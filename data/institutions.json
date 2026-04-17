@@ -1,0 +1,12 @@
+[
+  { "id": 1, "sigle": "MINDUH", "nom": "Ministère du Développement Urbain et de l'Habitat", "siege": "Yaoundé", "mandat": "Régulation, planification et développement de l'urbanisme et de l'habitat", "site": "https://www.minhdu.gov.cm/" },
+  { "id": 2, "sigle": "MINTP", "nom": "Ministère des Travaux Publics", "siege": "Yaoundé", "mandat": "Construction des ouvrages d'arts de transport routier, drainage, franchissement", "site": "https://mintp.cm/" },
+  { "id": 3, "sigle": "MINADER", "nom": "Ministère de l'Agriculture et du Développement Rural", "siege": "Yaoundé", "mandat": "Régulation, planification et développement et gestion de l'eau agricole", "site": "https://www.minader.cm/" },
+  { "id": 4, "sigle": "MINEPIA", "nom": "Ministère des Pêches et des Industries Animales", "siege": "Yaoundé", "mandat": "Régulation, planification et développement de la pêche et des ressources en eau pour l'élevage", "site": "" },
+  { "id": 5, "sigle": "MINEE", "nom": "Ministère de l'Eau et de l'Énergie", "siege": "Yaoundé", "mandat": "Élaboration et mise en œuvre de la politique nationale dans les domaines de l'eau et de l'énergie", "site": "https://www.minee.cm/" },
+  { "id": 6, "sigle": "MINFOF", "nom": "Ministère des Forêts et de la Faune", "siege": "Yaoundé", "mandat": "Gestion et protection des bassins versants, des ressources forestières et fauniques", "site": "https://www.minfof.cm/" },
+  { "id": 7, "sigle": "MINEPDED", "nom": "Ministère de l'Environnement, de la Protection de la Nature et du Développement Durable", "siege": "Yaoundé", "mandat": "Protection de l'environnement et des ressources en eau", "site": "https://www.minepded.gov.cm/" },
+  { "id": 8, "sigle": "CDE", "nom": "Cameroon Water Utilities Corporation", "siege": "Yaoundé", "mandat": "Distribution de l'eau potable urbaine", "site": "" },
+  { "id": 9, "sigle": "CAMWATER", "nom": "Cameroon Water Utilities", "siege": "Yaoundé", "mandat": "Gestion du patrimoine eau potable en milieu urbain et périurbain", "site": "" },
+  { "id": 10, "sigle": "SNEC", "nom": "Société Nationale des Eaux du Cameroun", "siege": "Yaoundé", "mandat": "Production et distribution de l'eau potable", "site": "" }
+]
