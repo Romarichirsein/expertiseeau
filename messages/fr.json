@@ -1,0 +1,32 @@
+{
+  "Index": {
+    "title": "Les Experts Eaux au Cameroun",
+    "description": "Répertoire national des professionnels"
+  },
+  "Navigation": {
+    "home": "Accueil",
+    "members": "Membres",
+    "institutions": "Institutions",
+    "gallery": "Galerie",
+    "blog": "Blog",
+    "contact": "Contact",
+    "register": "S'inscrire",
+    "about": "À Propos"
+  },
+  "Members": {
+    "title": "Répertoire des Experts",
+    "description": "Consultez la liste des professionnels du secteur de l'eau certifiés par notre réseau.",
+    "search": "Rechercher par nom ou profession...",
+    "total": "Membres au total",
+    "no_results": "Aucun membre trouvé",
+    "no_results_desc": "Essayez de modifier vos critères de recherche."
+  },
+  "Institutions": {
+    "title": "Répertoire des Institutions",
+    "description": "Retrouvez les acteurs clés du secteur de l'eau : ministères, organismes internationaux, ONG et partenaires techniques.",
+    "public": "Secteur Public",
+    "ngo": "ONG & PTF",
+    "private": "Bureaux d'Études",
+    "research": "Recherche & Formation"
+  }
+}

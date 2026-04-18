@@ -1,0 +1,32 @@
+{
+  "Index": {
+    "title": "Water Experts in Cameroon",
+    "description": "National directory of professionals"
+  },
+  "Navigation": {
+    "home": "Home",
+    "members": "Members",
+    "institutions": "Institutions",
+    "gallery": "Gallery",
+    "blog": "Blog",
+    "contact": "Contact",
+    "register": "Register",
+    "about": "About Us"
+  },
+  "Members": {
+    "title": "Experts Directory",
+    "description": "Consult the list of water sector professionals certified by our network.",
+    "search": "Search by name or profession...",
+    "total": "Total members",
+    "no_results": "No members found",
+    "no_results_desc": "Try adjusting your search criteria."
+  },
+  "Institutions": {
+    "title": "Institutional Directory",
+    "description": "Find key actors in the water sector: ministries, international organizations, NGOs, and technical partners.",
+    "public": "Public Sector",
+    "ngo": "NGOs & Partners",
+    "private": "Private Sector",
+    "research": "Research & Training"
+  }
+}

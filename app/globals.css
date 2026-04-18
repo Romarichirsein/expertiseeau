@@ -1,49 +1,249 @@
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@import "tailwindcss";
+
+/* =========================================
+   THEME TOKENS (Tailwind v4)
+   ========================================= */
+@theme {
+  --color-primary: #0a5694;
+  --color-primary-50: #f0f7ff;
+  --color-primary-100: #dbeafe;
+  --color-primary-500: #3b82f6;
+  --color-primary-600: #2563eb;
+  --color-primary-700: #1d4ed8;
+  --color-primary-800: #0a5694;
+  --color-primary-950: #062040;
+
+  --color-accent-teal: #0d9488;
+
+  --color-background: #ffffff;
+  --color-foreground: #1a1a1a;
+  --color-card: #ffffff;
+  --color-secondary: #f4f6f9;
+  --color-muted: #f1f5f9;
+  --color-muted-foreground: #64748b;
+  --color-border: #e2e8f0;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* =========================================
+   RESET BASE
+   ========================================= */
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body {
-  min-height: 100%;
+  background-color: #ffffff;
+  color: #1a1a1a;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  line-height: 1.6;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+/* =========================================
+   LAYOUT PRINCIPAL (WordPress-like full width)
+   ========================================= */
+#main-content {
+  flex: 1;
+  width: 100%;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
+/* Conteneur centré standard */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* Section spacings */
+.section {
+  padding: 80px 0;
+}
+
+.section-sm {
+  padding: 48px 0;
+}
+
+/* =========================================
+   NAVIGATION RESPONSIVE
+   ========================================= */
+.desktop-nav {
+  display: flex;
+}
+
+.mobile-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .desktop-nav {
+    display: none !important;
   }
+  .mobile-nav {
+    display: block !important;
+  }
+}
+
+/* =========================================
+   VARIABLES CSS pour usage inline
+   ========================================= */
+:root {
+  --primary: #0a5694;
+  --primary-dark: #062040;
+  --accent: #0d9488;
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --secondary: #f4f6f9;
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  --border: #e2e8f0;
+  --radius: 8px;
+}
+
+/* =========================================
+   CLASSES UTILITAIRES DESIGN SYSTEM
+   ========================================= */
+.bg-primary { background-color: var(--primary) !important; }
+.bg-card { background-color: var(--card) !important; }
+.bg-secondary { background-color: var(--secondary) !important; }
+.bg-muted { background-color: var(--muted) !important; }
+.bg-background { background-color: var(--background) !important; }
+.bg-accent { background-color: var(--accent) !important; }
+.bg-accent-teal { background-color: var(--accent) !important; }
+
+.bg-primary\/5  { background-color: rgba(10, 86, 148, 0.05) !important; }
+.bg-primary\/10 { background-color: rgba(10, 86, 148, 0.10) !important; }
+.bg-primary\/20 { background-color: rgba(10, 86, 148, 0.20) !important; }
+.bg-secondary\/30 { background-color: rgba(244,246,249,0.30) !important; }
+.bg-secondary\/50 { background-color: rgba(244,246,249,0.50) !important; }
+.bg-accent-teal\/5  { background-color: rgba(13,148,136,0.05) !important; }
+.bg-accent-teal\/10 { background-color: rgba(13,148,136,0.10) !important; }
+.bg-white\/10 { background-color: rgba(255,255,255,0.10) !important; }
+.bg-primary-950 { background-color: #062040 !important; }
+
+.text-foreground       { color: var(--foreground) !important; }
+.text-muted-foreground { color: var(--muted-foreground) !important; }
+.text-primary          { color: var(--primary) !important; }
+.text-accent           { color: var(--accent) !important; }
+.text-accent-teal      { color: var(--accent) !important; }
+.text-white            { color: #ffffff !important; }
+
+.border-border     { border-color: var(--border) !important; }
+.border-primary    { border-color: var(--primary) !important; }
+.border-primary\/10 { border-color: rgba(10,86,148,0.10) !important; }
+.border-primary\/30 { border-color: rgba(10,86,148,0.30) !important; }
+.border-primary\/50 { border-color: rgba(10,86,148,0.50) !important; }
+.border-accent-teal     { border-color: var(--accent) !important; }
+.border-accent-teal\/20 { border-color: rgba(13,148,136,0.20) !important; }
+.border-accent-teal\/50 { border-color: rgba(13,148,136,0.50) !important; }
+
+.hover\:border-primary\/30:hover     { border-color: rgba(10,86,148,0.30) !important; }
+.hover\:border-accent-teal\/50:hover { border-color: rgba(13,148,136,0.50) !important; }
+
+/* =========================================
+   TYPOGRAPHIE
+   ========================================= */
+.font-inter  { font-family: "Inter", system-ui, sans-serif; }
+.font-outfit { font-family: "Outfit", system-ui, sans-serif; }
+
+h1, h2, h3, h4, h5 {
+  line-height: 1.25;
+  font-weight: 700;
+}
+
+/* =========================================
+   GLASSMORPHISM
+   ========================================= */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+/* =========================================
+   HERO SECTION (identique WordPress)
+   ========================================= */
+.hero-section {
+  background: linear-gradient(135deg, #0a5694 0%, #0d7ac7 50%, #0d9488 100%);
+  color: white;
+  padding: 100px 0 80px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: url('/images/hero-pattern.svg') center/cover;
+  opacity: 0.05;
+}
+
+/* =========================================
+   SCROLLBAR
+   ========================================= */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* =========================================
+   PAGE HEADERS (Internal pages)
+   ========================================= */
+.page-hero {
+  background-color: #f8fafc;
+  border-bottom: 1px solid #e2e8f0;
+  padding: 60px 0;
+  margin-bottom: 60px;
+}
+
+.page-title {
+  font-size: 36px;
+  font-weight: 800;
+  color: #0f172a;
+  font-family: "Outfit", sans-serif;
+  margin-bottom: 12px;
+}
+
+.page-subtitle {
+  font-size: 16px;
+  color: #64748b;
+  max-width: 700px;
+  line-height: 1.6;
+}
+
+/* =========================================
+   CARDS & COMPONENTS
+   ========================================= */
+.premium-card {
+  background: white;
+  border: 1px solid #e8ecf0;
+  border-radius: 20px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+}
+
+.premium-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+  border-color: rgba(10, 86, 148, 0.2);
+}
+
+.expert-badge {
+  display: inline-flex;
+  padding: 4px 12px;
+  background-color: rgba(10, 86, 148, 0.08);
+  color: #0a5694;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
