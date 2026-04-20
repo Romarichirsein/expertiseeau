@@ -7,7 +7,10 @@ import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 
-export default function BlogPostPage({ params: { locale, id } }: { params: { locale: string, id: string } }) {
+export default function BlogPostPage({ params }: { params: Promise<{ locale: string; id: string }> }) {
+  const resolvedParams = React.use(params);
+  const { locale, id } = resolvedParams;
+  
   const isFR = locale === 'fr';
   const [post, setPost] = useState<any>(null);
   const [loading, setLoading] = useState(true);

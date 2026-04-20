@@ -19,7 +19,16 @@
     "search": "Rechercher par nom ou profession...",
     "total": "Membres au total",
     "no_results": "Aucun membre trouvé",
-    "no_results_desc": "Essayez de modifier vos critères de recherche."
+    "no_results_desc": "Essayez de modifier vos critères de recherche.",
+    "back": "Retour à l'annuaire",
+    "contact_expert": "Contacter l'expert",
+    "expertise": "Domaines d'Expertise",
+    "experience": "Expérience Sectorielle",
+    "education": "Formation",
+    "share": "Partager ce profil",
+    "certified": "Expert Certifié",
+    "no_expertise": "Aucun domaine d'expertise spécifié.",
+    "no_education": "Détails non communiqués."
   },
   "Institutions": {
     "title": "Répertoire des Institutions",
@@ -27,6 +36,54 @@
     "public": "Secteur Public",
     "ngo": "ONG & PTF",
     "private": "Bureaux d'Études",
-    "research": "Recherche & Formation"
+    "research": "Recherche & Formation",
+    "back": "Retour aux institutions",
+    "about": "À propos de l'institution",
+    "contact_details": "Coordonnées",
+    "contact_action": "Écrire à l'institution",
+    "linked_experts": "Experts liés",
+    "projects": "Projets encadrés",
+    "resources": "Ressources utiles"
+  },
+  "Blog": {
+    "title": "Actualités du Secteur",
+    "subtitle": "Chroniques & Actualités",
+    "description": "Retrouvez les dernières publications, analyses techniques et régulations du secteur de l'eau au Cameroun.",
+    "read_more": "Lire la suite",
+    "newsletter_title": "Restez informé",
+    "newsletter_desc": "Recevez chaque mois les actualités majeures du secteur de l'eau directement par e-mail.",
+    "subscribe": "S'abonner"
+  },
+  "Gallery": {
+    "title": "Galerie Photo",
+    "subtitle": "Ressources Visuelles",
+    "description": "Découvrez en images les infrastructures hydrauliques et les interventions techniques sur le terrain à travers le Cameroun.",
+    "all": "Toutes"
+  },
+  "Contact": {
+    "title": "Contactez-Nous",
+    "subtitle": "Restons en Contact",
+    "description": "Une question, une suggestion ou un partenariat ? Notre équipe est à votre écoute.",
+    "name": "Nom complet",
+    "email": "Adresse e-mail",
+    "subject": "Sujet",
+    "message": "Votre message",
+    "send": "Envoyer le message",
+    "sending": "Envoi en cours...",
+    "success": "Message envoyé avec succès !",
+    "error": "Erreur lors de l'envoi. Veuillez réessayer."
+  },
+  "About": {
+    "title": "À Propos",
+    "description": "Découvrez le réseau des experts en eau du Cameroun, ses missions et ses partenaires."
+  },
+  "Admin": {
+    "title": "Tableau de Bord Admin",
+    "members": "Membres en attente",
+    "approve": "Approuver",
+    "reject": "Rejeter",
+    "approved": "Approuvé",
+    "rejected": "Rejeté",
+    "loading": "Chargement..."
   }
 }

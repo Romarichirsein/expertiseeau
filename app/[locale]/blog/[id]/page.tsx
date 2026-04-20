@@ -5,10 +5,13 @@ import BlogPostClient from './BlogPostClient';
 import { Metadata } from 'next';
 
 type Props = {
-  params: { locale: string; id: string };
+  params: Promise<{ locale: string; id: string }>;
 };
 
-export async function generateMetadata({ params: { locale, id } }: Props): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
+
   const { data: post } = await supabase
     .from('blog_posts')
     .select('*')
@@ -36,16 +39,19 @@ export async function generateMetadata({ params: { locale, id } }: Props): Promi
 }
 
 export default async function BlogPostPage({ params }: Props) {
+  const resolvedParams = await params;
+  const { id, locale } = resolvedParams;
+
   let post = null;
   const { data, error } = await supabase
     .from('blog_posts')
     .select('*')
-    .eq('id', params.id)
+    .eq('id', id)
     .single();
 
   if (error || !data) {
     // Fallback mock
-    if (params.id === 'mock-1') {
+    if (id === 'mock-1') {
       post = {
         id: 'mock-1',
         title: "Le Cameroun face aux défis du stress hydrique en 2025",
@@ -63,5 +69,5 @@ export default async function BlogPostPage({ params }: Props) {
 
   if (!post) return notFound();
 
-  return <BlogPostClient locale={params.locale} post={post} />;
+  return <BlogPostClient locale={locale} post={post} />;
 }

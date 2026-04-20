@@ -72,8 +72,8 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
               <h1 className="page-title">{isFR ? 'Répertoire des Experts' : 'Experts Directory'}</h1>
               <p className="page-subtitle">
                 {isFR 
-                  ? 'Consultez la liste des professionnels certifiés du secteur de l\'eau au Cameroun.'
-                  : 'Consult the list of certified water sector professionals in Cameroon.'}
+                  ? "Consultez la liste des professionnels certifiés du secteur de l'eau au Cameroun."
+                  : "Consult the list of certified water sector professionals in Cameroon."}
               </p>
             </motion.div>
             
@@ -127,7 +127,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                 outline: 'none',
                 transition: 'all 0.2s'
               }}
-              className="focus:ring-2 focus:ring-primary/20 focus:border-primary"
+              className="search-input"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
@@ -161,7 +161,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         {loading ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '100px 0', gap: '20px' }}>
             <Loader2 className="animate-spin text-primary" size={48} />
-            <p style={{ color: '#64748b', fontWeight: 600 }}>{isFR ? 'Chargement de l\'annuaire...' : 'Loading directory...'}</p>
+            <p style={{ color: '#64748b', fontWeight: 600 }}>{isFR ? "Chargement de l'annuaire..." : "Loading directory..."}</p>
           </div>
         ) : (
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '30px' }}>

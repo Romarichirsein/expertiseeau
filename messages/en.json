@@ -19,7 +19,16 @@
     "search": "Search by name or profession...",
     "total": "Total members",
     "no_results": "No members found",
-    "no_results_desc": "Try adjusting your search criteria."
+    "no_results_desc": "Try adjusting your search criteria.",
+    "back": "Back to directory",
+    "contact_expert": "Contact expert",
+    "expertise": "Areas of Expertise",
+    "experience": "Sector Experience",
+    "education": "Education",
+    "share": "Share this profile",
+    "certified": "Certified Expert",
+    "no_expertise": "No areas of expertise specified.",
+    "no_education": "Details not provided."
   },
   "Institutions": {
     "title": "Institutional Directory",
@@ -27,6 +36,54 @@
     "public": "Public Sector",
     "ngo": "NGOs & Partners",
     "private": "Private Sector",
-    "research": "Research & Training"
+    "research": "Research & Training",
+    "back": "Back to institutions",
+    "about": "About the institution",
+    "contact_details": "Contact Details",
+    "contact_action": "Contact institution",
+    "linked_experts": "Linked experts",
+    "projects": "Supervised projects",
+    "resources": "Useful resources"
+  },
+  "Blog": {
+    "title": "Sector News",
+    "subtitle": "Chronicles & News",
+    "description": "Find the latest publications, technical analyses and regulations of the water sector in Cameroon.",
+    "read_more": "Read more",
+    "newsletter_title": "Stay informed",
+    "newsletter_desc": "Receive major water sector news via e-mail every month.",
+    "subscribe": "Subscribe"
+  },
+  "Gallery": {
+    "title": "Photo Gallery",
+    "subtitle": "Visual Resources",
+    "description": "Discover through images the hydraulic infrastructures and technical field interventions across Cameroon.",
+    "all": "All"
+  },
+  "Contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in Touch",
+    "description": "A question, a suggestion or a partnership? Our team is here to help.",
+    "name": "Full name",
+    "email": "Email address",
+    "subject": "Subject",
+    "message": "Your message",
+    "send": "Send message",
+    "sending": "Sending...",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "About": {
+    "title": "About Us",
+    "description": "Discover the water experts network of Cameroon, its missions and partners."
+  },
+  "Admin": {
+    "title": "Admin Dashboard",
+    "members": "Pending members",
+    "approve": "Approve",
+    "reject": "Reject",
+    "approved": "Approved",
+    "rejected": "Rejected",
+    "loading": "Loading..."
   }
 }

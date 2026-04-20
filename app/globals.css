@@ -247,3 +247,72 @@ h1, h2, h3, h4, h5 {
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
+
+/* =========================================
+   GALLERY GRID RESPONSIVE
+   ========================================= */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .gallery-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   CONTACT LAYOUT RESPONSIVE
+   ========================================= */
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 60px;
+}
+
+@media (max-width: 900px) {
+  .contact-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* =========================================
+   FOCUS RING ACCESSIBILITE
+   ========================================= */
+:focus-visible {
+  outline: 2px solid #0a5694;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* =========================================
+   ANIMATIONS UTILITAIRES
+   ========================================= */
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+.group:hover .group-hover\:scale-110 { transform: scale(1.1); }
+.group:hover .group-hover\:opacity-100 { opacity: 1 !important; }
+.group:hover .group-hover\:text-primary { color: var(--primary) !important; }
+
+/* =========================================
+   SEARCH INPUT
+   ========================================= */
+.search-input:focus {
+  box-shadow: 0 0 0 2px rgba(10, 86, 148, 0.2);
+  border-color: #0a5694;
+}

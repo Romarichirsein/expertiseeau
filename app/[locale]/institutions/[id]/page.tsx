@@ -5,12 +5,16 @@ import InstitutionDetailClient from './InstitutionDetailClient';
 import { Metadata } from 'next';
 
 type Props = {
-  params: { locale: string; id: string };
+  params: Promise<{ locale: string; id: string }>;
 };
 
-export async function generateMetadata({ params: { locale, id } }: Props): Promise<Metadata> {
-  const allInstitutions = Object.values(institutionsData).flat();
-  const institution = allInstitutions.find(inst => inst.id === id || inst.sigle === id);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const resolvedParams = await params;
+  const { locale, id } = resolvedParams;
+  
+  const allInstitutions = Object.values(institutionsData).flat() as any[];
+  // Fix type comparison: inst.id is number, id is string from params
+  const institution = allInstitutions.find(inst => String(inst.id) === id || inst.sigle === id);
   
   if (!institution) return { title: 'Institution Not Found' };
 
@@ -31,11 +35,15 @@ export async function generateMetadata({ params: { locale, id } }: Props): Promi
   };
 }
 
-export default function InstitutionDetailPage({ params }: Props) {
-  const allInstitutions = Object.values(institutionsData).flat();
-  const institution = allInstitutions.find(inst => inst.id === params.id || inst.sigle === params.id);
+export default async function InstitutionDetailPage({ params }: Props) {
+  const resolvedParams = await params;
+  const { id, locale } = resolvedParams;
+  
+  const allInstitutions = Object.values(institutionsData).flat() as any[];
+  // Fix type comparison: inst.id is number, id is string from params
+  const institution = allInstitutions.find(inst => String(inst.id) === id || inst.sigle === id);
   
   if (!institution) return notFound();
 
-  return <InstitutionDetailClient locale={params.locale} institution={institution} />;
+  return <InstitutionDetailClient locale={locale} institution={institution} />;
 }

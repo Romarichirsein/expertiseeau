@@ -1,4 +1,4 @@
-"use client";
+// Server & client compatible Supabase actions
 
 import { supabase } from '@/lib/supabase';
 
@@ -65,6 +65,33 @@ export async function getExpertById(id: string) {
     
     if (error) {
       console.error('Fetch error:', error.message);
+      return null;
+    }
+    return data;
+}
+
+export async function getInstitutions() {
+    const { data, error } = await supabase
+      .from('institutions')
+      .select('*')
+      .order('nom', { ascending: true });
+    
+    if (error) {
+      console.error('Fetch institutions error:', error.message);
+      return [];
+    }
+    return data;
+}
+
+export async function getInstitutionById(id: string) {
+    const { data, error } = await supabase
+      .from('institutions')
+      .select('*')
+      .eq('id', id)
+      .single();
+    
+    if (error) {
+      console.error('Fetch institution error:', error.message);
       return null;
     }
     return data;

@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "fetch-data": "node scratch/migrate_to_supabase.js",
+    "parse-data": "python scratch/parse_tables.py"
   },
   "dependencies": {
     "@supabase/ssr": "^0.10.2",
