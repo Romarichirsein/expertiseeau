@@ -96,3 +96,17 @@ export async function getInstitutionById(id: string) {
     }
     return data;
 }
+export async function updateExpert(id: string, data: any) {
+    try {
+        const { error } = await supabase
+            .from('experts')
+            .update(data)
+            .eq('id', id);
+
+        if (error) throw error;
+        return { success: true };
+    } catch (error: any) {
+        console.error('Update error:', error.message);
+        return { success: false, error: error.message };
+    }
+}
