@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Users, Droplets, MapPin, ArrowRight, ShieldCheck, Building2, Globe,
-  ChevronRight, Award, BookOpen, Phone
+  ChevronRight, Award, BookOpen, Search, CheckCircle2, Star, TrendingUp, Zap, Heart
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -14,10 +14,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   const isFR = locale === 'fr';
 
   const stats = [
-    { value: '960+', label: isFR ? 'Experts Inscrits' : 'Registered Experts', icon: Users },
-    { value: '10', label: isFR ? 'Régions Couvertes' : 'Regions Covered', icon: MapPin },
-    { value: '25+', label: isFR ? 'Institutions Partenaires' : 'Partner Institutions', icon: Building2 },
-    { value: '15+', label: isFR ? "Années d'Expertise" : 'Years of Expertise', icon: Award },
+    { value: '960+', label: isFR ? 'Experts Inscrits' : 'Registered Experts', icon: Users, color: '#0ea5e9' },
+    { value: '10', label: isFR ? 'Régions Couvertes' : 'Regions Covered', icon: MapPin, color: '#10b981' },
+    { value: '25+', label: isFR ? 'Institutions' : 'Institutions', icon: Building2, color: '#f59e0b' },
+    { value: '15+', label: isFR ? "Années d'Expertise" : 'Years', icon: Award, color: '#8b5cf6' },
   ];
 
   const services = [
@@ -51,87 +51,147 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
     },
   ];
 
-  const partners = [
-    { name: 'UNESCO', logo: '/images/partners/unesco.png' },
-    { name: 'GWP', logo: '/images/partners/gwp.png' },
-    { name: 'MINEE', logo: '/images/partners/minee.png' },
-    { name: 'CAMWATER', logo: '/images/partners/camwater.png' },
-  ];
-
   return (
-    <div>
-      {/* ==================== HERO ==================== */}
-      <section style={{
-        background: 'linear-gradient(135deg, #0a5694 0%, #0d7ac7 60%, #0d9488 100%)',
-        color: 'white',
-        padding: '100px 0 80px',
-        position: 'relative',
-        overflow: 'hidden',
-      }}>
-        {/* Decorative circles */}
-        <div style={{ position: 'absolute', top: '-80px', right: '-80px', width: '400px', height: '400px', borderRadius: '50%', background: 'rgba(255,255,255,0.05)' }} />
-        <div style={{ position: 'absolute', bottom: '-100px', left: '-60px', width: '300px', height: '300px', borderRadius: '50%', background: 'rgba(255,255,255,0.04)' }} />
+    <div className="bg-[#f8fafc] overflow-hidden">
+      {/* ==================== HERO SECTION ==================== */}
+      <section className="relative min-h-screen flex items-center pt-20 pb-32 overflow-hidden">
+        {/* Animated Background Gradients */}
+        <div className="absolute inset-0 bg-white">
+           <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-blue-50/50 via-white to-teal-50/50" />
+           <motion.div 
+             animate={{ 
+               scale: [1, 1.2, 1],
+               x: [0, 50, 0],
+               y: [0, 30, 0]
+             }}
+             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+             className="absolute -top-[10%] -left-[10%] w-[50%] h-[50%] bg-blue-100/40 rounded-full blur-[120px]" 
+           />
+           <motion.div 
+             animate={{ 
+               scale: [1.2, 1, 1.2],
+               x: [0, -50, 0],
+               y: [0, -30, 0]
+             }}
+             transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+             className="absolute -bottom-[10%] -right-[10%] w-[60%] h-[60%] bg-teal-100/30 rounded-full blur-[120px]" 
+           />
+        </div>
 
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', position: 'relative' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <motion.div initial={{ opacity: 0, x: -40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7 }}>
-              <div style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: 'rgba(255,255,255,0.15)', borderRadius: '30px', padding: '6px 16px', marginBottom: '24px', fontSize: '13px', fontWeight: 600 }}>
-                <Droplets size={14} />
-                {isFR ? 'Portail National des Experts en Eaux' : 'National Portal of Water Experts'}
+        <div className="container relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-20 items-center">
+            
+            {/* Left Column: Text Content */}
+            <motion.div 
+              initial={{ opacity: 0, x: -50 }} 
+              animate={{ opacity: 1, x: 0 }} 
+              transition={{ duration: 1, ease: "easeOut" }}
+              className="lg:col-span-7 space-y-10"
+            >
+              <div className="space-y-6">
+                <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white shadow-xl shadow-blue-900/5 border border-gray-50 text-[#0a5694] text-xs font-black uppercase tracking-[0.2em]">
+                  <Droplets size={18} strokeWidth={2.5} />
+                  {isFR ? 'Portail National de l\'Expertise' : 'National Expertise Portal'}
+                </div>
+                
+                <h1 className="text-6xl md:text-8xl font-black text-gray-900 leading-[1.1] tracking-tight">
+                  {isFR ? (
+                    <>L'Excellence de l'<span className="text-[#0a5694]">Expertise</span> au Cameroun</>
+                  ) : (
+                    <>Excellence in Cameroonian <span className="text-[#0a5694]">Expertise</span></>
+                  )}
+                </h1>
+                
+                <p className="text-xl text-gray-500 leading-relaxed max-w-2xl font-medium">
+                  {isFR
+                    ? 'Le premier réseau structuré dédié à la promotion et à la certification des professionnels camerounais du secteur de l\'eau.'
+                    : 'The first structured network dedicated to the promotion and certification of Cameroonian professionals in the water sector.'
+                  }
+                </p>
               </div>
-              <h1 style={{ fontSize: '48px', fontWeight: 800, lineHeight: 1.15, marginBottom: '20px', fontFamily: '"Outfit", sans-serif' }}>
-                {isFR
-                  ? <>Les Experts en Eaux<br /><span style={{ color: '#7dd3fc' }}>au Cameroun</span></>
-                  : <>Water Experts<br /><span style={{ color: '#7dd3fc' }}>in Cameroon</span></>
-                }
-              </h1>
-              <p style={{ fontSize: '17px', lineHeight: 1.7, opacity: 0.9, marginBottom: '36px', maxWidth: '480px' }}>
-                {isFR
-                  ? 'Le réseau de référence national pour la valorisation et la structuration de l\'expertise camerounaise dans le secteur de l\'eau et de l\'assainissement.'
-                  : 'The national reference network for the valorization and structuring of Cameroonian expertise in the water and sanitation sector.'
-                }
-              </p>
-              <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-                <Link href={`/${locale}/members`} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  backgroundColor: '#fff', color: '#0a5694',
-                  padding: '14px 28px', borderRadius: '8px',
-                  fontWeight: 700, fontSize: '15px', textDecoration: 'none',
-                  boxShadow: '0 4px 20px rgba(0,0,0,0.15)',
-                }}>
-                  {isFR ? 'Consulter le répertoire' : 'Browse Directory'}
-                  <ArrowRight size={18} />
+              
+              <div className="flex flex-wrap gap-6 pt-4">
+                <Link href={`/${locale}/members`} className="group relative px-10 py-5 bg-[#0a5694] text-white rounded-2xl font-black text-lg shadow-2xl shadow-blue-900/20 hover:scale-105 active:scale-95 transition-all flex items-center gap-3 overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                  {isFR ? 'Explorer l\'Annuaire' : 'Explore Directory'}
+                  <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link href={`/${locale}/register/resident`} style={{
-                  display: 'inline-flex', alignItems: 'center', gap: '8px',
-                  backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff',
-                  border: '2px solid rgba(255,255,255,0.4)',
-                  padding: '14px 28px', borderRadius: '8px',
-                  fontWeight: 700, fontSize: '15px', textDecoration: 'none',
-                }}>
-                  {isFR ? 'S\'inscrire comme Expert' : 'Register as Expert'}
+                <Link href={`/${locale}/register`} className="px-10 py-5 bg-white text-gray-900 border border-gray-100 rounded-2xl font-black text-lg shadow-xl hover:bg-gray-50 hover:scale-105 active:scale-95 transition-all">
+                  {isFR ? 'Rejoindre le Réseau' : 'Join the Network'}
                 </Link>
+              </div>
+
+              {/* Trust Badges */}
+              <div className="pt-10 flex flex-wrap items-center gap-10 opacity-60">
+                 <div className="flex flex-col gap-1">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-gray-400">{isFR ? 'Approuvé par' : 'Approved by'}</div>
+                    <div className="font-black text-gray-900 text-lg tracking-tighter">MINEE</div>
+                 </div>
+                 <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+                 <div className="flex flex-col gap-1">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-gray-400">{isFR ? 'Soutenu par' : 'Supported by'}</div>
+                    <div className="font-black text-gray-900 text-lg tracking-tighter">UNESCO</div>
+                 </div>
+                 <div className="w-px h-10 bg-gray-200 hidden sm:block" />
+                 <div className="flex flex-col gap-1">
+                    <div className="text-[10px] font-black uppercase tracking-widest text-gray-400">{isFR ? 'Partenaire' : 'Partner'}</div>
+                    <div className="font-black text-gray-900 text-lg tracking-tighter text-transform uppercase">UE & AFD</div>
+                 </div>
               </div>
             </motion.div>
+            
+            {/* Right Column: Visual Elements */}
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.8 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              transition={{ duration: 1.2, ease: "easeOut" }}
+              className="lg:col-span-5 hidden lg:block"
+            >
+              <div className="relative">
+                {/* Main Abstract Shape */}
+                <div className="relative z-10 bg-white rounded-[5rem] p-20 shadow-2xl shadow-blue-900/10 border border-gray-50 transform -rotate-3 hover:rotate-0 transition-transform duration-700">
+                   <img src="/images/logo.png" alt="Logo" className="w-full drop-shadow-2xl" />
+                </div>
 
-            <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.7, delay: 0.2 }}
-              style={{ display: 'flex', justifyContent: 'center' }}>
-              <div style={{ position: 'relative' }}>
-                <img
-                  src="/images/logo.png"
-                  alt="Expertise au Cameroun"
-                  style={{ width: '320px', maxWidth: '100%', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.3))' }}
-                />
+                {/* Floating Stats Card */}
+                <motion.div 
+                  animate={{ y: [0, -20, 0] }}
+                  transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+                  className="absolute -top-10 -right-10 z-20 bg-white p-8 rounded-[2.5rem] shadow-2xl shadow-blue-900/10 border border-gray-50 space-y-4"
+                >
+                   <div className="w-12 h-12 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-500">
+                      <TrendingUp size={24} />
+                   </div>
+                   <div>
+                      <div className="text-4xl font-black text-gray-900 tracking-tighter">960+</div>
+                      <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-1">{isFR ? 'Experts Validés' : 'Validated Experts'}</div>
+                   </div>
+                </motion.div>
+
+                {/* Second Floating Card */}
+                <motion.div 
+                   animate={{ y: [0, 20, 0] }}
+                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                   className="absolute -bottom-10 -left-10 z-20 bg-[#0a5694] p-8 rounded-[2.5rem] shadow-2xl shadow-blue-900/20 text-white space-y-4"
+                >
+                   <div className="w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center text-white">
+                      <ShieldCheck size={24} />
+                   </div>
+                   <div>
+                      <div className="text-xl font-black tracking-tight">{isFR ? 'Certification Officielle' : 'Official Certification'}</div>
+                      <div className="text-[10px] font-black text-white/50 uppercase tracking-widest mt-1">{isFR ? 'Plateforme de l\'État' : 'State Platform'}</div>
+                   </div>
+                </motion.div>
               </div>
             </motion.div>
           </div>
         </div>
       </section>
 
-      {/* ==================== STATS BAR ==================== */}
-      <section style={{ backgroundColor: '#062040', color: 'white', padding: '0' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0' }}>
+      {/* ==================== STATS SECTION ==================== */}
+      <section className="relative z-20 -mt-20 container">
+        <div className="bg-white rounded-[4rem] shadow-2xl shadow-blue-900/5 border border-gray-50 p-12 md:p-16">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
             {stats.map((stat, i) => {
               const Icon = stat.icon;
               return (
@@ -141,19 +201,16 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  style={{
-                    display: 'flex', alignItems: 'center', gap: '16px',
-                    padding: '28px 24px',
-                    borderRight: i < 3 ? '1px solid rgba(255,255,255,0.1)' : 'none',
-                  }}
+                  className="flex flex-col items-center text-center group"
                 >
-                  <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
-                    <Icon size={22} color="#7dd3fc" />
+                  <div 
+                    className="w-20 h-20 rounded-[2rem] mb-8 flex items-center justify-center transition-all group-hover:scale-110 group-hover:-rotate-12 shadow-inner"
+                    style={{ backgroundColor: `${stat.color}10`, color: stat.color }}
+                  >
+                    <Icon size={32} strokeWidth={2.5} />
                   </div>
-                  <div>
-                    <div style={{ fontSize: '28px', fontWeight: 800, fontFamily: '"Outfit", sans-serif', color: '#7dd3fc' }}>{stat.value}</div>
-                    <div style={{ fontSize: '13px', opacity: 0.7, marginTop: '2px' }}>{stat.label}</div>
-                  </div>
+                  <div className="text-5xl font-black text-gray-900 mb-2 tracking-tighter">{stat.value}</div>
+                  <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{stat.label}</div>
                 </motion.div>
               );
             })}
@@ -161,93 +218,51 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
       </section>
 
-      {/* ==================== ABOUT SECTION ==================== */}
-      <section style={{ padding: '80px 0', backgroundColor: '#fff' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <span style={{ color: '#0a5694', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px' }}>
-                {isFR ? 'À Propos du Réseau' : 'About the Network'}
-              </span>
-              <h2 style={{ fontSize: '36px', fontWeight: 800, marginTop: '12px', marginBottom: '20px', fontFamily: '"Outfit", sans-serif', color: '#0f172a' }}>
-                {isFR ? 'Expertiseaucameroun.org' : 'Expertiseaucameroun.org'}
+      {/* ==================== SERVICES ECOSYSTEM ==================== */}
+      <section className="py-40">
+        <div className="container">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10 mb-20">
+            <div className="max-w-2xl space-y-6">
+              <div className="text-[11px] font-black text-[#0a5694] uppercase tracking-[0.3em]">{isFR ? 'Écosystème' : 'Ecosystem'}</div>
+              <h2 className="text-5xl md:text-7xl font-black text-gray-900 tracking-tight leading-[1.1]">
+                {isFR ? 'Une Expertise au service du ' : 'Expertise at the service of '} 
+                <span className="text-[#0a5694]">{isFR ? 'Développement' : 'Development'}</span>
               </h2>
-              <p style={{ color: '#4b5563', lineHeight: 1.8, marginBottom: '16px', fontSize: '15px' }}>
-                {isFR
-                  ? 'Ce projet est financé par le Fonds de Solidarité pour les Projets Innovants (FSPI) de l\'Ambassade de France au Cameroun, et la Délégation de l\'Union Européenne au Cameroun. Il est exécuté par le bureau AFD (Agence Française de Développement) au Cameroun.'
-                  : 'This project is funded by the Solidarity Fund for Innovative Projects (FSPI) of the French Embassy in Cameroon, and the EU Delegation in Cameroon. It is implemented by the AFD office in Cameroon.'
-                }
-              </p>
-              <p style={{ color: '#4b5563', lineHeight: 1.8, marginBottom: '28px', fontSize: '15px' }}>
-                {isFR
-                  ? 'L\'objectif principal est de créer un répertoire des expertises dans le secteur de l\'eau au Cameroun, afin de valoriser les compétences disponibles localement et dans la diaspora.'
-                  : 'The main objective is to create a directory of expertise in the water sector in Cameroon, to promote skills available locally and in the diaspora.'
-                }
-              </p>
-              <Link
-                href={`/${locale}/about`}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', color: '#0a5694', fontWeight: 700, textDecoration: 'none', fontSize: '15px' }}
-              >
-                {isFR ? 'En savoir plus' : 'Learn more'} <ChevronRight size={18} />
-              </Link>
-            </motion.div>
-
-            <motion.div initial={{ opacity: 0, x: 30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                {[
-                  { icon: '🌊', title: isFR ? 'Ressources en eau' : 'Water Resources', color: '#dbeafe' },
-                  { icon: '🔬', title: isFR ? 'Recherche & Innovation' : 'Research & Innovation', color: '#dcfce7' },
-                  { icon: '🏗️', title: isFR ? 'Génie Civil Hydraulique' : 'Hydraulic Engineering', color: '#fef3c7' },
-                  { icon: '♻️', title: isFR ? 'Assainissement' : 'Sanitation', color: '#fce7f3' },
-                ].map((item, i) => (
-                  <div key={i} style={{
-                    backgroundColor: item.color,
-                    borderRadius: '16px',
-                    padding: '24px',
-                    textAlign: 'center',
-                    transition: 'transform 0.2s',
-                  }}>
-                    <div style={{ fontSize: '32px', marginBottom: '12px' }}>{item.icon}</div>
-                    <div style={{ fontWeight: 600, fontSize: '14px', color: '#1f2937' }}>{item.title}</div>
-                  </div>
-                ))}
-              </div>
-            </motion.div>
+            </div>
+            <Link href={`/${locale}/about`} className="px-10 py-5 bg-gray-50 hover:bg-gray-100 rounded-2xl font-black text-xs uppercase tracking-widest text-gray-600 transition-all flex items-center gap-3">
+               {isFR ? 'Notre Mission' : 'Our Mission'}
+               <ArrowRight size={18} />
+            </Link>
           </div>
-        </div>
-      </section>
-
-      {/* ==================== SERVICES ==================== */}
-      <section style={{ padding: '80px 0', backgroundColor: '#f4f6f9' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '56px' }}>
-            <span style={{ color: '#0a5694', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px' }}>
-              {isFR ? 'Nos Services' : 'Our Services'}
-            </span>
-            <h2 style={{ fontSize: '36px', fontWeight: 800, marginTop: '12px', fontFamily: '"Outfit", sans-serif', color: '#0f172a' }}>
-              {isFR ? 'Ce que nous offrons' : 'What we offer'}
-            </h2>
-          </div>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '24px' }}>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {services.map((svc, i) => {
               const Icon = svc.icon;
               return (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
                   viewport={{ once: true }}
                   transition={{ delay: i * 0.1 }}
-                  whileHover={{ y: -6 }}
                 >
-                  <Link href={svc.href} style={{ display: 'block', backgroundColor: '#fff', borderRadius: '16px', padding: '32px 24px', textDecoration: 'none', height: '100%', boxShadow: '0 4px 16px rgba(0,0,0,0.06)', border: '1px solid #e8ecf0', transition: 'all 0.3s' }}>
-                    <div style={{ width: '56px', height: '56px', borderRadius: '14px', backgroundColor: svc.color + '15', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                      <Icon size={26} color={svc.color} />
+                  <Link href={svc.href} className="flex flex-col bg-white rounded-[3.5rem] p-12 h-full border border-gray-100 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-2 transition-all duration-500 group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:rotate-12 transition-transform duration-700">
+                       <Icon size={120} />
                     </div>
-                    <h3 style={{ fontSize: '17px', fontWeight: 700, color: '#0f172a', marginBottom: '12px', fontFamily: '"Outfit", sans-serif' }}>{svc.title}</h3>
-                    <p style={{ fontSize: '14px', color: '#64748b', lineHeight: 1.65 }}>{svc.desc}</p>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px', color: svc.color, fontWeight: 600, fontSize: '13px', marginTop: '20px' }}>
-                      {isFR ? 'Découvrir' : 'Learn more'} <ChevronRight size={16} />
+                    <div 
+                      className="w-16 h-16 rounded-2xl flex items-center justify-center mb-10 shadow-inner group-hover:scale-110 transition-transform relative z-10"
+                      style={{ backgroundColor: `${svc.color}15`, color: svc.color }}
+                    >
+                      <Icon size={32} />
+                    </div>
+                    <h3 className="text-2xl font-black text-gray-900 mb-6 group-hover:text-[#0a5694] transition-colors relative z-10 leading-tight">{svc.title}</h3>
+                    <p className="text-gray-500 font-bold leading-relaxed mb-10 text-sm relative z-10">{svc.desc}</p>
+                    <div 
+                      className="mt-auto flex items-center gap-3 font-black text-[10px] uppercase tracking-widest transition-all relative z-10"
+                      style={{ color: svc.color }}
+                    >
+                      {isFR ? 'Découvrir' : 'Discover'} <ChevronRight size={18} />
                     </div>
                   </Link>
                 </motion.div>
@@ -257,95 +272,77 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
         </div>
       </section>
 
-      {/* ==================== DIASPORA CTA ==================== */}
-      <section style={{ padding: '80px 0', background: 'linear-gradient(135deg, #0a5694, #0d9488)', color: 'white' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '60px', alignItems: 'center' }}>
-            <div>
-              <Globe size={48} style={{ opacity: 0.5, marginBottom: '20px' }} />
-              <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px', fontFamily: '"Outfit", sans-serif' }}>
-                {isFR ? 'Expert Camerounais de la Diaspora ?' : 'Cameroonian Expert in Diaspora?'}
-              </h2>
-              <p style={{ opacity: 0.85, lineHeight: 1.7, fontSize: '16px', marginBottom: '32px' }}>
-                {isFR
-                  ? 'Vous avez une expertise dans le secteur de l\'eau et vivez à l\'étranger ? Rejoignez notre réseau et contribuez au développement du Cameroun depuis l\'international.'
-                  : 'Do you have expertise in the water sector and live abroad? Join our network and contribute to the development of Cameroon from the international level.'
-                }
-              </p>
-              <Link
-                href={`/${locale}/register/diaspora`}
-                style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: '#fff', color: '#0a5694', padding: '14px 32px', borderRadius: '8px', fontWeight: 700, fontSize: '15px', textDecoration: 'none', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }}
-              >
-                {isFR ? 'S\'inscrire comme Expert Diaspora' : 'Register as Diaspora Expert'}
-                <ArrowRight size={18} />
-              </Link>
+      {/* ==================== DIASPORA SECTION ==================== */}
+      <section className="py-40 bg-gray-900 relative overflow-hidden">
+         <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-900 to-[#0a5694]/20" />
+         <div className="absolute top-0 left-0 w-full h-full bg-[url('/images/hero-pattern.svg')] opacity-[0.03]" />
+         
+         <div className="container relative z-10">
+            <div className="max-w-4xl mx-auto text-center space-y-12">
+               <div className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-white/5 border border-white/10 text-[#0d9488] text-[10px] font-black uppercase tracking-[0.3em]">
+                  <Globe size={18} strokeWidth={2.5} />
+                  {isFR ? 'Connexion Internationale' : 'International Connection'}
+               </div>
+               
+               <h2 className="text-5xl md:text-8xl font-black text-white tracking-tight leading-[1.1]">
+                  {isFR ? 'Talents de la ' : 'Talents of the '} 
+                  <span className="text-[#0d9488]">{isFR ? 'Diaspora' : 'Diaspora'}</span>
+               </h2>
+               
+               <p className="text-xl text-gray-400 font-medium leading-relaxed max-w-2xl mx-auto">
+                  {isFR 
+                    ? 'Le réseau national vous permet de contribuer activement au développement de votre pays d\'origine à travers vos expertises acquises à l\'international.'
+                    : 'The national network allows you to actively contribute to the development of your country of origin through your expertise acquired internationally.'}
+               </p>
+
+               <div className="flex flex-col sm:flex-row justify-center gap-6 pt-6">
+                  <Link href={`/${locale}/register/diaspora`} className="px-12 py-6 bg-[#0d9488] text-white rounded-[2rem] font-black text-lg shadow-2xl shadow-teal-900/40 hover:scale-105 active:scale-95 transition-all flex items-center justify-center gap-3 group">
+                     {isFR ? 'Rejoindre depuis l\'Étranger' : 'Join from Abroad'}
+                     <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <div className="flex items-center justify-center -space-x-4">
+                     {[1, 2, 3, 4, 5].map(i => (
+                       <div key={i} className="w-14 h-14 rounded-full border-4 border-gray-900 bg-gray-800 overflow-hidden">
+                          <img src={`https://i.pravatar.cc/150?u=diaspora${i}`} alt="user" className="w-full h-full object-cover" />
+                       </div>
+                     ))}
+                     <div className="w-14 h-14 rounded-full border-4 border-gray-900 bg-gray-800 flex items-center justify-center text-[10px] font-black text-white">+120</div>
+                  </div>
+               </div>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-              {[
-                { flag: '🇫🇷', pays: 'France' },
-                { flag: '🇩🇪', pays: 'Allemagne' },
-                { flag: '🇺🇸', pays: 'États-Unis' },
-                { flag: '🇨🇦', pays: 'Canada' },
-                { flag: '🇬🇧', pays: 'Royaume-Uni' },
-                { flag: '🇧🇪', pays: 'Belgique' },
-              ].map((c, i) => (
-                <div key={i} style={{ backgroundColor: 'rgba(255,255,255,0.12)', borderRadius: '12px', padding: '16px', display: 'flex', alignItems: 'center', gap: '10px', fontSize: '14px', fontWeight: 500 }}>
-                  <span style={{ fontSize: '22px' }}>{c.flag}</span> {c.pays}
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+         </div>
       </section>
 
-      {/* ==================== PARTNERS ==================== */}
-      <section style={{ padding: '60px 0', backgroundColor: '#fff', borderTop: '1px solid #f0f0f0' }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px' }}>
-          <div style={{ textAlign: 'center', marginBottom: '40px' }}>
-            <span style={{ color: '#0a5694', fontWeight: 700, fontSize: '13px', textTransform: 'uppercase', letterSpacing: '2px' }}>
-              {isFR ? 'Nos Partenaires' : 'Our Partners'}
-            </span>
-          </div>
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '48px', flexWrap: 'wrap', opacity: 0.7 }}>
-            {[
-              { name: 'UNESCO', abbr: 'UNESCO' },
-              { name: 'GWP', abbr: 'GWP' },
-              { name: 'Ambassade de France', abbr: 'AFD' },
-              { name: 'Union Européenne', abbr: 'UE' },
-              { name: 'MINEE', abbr: 'MINEE' },
-            ].map((p, i) => (
-              <div key={i} style={{ textAlign: 'center' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '12px', border: '2px solid #e5e7eb', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '13px', color: '#374151', backgroundColor: '#f9fafb' }}>
-                  {p.abbr}
-                </div>
-                <div style={{ fontSize: '11px', color: '#9ca3af', marginTop: '6px' }}>{p.name}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ==================== CTA FINAL ==================== */}
-      <section style={{ padding: '80px 0', backgroundColor: '#0f172a', color: 'white', textAlign: 'center' }}>
-        <div style={{ maxWidth: '700px', margin: '0 auto', padding: '0 24px' }}>
-          <h2 style={{ fontSize: '36px', fontWeight: 800, marginBottom: '16px', fontFamily: '"Outfit", sans-serif' }}>
-            {isFR ? 'Rejoignez le réseau des experts' : 'Join the experts network'}
-          </h2>
-          <p style={{ opacity: 0.7, fontSize: '16px', lineHeight: 1.7, marginBottom: '36px' }}>
-            {isFR
-              ? 'Inscrivez-vous dès maintenant pour faire partie du premier réseau national d\'experts en eau du Cameroun.'
-              : 'Register now to be part of the first national network of water experts in Cameroon.'
-            }
-          </p>
-          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href={`/${locale}/register/resident`} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: '#0a5694', color: '#fff', padding: '14px 28px', borderRadius: '8px', fontWeight: 700, textDecoration: 'none', fontSize: '15px' }}>
-              {isFR ? 'Expert Résident' : 'Resident Expert'}
-            </Link>
-            <Link href={`/${locale}/register/diaspora`} style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', backgroundColor: '#0d9488', color: '#fff', padding: '14px 28px', borderRadius: '8px', fontWeight: 700, textDecoration: 'none', fontSize: '15px' }}>
-              {isFR ? 'Expert Diaspora' : 'Diaspora Expert'}
-            </Link>
-          </div>
-        </div>
+      {/* ==================== CALL TO ACTION ==================== */}
+      <section className="py-40 relative">
+         <div className="container relative z-10">
+            <div className="bg-[#0a5694] rounded-[5rem] p-16 md:p-32 text-white text-center relative overflow-hidden shadow-2xl shadow-blue-900/30">
+               <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-10" />
+               <motion.div 
+                 initial={{ opacity: 0, y: 20 }}
+                 whileInView={{ opacity: 1, y: 0 }}
+                 viewport={{ once: true }}
+                 className="max-w-3xl mx-auto space-y-12 relative z-10"
+               >
+                  <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-[1.1]">
+                     {isFR ? 'Prêt à bâtir l\'avenir de l\'Eau ?' : 'Ready to build the future of Water?'}
+                  </h2>
+                  <p className="text-xl text-blue-100 font-medium leading-relaxed">
+                     {isFR 
+                       ? 'Inscrivez-vous dès aujourd\'hui et valorisez votre parcours au sein du premier réseau certifié des experts nationaux.'
+                       : 'Sign up today and showcase your journey within the first certified national expert network.'}
+                  </p>
+                  <div className="flex flex-col sm:flex-row justify-center gap-6">
+                     <Link href={`/${locale}/register/resident`} className="px-12 py-6 bg-white text-[#0a5694] rounded-[2rem] font-black text-xl shadow-2xl hover:scale-105 active:scale-95 transition-all">
+                        {isFR ? 'Cameroun Résident' : 'Cameroon Resident'}
+                     </Link>
+                     <Link href={`/${locale}/register/diaspora`} className="px-12 py-6 bg-transparent border-2 border-white/30 text-white rounded-[2rem] font-black text-xl hover:bg-white/10 hover:border-white transition-all">
+                        {isFR ? 'Expert Diaspora' : 'Diaspora Expert'}
+                     </Link>
+                  </div>
+               </motion.div>
+            </div>
+         </div>
       </section>
     </div>
   );

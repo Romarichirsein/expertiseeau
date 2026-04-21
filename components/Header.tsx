@@ -3,15 +3,16 @@
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, ChevronDown, Phone, Mail, Globe } from 'lucide-react';
+import { Menu, X, ChevronDown, Phone, Mail, Globe, User, LogIn, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const navItems = [
   { label: 'Accueil', labelEn: 'Home', href: '/' },
   { label: 'À Propos', labelEn: 'About', href: '/about' },
   { label: 'Membres', labelEn: 'Members', href: '/members' },
   { label: 'Institutions', labelEn: 'Institutions', href: '/institutions' },
-  { label: 'Galerie', labelEn: 'Gallery', href: '/gallery' },
   { label: 'Blog', labelEn: 'Blog', href: '/blog' },
+  { label: 'Galerie', labelEn: 'Gallery', href: '/gallery' },
   { label: 'Contact', labelEn: 'Contact', href: '/contact' },
 ];
 
@@ -22,7 +23,7 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
   const isFR = locale === 'fr';
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
@@ -31,135 +32,151 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
     pathname === `/${locale}${href}` || (href === '/' && pathname === `/${locale}`);
 
   return (
-    <header style={{ width: '100%', position: 'sticky', top: 0, zIndex: 1000 }}>
+    <header className="fixed top-0 left-0 right-0 z-[100] w-full">
       {/* === TOP BAR === */}
-      <div style={{
-        backgroundColor: '#0a5694',
-        color: '#fff',
-        fontSize: '13px',
-        padding: '6px 0',
-        borderBottom: '1px solid rgba(255,255,255,0.15)',
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
-            <a href="tel:+237222234567" style={{ color: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}>
-              <Phone size={12} /> +237 222 23 45 67
-            </a>
-            <a href="mailto:contact@expertiseaucameroun.org" style={{ color: 'rgba(255,255,255,0.9)', display: 'flex', alignItems: 'center', gap: '5px', textDecoration: 'none' }}>
-              <Mail size={12} /> contact@expertiseaucameroun.org
-            </a>
-          </div>
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
-            <Link href={`/fr${pathname.replace(/^\/(fr|en)/, '') || '/'}`} style={{ color: locale === 'fr' ? '#fff' : 'rgba(255,255,255,0.6)', fontWeight: locale === 'fr' ? 700 : 400, textDecoration: 'none', fontSize: '12px' }}>FR</Link>
-            <span style={{ color: 'rgba(255,255,255,0.4)' }}>|</span>
-            <Link href={`/en${pathname.replace(/^\/(fr|en)/, '') || '/'}`} style={{ color: locale === 'en' ? '#fff' : 'rgba(255,255,255,0.6)', fontWeight: locale === 'en' ? 700 : 400, textDecoration: 'none', fontSize: '12px' }}>EN</Link>
-          </div>
-        </div>
-      </div>
+      <AnimatePresence>
+        {!scrolled && (
+          <motion.div 
+            initial={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="bg-[#0a5694] text-white py-3 overflow-hidden hidden lg:block"
+          >
+            <div className="container flex justify-between items-center text-[10px] font-black uppercase tracking-[0.2em]">
+              <div className="flex gap-8">
+                <a href="tel:+237222234567" className="flex items-center gap-2 hover:text-blue-200 transition-all">
+                  <Phone size={12} className="text-blue-300" /> +237 222 23 45 67
+                </a>
+                <a href="mailto:contact@expertiseaucameroun.org" className="flex items-center gap-2 hover:text-blue-200 transition-all">
+                  <Mail size={12} className="text-blue-300" /> contact@expertiseaucameroun.org
+                </a>
+              </div>
+              <div className="flex gap-6 items-center">
+                <div className="flex gap-3 items-center bg-white/10 px-3 py-1 rounded-full border border-white/10">
+                  <Link href={`/fr${pathname.replace(/^\/(fr|en)/, '') || '/'}`} className={`${locale === 'fr' ? 'text-white' : 'text-white/40'} hover:text-white transition-colors`}>FR</Link>
+                  <div className="w-px h-2 bg-white/20" />
+                  <Link href={`/en${pathname.replace(/^\/(fr|en)/, '') || '/'}`} className={`${locale === 'en' ? 'text-white' : 'text-white/40'} hover:text-white transition-colors`}>EN</Link>
+                </div>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* === MAIN HEADER === */}
-      <div style={{
-        backgroundColor: scrolled ? 'rgba(255,255,255,0.98)' : '#ffffff',
-        backdropFilter: scrolled ? 'blur(20px)' : 'none',
-        boxShadow: scrolled ? '0 2px 20px rgba(0,0,0,0.12)' : '0 1px 4px rgba(0,0,0,0.08)',
-        transition: 'all 0.3s ease',
-      }}>
-        <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '0 24px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', height: '80px' }}>
+      <div className="container mt-4">
+        <div className={`transition-all duration-700 px-8 py-4 rounded-[2.5rem] border flex items-center justify-between ${
+          scrolled 
+            ? 'bg-white/90 backdrop-blur-2xl shadow-2xl shadow-blue-900/10 border-gray-100' 
+            : 'bg-white/80 backdrop-blur-xl border-white/50 shadow-xl'
+        }`}>
           
           {/* LOGO */}
-          <Link href={`/${locale}`} style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none', flexShrink: 0 }}>
+          <Link href={`/${locale}`} className="relative group shrink-0">
             <img
               src="/images/logo.png"
-              alt="Expertise au Cameroun"
-              style={{ height: '60px', width: 'auto', objectFit: 'contain' }}
+              alt="Logo"
+              className={`transition-all duration-500 ${scrolled ? 'h-10' : 'h-12'}`}
             />
           </Link>
 
           {/* DESKTOP NAV */}
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '4px' }} className="desktop-nav">
+          <nav className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={`/${locale}${item.href}`}
-                style={{
-                  padding: '8px 14px',
-                  borderRadius: '6px',
-                  fontSize: '14px',
-                  fontWeight: isActive(item.href) ? 700 : 500,
-                  color: isActive(item.href) ? '#0a5694' : '#333',
-                  textDecoration: 'none',
-                  backgroundColor: isActive(item.href) ? 'rgba(10,86,148,0.08)' : 'transparent',
-                  borderBottom: isActive(item.href) ? '2px solid #0a5694' : '2px solid transparent',
-                  transition: 'all 0.2s',
-                  whiteSpace: 'nowrap',
-                }}
+                className={`px-5 py-2.5 rounded-2xl text-[11px] font-black uppercase tracking-widest transition-all duration-300 relative group ${
+                  isActive(item.href) 
+                    ? 'text-[#0a5694] bg-blue-50/50' 
+                    : 'text-gray-500 hover:text-gray-900 hover:bg-gray-50'
+                }`}
               >
                 {isFR ? item.label : item.labelEn}
+                {isActive(item.href) && (
+                  <motion.div layoutId="nav-dot" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#0a5694]" />
+                )}
               </Link>
             ))}
           </nav>
 
-          {/* CTA BUTTON + MOBILE TOGGLE */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          {/* ACTIONS */}
+          <div className="flex items-center gap-3">
             <Link
-              href={`/${locale}/register/resident`}
-              className="cta-btn desktop-nav"
-              style={{
-                backgroundColor: '#0a5694',
-                color: '#fff',
-                padding: '10px 20px',
-                borderRadius: '8px',
-                fontSize: '13px',
-                fontWeight: 700,
-                textDecoration: 'none',
-                whiteSpace: 'nowrap',
-                boxShadow: '0 4px 12px rgba(10,86,148,0.3)',
-                transition: 'all 0.2s',
-              }}
+              href={`/${locale}/login`}
+              className="hidden sm:flex items-center gap-2 px-6 py-3 rounded-2xl text-[10px] font-black uppercase tracking-widest text-gray-500 hover:bg-gray-50 transition-all"
             >
-              {isFR ? "S'inscrire" : 'Register'}
+              <LogIn size={16} className="text-[#0a5694]" />
+              <span className="hidden xl:inline">{isFR ? 'Connexion' : 'Login'}</span>
             </Link>
-            <button
-              className="mobile-nav"
-              onClick={() => setMobileOpen(!mobileOpen)}
-              style={{ background: 'none', border: '1px solid #ddd', borderRadius: '6px', padding: '8px', cursor: 'pointer', color: '#333' }}
+            
+            <Link
+              href={`/${locale}/register`}
+              className="hidden sm:flex items-center gap-2 px-8 py-3 bg-[#0a5694] text-white rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-xl shadow-blue-900/20 hover:scale-105 active:scale-95 transition-all"
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              <UserPlus size={16} />
+              <span>{isFR ? "S'inscrire" : 'Register'}</span>
+            </Link>
+
+            <button
+              className="lg:hidden w-12 h-12 flex items-center justify-center rounded-2xl bg-gray-50 text-gray-900 hover:bg-gray-100 transition-colors"
+              onClick={() => setMobileOpen(!mobileOpen)}
+            >
+              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
-
-        {/* MOBILE MENU */}
-        {mobileOpen && (
-          <div className="mobile-nav" style={{ backgroundColor: '#fff', borderTop: '1px solid #eee', padding: '16px 24px' }}>
-            {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={`/${locale}${item.href}`}
-                onClick={() => setMobileOpen(false)}
-                style={{
-                  display: 'block',
-                  padding: '12px 0',
-                  fontSize: '15px',
-                  fontWeight: isActive(item.href) ? 700 : 500,
-                  color: isActive(item.href) ? '#0a5694' : '#333',
-                  textDecoration: 'none',
-                  borderBottom: '1px solid #f0f0f0',
-                }}
-              >
-                {isFR ? item.label : item.labelEn}
-              </Link>
-            ))}
-            <Link
-              href={`/${locale}/register/resident`}
-              onClick={() => setMobileOpen(false)}
-              style={{ display: 'block', marginTop: '12px', backgroundColor: '#0a5694', color: '#fff', padding: '12px', borderRadius: '8px', textAlign: 'center', textDecoration: 'none', fontWeight: 700 }}
-            >
-              {isFR ? "S'inscrire" : 'Register'}
-            </Link>
-          </div>
-        )}
       </div>
+
+      {/* MOBILE MENU */}
+      <AnimatePresence>
+        {mobileOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            className="lg:hidden container mt-4"
+          >
+            <div className="bg-white/95 backdrop-blur-2xl border border-gray-100 rounded-[3rem] p-10 shadow-2xl space-y-8 overflow-hidden">
+              <div className="flex flex-col gap-2">
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={`/${locale}${item.href}`}
+                    onClick={() => setMobileOpen(false)}
+                    className={`flex items-center justify-between p-5 rounded-[2rem] text-xl font-black tracking-tight transition-all ${
+                      isActive(item.href) 
+                        ? 'bg-[#0a5694]/5 text-[#0a5694]' 
+                        : 'text-gray-900 hover:bg-gray-50'
+                    }`}
+                  >
+                    {isFR ? item.label : item.labelEn}
+                    <ChevronDown size={20} className="-rotate-90 opacity-20" />
+                  </Link>
+                ))}
+              </div>
+              
+              <div className="grid grid-cols-2 gap-4 pt-8 border-t border-gray-50">
+                <Link
+                  href={`/${locale}/login`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex flex-col items-center gap-2 p-6 bg-gray-50 rounded-[2rem] text-[10px] font-black uppercase tracking-widest text-gray-500"
+                >
+                  <LogIn size={24} />
+                  {isFR ? 'Connexion' : 'Login'}
+                </Link>
+                <Link
+                  href={`/${locale}/register`}
+                  onClick={() => setMobileOpen(false)}
+                  className="flex flex-col items-center gap-2 p-6 bg-[#0a5694] rounded-[2rem] text-[10px] font-black uppercase tracking-widest text-white shadow-2xl shadow-blue-900/20"
+                >
+                  <UserPlus size={24} />
+                  {isFR ? "S'inscrire" : 'Register'}
+                </Link>
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

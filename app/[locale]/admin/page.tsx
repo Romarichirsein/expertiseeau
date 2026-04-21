@@ -11,7 +11,10 @@ import {
   Loader2,
   Mail,
   MapPin,
-  Globe
+  Globe,
+  Award,
+  ChevronRight,
+  AlertCircle
 } from 'lucide-react';
 import { getPendingExperts, updateExpertStatus } from '@/lib/actions/admin';
 
@@ -46,91 +49,99 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
   }
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 pb-20">
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-        <div>
-          <div className="flex items-center gap-2 text-primary font-bold text-sm uppercase tracking-widest mb-2">
-            <ShieldCheck size={18} />
-            {isFR ? 'Administration' : 'Administration'}
+    <div className="max-w-7xl mx-auto space-y-12 pb-24 px-6 md:px-12">
+      {/* Admin Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-8">
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 font-black text-[10px] uppercase tracking-[0.2em] w-fit">
+            <ShieldCheck size={14} />
+            {isFR ? 'Espace Administration' : 'Administration Space'}
           </div>
-          <h1 className="text-3xl font-bold font-outfit">
-            {isFR ? 'Modération des Experts' : 'Expert Moderation'}
+          <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+            {isFR ? 'Modération des ' : 'Expert '} <span className="text-[#0a5694]">{isFR ? 'Experts' : 'Moderation'}</span>
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-gray-500 font-bold text-lg max-w-2xl">
             {isFR 
-              ? 'Validez les nouvelles inscriptions pour maintenir la qualité du répertoire.'
-              : 'Validate new registrations to maintain the quality of the directory.'}
+              ? 'Gérez et validez les nouvelles inscriptions pour garantir l\'excellence du réseau national.'
+              : 'Manage and validate new registrations to ensure the excellence of the national network.'}
           </p>
         </div>
-        <div className="flex items-center gap-4 bg-orange-500/5 px-6 py-4 rounded-3xl border border-orange-500/10">
-          <div className="w-10 h-10 rounded-xl bg-orange-500 flex items-center justify-center text-white">
-            <Clock size={20} />
+        
+        <div className="flex items-center gap-4 bg-white p-6 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-blue-900/5">
+          <div className="w-14 h-14 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center shadow-sm">
+            <Clock size={28} />
           </div>
           <div>
-            <div className="text-xl font-bold font-outfit">{pendingExperts.length}</div>
-            <div className="text-xs text-muted-foreground uppercase">{isFR ? 'En attente' : 'Pending'}</div>
+            <div className="text-3xl font-black text-gray-900 tracking-tight">{pendingExperts.length}</div>
+            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest">{isFR ? 'En attente' : 'Pending'}</div>
           </div>
         </div>
       </div>
 
       {loading ? (
-        <div className="flex flex-col items-center justify-center py-20 space-y-4">
-          <Loader2 className="w-10 h-10 animate-spin text-primary" />
-          <p className="text-muted-foreground">{isFR ? 'Chargement des demandes...' : 'Loading requests...'}</p>
+        <div className="flex flex-col items-center justify-center py-32 space-y-6">
+          <div className="relative">
+            <div className="w-16 h-16 border-4 border-blue-50 rounded-full" />
+            <Loader2 className="w-16 h-16 animate-spin text-[#0a5694] absolute top-0 left-0" />
+          </div>
+          <p className="text-gray-400 font-black uppercase tracking-widest text-xs">{isFR ? 'Chargement des dossiers...' : 'Loading folders...'}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 gap-4">
+        <div className="space-y-6">
           <AnimatePresence mode="popLayout">
             {pendingExperts.map((expert) => (
               <motion.div
                 key={expert.id}
                 layout
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, scale: 0.95 }}
-                className="bg-card border border-border p-6 rounded-[2rem] flex flex-col md:flex-row items-center gap-6 group hover:shadow-xl transition-all"
+                className="bg-white border border-gray-100 p-8 rounded-[3rem] shadow-xl shadow-blue-900/5 hover:shadow-blue-900/10 transition-all flex flex-col lg:flex-row items-center gap-10 group"
               >
-                <div className="w-16 h-16 rounded-2xl bg-secondary flex items-center justify-center text-primary shrink-0">
-                  {expert.expert_type === 'diaspora' ? <Globe size={32} /> : <UserCheck size={32} />}
+                <div className="w-24 h-24 rounded-[2rem] bg-gray-50 flex items-center justify-center text-[#0a5694] shrink-0 group-hover:scale-110 transition-transform shadow-sm">
+                  {expert.expert_type === 'diaspora' ? <Globe size={40} /> : <UserCheck size={40} />}
                 </div>
 
-                <div className="flex-1 space-y-2 text-center md:text-left">
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-3">
-                    <h3 className="font-bold text-xl font-outfit">{expert.name}</h3>
-                    <span className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
-                      expert.expert_type === 'diaspora' ? 'bg-accent-teal/10 text-accent-teal' : 'bg-primary/10 text-primary'
-                    }`}>
-                      {expert.expert_type || 'Resident'}
-                    </span>
+                <div className="flex-1 space-y-4 text-center lg:text-left">
+                  <div className="space-y-1">
+                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
+                      <h3 className="font-black text-2xl text-gray-900 tracking-tight">{expert.name}</h3>
+                      <span className={`px-4 py-1 rounded-xl text-[10px] font-black uppercase tracking-widest ${
+                        expert.expert_type === 'diaspora' ? 'bg-teal-50 text-teal-600' : 'bg-blue-50 text-blue-600'
+                      }`}>
+                        {expert.expert_type || 'Resident'}
+                      </span>
+                    </div>
+                    <p className="text-lg font-bold text-gray-500">{expert.profession}</p>
                   </div>
-                  <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1.5 line-clamp-1">
-                      <Mail size={14} className="text-primary" />
+
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-6 text-sm font-bold text-gray-400">
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400"><Mail size={14} /></div>
                       {expert.email}
                     </div>
-                    <div className="flex items-center gap-1.5">
-                      <MapPin size={14} className="text-primary" />
+                    <div className="flex items-center gap-2">
+                      <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400"><MapPin size={14} /></div>
                       {expert.city}, {expert.country || 'Cameroun'}
                     </div>
                   </div>
-                  <p className="text-sm font-medium">{expert.profession}</p>
                 </div>
 
-                <div className="flex items-center gap-3">
+                <div className="flex flex-wrap items-center justify-center gap-4 w-full lg:w-auto shrink-0 pt-6 lg:pt-0 border-t lg:border-t-0 border-gray-50">
                   <button 
                     onClick={() => handleAction(expert.id, 'rejected')}
                     disabled={!!actionLoading}
-                    className="flex items-center gap-2 px-5 py-3 rounded-2xl font-bold bg-secondary text-muted-foreground hover:bg-red-50 hover:text-red-500 transition-all"
+                    className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-5 rounded-2xl font-black text-sm uppercase tracking-widest bg-gray-50 text-gray-400 hover:bg-red-50 hover:text-red-600 transition-all group/btn"
                   >
-                    <UserX size={20} />
+                    <UserX size={18} className="group-hover/btn:scale-110 transition-transform" />
                     {isFR ? 'Rejeter' : 'Reject'}
                   </button>
                   <button 
                     onClick={() => handleAction(expert.id, 'approved')}
                     disabled={!!actionLoading}
-                    className="flex items-center gap-2 px-8 py-3 rounded-2xl font-bold bg-primary text-white shadow-lg shadow-primary/20 hover:bg-primary-600 transition-all"
+                    className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-10 py-5 rounded-2xl font-black text-sm uppercase tracking-widest bg-[#0a5694] text-white shadow-xl shadow-blue-900/10 hover:scale-105 active:scale-95 transition-all group/btn"
                   >
-                    {actionLoading === expert.id ? <Loader2 className="animate-spin" size={20} /> : <UserCheck size={20} />}
+                    {actionLoading === expert.id ? <Loader2 className="animate-spin" size={18} /> : <UserCheck size={18} className="group-hover/btn:scale-110 transition-transform" />}
                     {isFR ? 'Approuver' : 'Approve'}
                   </button>
                 </div>
@@ -139,16 +150,36 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
           </AnimatePresence>
 
           {pendingExperts.length === 0 && (
-            <div className="bg-secondary/30 border border-dashed border-border rounded-[2.5rem] p-20 text-center space-y-4">
-              <div className="w-16 h-16 bg-white rounded-2xl mx-auto flex items-center justify-center text-emerald-500 shadow-sm">
-                <ShieldCheck size={32} />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="bg-white border border-dashed border-gray-200 rounded-[4rem] p-24 text-center space-y-6"
+            >
+              <div className="w-24 h-24 bg-emerald-50 rounded-[2.5rem] mx-auto flex items-center justify-center text-emerald-600 shadow-sm mb-4">
+                <ShieldCheck size={48} />
               </div>
-              <div className="space-y-1">
-                <h3 className="font-bold text-xl">{isFR ? 'Toutes les demandes ont été traitées' : 'All requests processed'}</h3>
-                <p className="text-muted-foreground">{isFR ? 'Il n\'y a actuellement aucun expert en attente de modération.' : 'There are currently no experts waiting for moderation.'}</p>
+              <div className="space-y-2">
+                <h3 className="font-black text-3xl text-gray-900 tracking-tight">{isFR ? 'Zéro demande en attente' : 'No pending requests'}</h3>
+                <p className="text-gray-500 font-bold text-lg max-w-md mx-auto">
+                  {isFR ? 'Félicitations, vous êtes à jour dans la modération des dossiers.' : 'Congratulations, you are up to date with folder moderation.'}
+                </p>
               </div>
-            </div>
+              <div className="pt-6">
+                <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-600 font-black text-[10px] uppercase tracking-widest">
+                  <CheckCircle2 size={14} />
+                  {isFR ? 'Système au repos' : 'System idle'}
+                </div>
+              </div>
+            </motion.div>
           )}
+        </div>
+      )}
+
+      {/* Admin Footer Tip */}
+      {!loading && pendingExperts.length > 0 && (
+        <div className="flex items-center justify-center gap-3 text-gray-400 font-black text-[10px] uppercase tracking-widest pt-8">
+          <AlertCircle size={14} className="text-[#0a5694]" />
+          <span>{isFR ? 'Vérifiez les antécédents avant approbation' : 'Verify backgrounds before approval'}</span>
         </div>
       )}
     </div>

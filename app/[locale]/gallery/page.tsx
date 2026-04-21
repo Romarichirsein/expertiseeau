@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Maximize2, X, Filter, Camera } from 'lucide-react';
+import { Maximize2, X, Filter, Camera, Image as ImageIcon, ChevronRight } from 'lucide-react';
 
 const galleryCategories = [
   'All', 'Drilling', 'Infrastructure', 'Technical', 'Field Operations'
@@ -30,105 +30,82 @@ export default function GalleryPage({ params }: { params: Promise<{ locale: stri
   );
 
   return (
-    <div className="pb-20">
-      {/* PAGE HERO */}
-      <div className="page-hero">
-        <div className="container">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
-            <span className="expert-badge mb-4">{isFR ? 'Ressources Visuelles' : 'Visual Resources'}</span>
-            <h1 className="page-title">{isFR ? 'Galerie Photo' : 'Photo Gallery'}</h1>
-            <p className="page-subtitle">
+    <div className="pb-20 bg-[#f8fafc] min-h-screen">
+      {/* PREMIUM HERO SECTION */}
+      <div className="relative overflow-hidden bg-gradient-to-br from-[#0a5694] via-[#0d7ac7] to-[#0d9488] pt-24 pb-32">
+        <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
+        <div className="absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#f8fafc] to-transparent" />
+        
+        <div className="container relative z-10">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-sm font-semibold mb-6 backdrop-blur-md border border-white/30">
+              <Camera size={16} />
+              {isFR ? 'Ressources Visuelles' : 'Visual Resources'}
+            </span>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight">
+              {isFR ? 'Galerie Photo & Médias' : 'Photo & Media Gallery'}
+            </h1>
+            <p className="text-xl text-blue-100 leading-relaxed opacity-90">
               {isFR 
-                ? 'Découvrez en images les infrastructures hydrauliques et les interventions techniques sur le terrain à travers le Cameroun.'
-                : 'Discover through images the hydraulic infrastructures and technical field interventions across Cameroon.'}
+                ? 'Découvrez les infrastructures et les interventions techniques qui transforment le secteur de l\'eau au Cameroun.'
+                : 'Discover the infrastructures and technical interventions transforming the water sector in Cameroon.'}
             </p>
           </motion.div>
         </div>
       </div>
 
-      <div className="container">
+      <div className="container -mt-8 relative z-20">
         {/* Categories Filter */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginBottom: '40px', flexWrap: 'wrap' }}>
-          <div style={{ padding: '10px', backgroundColor: '#f1f5f9', borderRadius: '10px', color: '#0a5694' }}>
+        <div className="bg-white rounded-3xl p-4 shadow-xl border border-gray-100 flex items-center gap-3 mb-12 flex-wrap">
+          <div className="w-12 h-12 bg-gray-50 rounded-2xl flex items-center justify-center text-[#0a5694] border border-gray-100">
             <Filter size={20} />
           </div>
-          {galleryCategories.map((cat) => (
-            <button
-              key={cat}
-              onClick={() => setSelectedCategory(cat)}
-              style={{
-                padding: '10px 24px',
-                borderRadius: '12px',
-                border: '1px solid',
-                borderColor: selectedCategory === cat ? '#0a5694' : '#e8ecf0',
-                backgroundColor: selectedCategory === cat ? '#0a5694' : '#fff',
-                color: selectedCategory === cat ? '#fff' : '#64748b',
-                fontWeight: 700,
-                fontSize: '14px',
-                transition: 'all 0.2s',
-                cursor: 'pointer',
-                boxShadow: selectedCategory === cat ? '0 4px 12px rgba(10, 86, 148, 0.2)' : 'none'
-              }}
-            >
-              {isFR && cat === 'All' ? 'Toutes' : cat}
-            </button>
-          ))}
+          <div className="flex gap-2 flex-wrap">
+            {galleryCategories.map((cat) => (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-6 py-3 rounded-2xl text-sm font-black transition-all ${
+                  selectedCategory === cat 
+                    ? 'bg-[#0a5694] text-white shadow-lg shadow-blue-900/20' 
+                    : 'bg-[#f8fafc] text-gray-500 hover:bg-gray-100 border border-gray-100'
+                }`}
+              >
+                {isFR && cat === 'All' ? 'Toutes les photos' : cat}
+              </button>
+            ))}
+          </div>
         </div>
 
         {/* Grid */}
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }} className="gallery-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           <AnimatePresence mode="popLayout">
             {filteredImages.map((img, i) => (
               <motion.div
                 layout
                 key={img.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3, delay: i * 0.05 }}
-                style={{
-                  position: 'relative',
-                  aspectRatio: '1/1',
-                  borderRadius: '24px',
-                  overflow: 'hidden',
-                  cursor: 'pointer',
-                  backgroundColor: '#f1f5f9',
-                  border: '1px solid #e2e8f0'
-                }}
-                className="group gallery-item"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
+                className="group relative aspect-[4/3] rounded-[2.5rem] overflow-hidden cursor-pointer bg-white shadow-sm hover:shadow-2xl transition-all border border-gray-100"
                 onClick={() => setSelectedImage(img)}
               >
                 <img 
                   src={img.url} 
-                  style={{
-                    position: 'absolute',
-                    inset: 0,
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                    transition: 'transform 0.5s ease'
-                  }}
-                  className="group-hover:scale-110"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                   alt={img.title}
                   onError={(e) => {
-                     (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=600';
+                     (e.target as HTMLImageElement).src = `https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=800&u=${img.id}`;
                   }}
                 />
-                <div style={{
-                  position: 'absolute',
-                  inset: 0,
-                  background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)',
-                  opacity: 0,
-                  transition: 'opacity 0.3s',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'end',
-                  padding: '24px',
-                }} className="group-hover:opacity-100">
-                  <span style={{ fontSize: '10px', color: 'rgba(255,255,255,0.7)', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '2px', marginBottom: '4px' }}>{img.category}</span>
-                  <span style={{ fontSize: '16px', color: '#fff', fontWeight: 700 }}>{img.title}</span>
-                  <div style={{ position: 'absolute', top: '24px', right: '24px', width: '40px', height: '40px', borderRadius: '50%', backgroundColor: 'rgba(255,255,255,0.2)', backdropFilter: 'blur(8px)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff' }}>
-                    <Maximize2 size={20} />
+                <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-gray-900/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-8">
+                  <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                    <span className="text-[10px] font-black text-[#7dd3fc] uppercase tracking-[0.2em] mb-2 block">{img.category}</span>
+                    <h3 className="text-xl font-extrabold text-white leading-tight">{img.title}</h3>
+                  </div>
+                  <div className="absolute top-8 right-8 w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-white scale-0 group-hover:scale-100 transition-transform duration-300">
+                    <Maximize2 size={24} />
                   </div>
                 </div>
               </motion.div>
@@ -144,42 +121,39 @@ export default function GalleryPage({ params }: { params: Promise<{ locale: stri
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 2000,
-              backgroundColor: 'rgba(6, 32, 64, 0.95)',
-              backdropFilter: 'blur(12px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '40px'
-            }}
+            className="fixed inset-0 z-[2000] bg-gray-950/95 backdrop-blur-2xl flex items-center justify-center p-6 md:p-12"
             onClick={() => setSelectedImage(null)}
           >
-            <button style={{ position: 'absolute', top: '40px', right: '40px', background: 'none', border: 'none', color: '#fff', opacity: 0.6, cursor: 'pointer' }}>
-              <X size={40} />
+            <button className="absolute top-8 right-8 p-3 rounded-2xl bg-white/5 text-white hover:bg-white/10 transition-colors border border-white/10">
+              <X size={32} />
             </button>
+            
             <motion.div
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              style={{
-                position: 'relative',
-                maxWidth: '1000px',
-                width: '100%',
-                maxHeight: '100%',
-                aspectRatio: '16/9',
-                borderRadius: '32px',
-                overflow: 'hidden',
-                boxShadow: '0 20px 60px rgba(0,0,0,0.4)',
-                backgroundColor: '#000'
-              }}
+              className="relative max-w-6xl w-full h-full flex flex-col items-center justify-center gap-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <img src={selectedImage.url} style={{ width: '100%', height: '100%', objectFit: 'contain' }} alt={selectedImage.title} />
-              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: '40px', background: 'linear-gradient(to top, rgba(0,0,0,0.8), transparent)' }}>
-                <h3 style={{ color: '#fff', fontSize: '24px', fontWeight: 800 }}>{selectedImage.title}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.6)', fontWeight: 700, textTransform: 'uppercase', fontSize: '12px', letterSpacing: '1px' }}>{selectedImage.category}</p>
+              <div className="relative w-full h-[70vh] rounded-[3rem] overflow-hidden shadow-2xl border border-white/5 bg-black">
+                <img 
+                  src={selectedImage.url} 
+                  className="w-full h-full object-contain" 
+                  alt={selectedImage.title}
+                  onError={(e) => {
+                     (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200';
+                  }}
+                />
+              </div>
+              
+              <div className="text-center space-y-2">
+                <h3 className="text-3xl font-black text-white tracking-tight">{selectedImage.title}</h3>
+                <div className="flex items-center justify-center gap-3">
+                  <span className="px-4 py-1.5 rounded-full bg-[#0a5694] text-white text-[10px] font-black uppercase tracking-widest">
+                    {selectedImage.category}
+                  </span>
+                  <div className="w-1 h-1 rounded-full bg-gray-700" />
+                  <span className="text-gray-500 font-bold text-sm">Expertise Au Cameroun</span>
+                </div>
               </div>
             </motion.div>
           </motion.div>

@@ -1,37 +1,76 @@
 "use client";
 
 import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { User, Mail, Lock, Phone, MapPin, Globe, ArrowRight, ShieldCheck, CheckCircle2, UserPlus } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { 
+  User, Mail, Lock, Phone, MapPin, Globe, 
+  ArrowRight, ShieldCheck, CheckCircle2, UserPlus,
+  ChevronLeft, Award, Heart, Briefcase, Zap
+} from 'lucide-react';
 import Link from 'next/link';
 
 export default function RegisterDiasporaPage({ params }: { params: Promise<{ locale: string }> }) {
   const resolvedParams = React.use(params);
   const locale = resolvedParams.locale;
   const isFR = locale === 'fr';
+  
   const [step, setStep] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+      setSuccess(true);
+    }, 2000);
+  };
+
+  if (success) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-6 bg-[#f8fafc]">
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 text-center max-w-xl border border-gray-100">
+          <div className="w-24 h-24 rounded-full bg-[#0d9488] text-white flex items-center justify-center mx-auto mb-8 shadow-xl shadow-teal-500/20">
+            <CheckCircle2 size={48} />
+          </div>
+          <h2 className="text-4xl font-black text-gray-900 mb-6 tracking-tight">{isFR ? 'Inscription Diaspora' : 'Diaspora Registered'}</h2>
+          <p className="text-gray-500 text-lg leading-relaxed mb-10">
+            {isFR 
+              ? 'Votre demande a été enregistrée. Le réseau des experts de la diaspora vous contactera après validation de votre profil.' 
+              : 'Your request has been registered. The diaspora experts network will contact you after profile validation.'}
+          </p>
+          <Link href={`/${locale}/login`} className="inline-flex items-center gap-3 px-10 py-5 bg-[#0d9488] text-white rounded-2xl font-black text-lg shadow-xl shadow-teal-900/10 hover:scale-105 transition-all">
+            {isFR ? 'Se connecter' : 'Log In'}
+            <ArrowRight size={20} />
+          </Link>
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ 
-      minHeight: 'calc(100vh - 400px)', 
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center',
-      padding: '80px 24px',
-      background: 'linear-gradient(135deg, #f0fdfa 0%, #ffffff 50%, #f0f7ff 100%)',
-    }}>
-      <div style={{ maxWidth: '640px', width: '100%' }}>
+    <div className="min-h-screen bg-[#f8fafc] py-20 relative overflow-hidden">
+      {/* Background decoration */}
+      <div className="absolute top-0 right-0 p-20 opacity-[0.03] rotate-12">
+        <Globe size={400} className="text-teal-900" />
+      </div>
+
+      <div className="container relative z-10 max-w-[720px]">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          style={{ textAlign: 'center', marginBottom: '40px' }}
+          className="text-center mb-12"
         >
-          <span className="expert-badge mb-3" style={{ backgroundColor: 'rgba(13, 148, 136, 0.1)', color: '#0d9488' }}>{isFR ? 'Inscription Diaspora' : 'Diaspora Registration'}</span>
-          <h1 style={{ fontSize: '32px', fontWeight: 800, color: '#0f172a', fontFamily: '"Outfit", sans-serif' }}>
-            {isFR ? 'Expert de la Diaspora' : 'Diaspora Expert'}
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-teal-50 text-[#0d9488] text-xs font-black uppercase tracking-widest mb-6">
+            <Globe size={14} />
+            {isFR ? 'Expert Diaspora' : 'Diaspora Expert'}
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4 tracking-tight">
+            {isFR ? 'Rayonnez à l\'International' : 'Global Impact'}
           </h1>
-          <p style={{ color: '#64748b', marginTop: '8px' }}>
-            {isFR ? 'Contribuez au développement du pays depuis l\'international.' : 'Contribute to the country\'s development from abroad.'}
+          <p className="text-gray-500 font-medium text-lg">
+            {isFR ? 'Contribuez au développement du Cameroun depuis n\'importe où dans le monde.' : 'Contribute to Cameroon\'s development from anywhere in the world.'}
           </p>
         </motion.div>
 
@@ -39,100 +78,153 @@ export default function RegisterDiasporaPage({ params }: { params: Promise<{ loc
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="premium-card"
-          style={{ backgroundColor: '#ffffff', padding: '40px', borderTop: '4px solid #0d9488' }}
+          className="bg-white rounded-[3rem] shadow-2xl shadow-teal-900/5 border border-gray-100 overflow-hidden"
         >
-          {/* Progress bar */}
-          <div style={{ display: 'flex', gap: '8px', marginBottom: '32px' }}>
-            {[1, 2, 3].map((s) => (
-              <div key={s} style={{ flex: 1, height: '4px', borderRadius: '2px', backgroundColor: s <= step ? '#0d9488' : '#e2e8f0', transition: 'all 0.3s' }} />
-            ))}
+          {/* Stepper Header */}
+          <div className="bg-gray-50 px-12 py-8 border-b border-gray-100 flex justify-between items-center">
+            <div className="flex gap-4">
+              {[1, 2, 3].map((s) => (
+                <div key={s} className="flex flex-col items-center gap-2">
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
+                    s === step ? 'bg-[#0d9488] text-white' : s < step ? 'bg-blue-500 text-white' : 'bg-white border border-gray-200 text-gray-400'
+                  }`}>
+                    {s < step ? <CheckCircle2 size={16} /> : s}
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest text-right">
+              {isFR ? `Étape ${step} sur 3` : `Step ${step} of 3`}
+            </div>
           </div>
 
-          <form style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
-            {step === 1 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Nom' : 'First Name'}</label>
-                    <input required type="text" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="Jean" />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Prénom' : 'Last Name'}</label>
-                    <input required type="text" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="Dupont" />
-                  </div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Pays de résidence' : 'Country of residence'}</label>
-                  <div style={{ position: 'relative' }}>
-                    <Globe style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: '#94a3b8' }} size={18} />
-                    <input required type="text" style={{ width: '100%', padding: '14px 14px 14px 40px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="Ex: France, Canada..." />
-                  </div>
-                </div>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Spécialité' : 'Specialization'}</label>
-                  <input required type="text" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="Ex: Hydrologie, Assainissement..." />
-                </div>
-                <button type="button" onClick={() => setStep(2)} style={{ marginTop: '10px', padding: '16px', backgroundColor: '#0d9488', color: '#fff', borderRadius: '12px', border: 'none', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                  {isFR ? 'Suivant' : 'Next'} <ArrowRight size={18} />
-                </button>
-              </motion.div>
-            )}
+          <div className="p-8 md:p-12">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <AnimatePresence mode="wait">
+                {step === 1 && (
+                  <motion.div 
+                    key="step1"
+                    initial={{ opacity: 0, x: 20 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-6"
+                  >
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">{isFR ? 'Prénom' : 'First Name'}</label>
+                        <input required type="text" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="Jean" />
+                      </div>
+                      <div className="space-y-2">
+                        <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">{isFR ? 'Nom' : 'Last Name'}</label>
+                        <input required type="text" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-6 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="Dupont" />
+                      </div>
+                    </div>
+                    
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">{isFR ? 'Pays de résidence' : 'Country of residence'}</label>
+                      <div className="relative group">
+                        <Globe size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0d9488] transition-colors" />
+                        <input required type="text" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="France, USA, Canada..." />
+                      </div>
+                    </div>
 
-            {step === 2 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                  <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>Email</label>
-                  <input required type="email" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="votre@email.com" />
-                </div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Mot de passe' : 'Password'}</label>
-                    <input required type="password" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="••••••••" />
-                  </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    <label style={{ fontSize: '11px', fontWeight: 800, color: '#64748b', textTransform: 'uppercase' }}>{isFR ? 'Confirmer' : 'Confirm'}</label>
-                    <input required type="password" style={{ padding: '14px', borderRadius: '10px', border: '1px solid #e2e8f0', fontSize: '15px' }} placeholder="••••••••" />
-                  </div>
-                </div>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <button type="button" onClick={() => setStep(1)} style={{ flex: 1, padding: '16px', backgroundColor: '#f1f5f9', color: '#475569', borderRadius: '12px', border: 'none', fontWeight: 800, cursor: 'pointer' }}>
-                    {isFR ? 'Retour' : 'Back'}
-                  </button>
-                  <button type="button" onClick={() => setStep(3)} style={{ flex: 2, padding: '16px', backgroundColor: '#0d9488', color: '#fff', borderRadius: '12px', border: 'none', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                    {isFR ? 'Suivant' : 'Next'} <ArrowRight size={18} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
+                    <button type="button" onClick={() => setStep(2)} className="w-full py-5 bg-[#0d9488] text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-teal-900/10 hover:scale-[1.02] transition-all group">
+                      {isFR ? 'Continuer' : 'Continue'}
+                      <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                    </button>
+                  </motion.div>
+                )}
 
-            {step === 3 && (
-              <motion.div initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} style={{ textAlign: 'center', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(13, 148, 136, 0.1)', color: '#0d9488', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto' }}>
-                  <ShieldCheck size={32} />
-                </div>
-                <h3 style={{ fontSize: '18px', fontWeight: 700 }}>{isFR ? 'Expert Diaspora' : 'Diaspora Expert'}</h3>
-                <p style={{ fontSize: '14px', color: '#64748b' }}>
-                  {isFR 
-                    ? 'Rejoignez la communauté des experts camerounais à l\'étranger et apportez votre contribution au secteur de l\'eau.' 
-                    : 'Join the community of Cameroonian experts abroad and contribute to the water sector.'}
-                </p>
-                <div style={{ display: 'flex', gap: '12px' }}>
-                  <button type="button" onClick={() => setStep(2)} style={{ flex: 1, padding: '16px', backgroundColor: '#f1f5f9', color: '#475569', borderRadius: '12px', border: 'none', fontWeight: 800, cursor: 'pointer' }}>
-                    {isFR ? 'Retour' : 'Back'}
-                  </button>
-                  <button type="submit" style={{ flex: 2, padding: '16px', backgroundColor: '#0d9488', color: '#fff', borderRadius: '12px', border: 'none', fontWeight: 800, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px' }}>
-                    {isFR ? 'S\'inscrire maintenant' : 'Register Now'} <UserPlus size={18} />
-                  </button>
-                </div>
-              </motion.div>
-            )}
-          </form>
+                {step === 2 && (
+                  <motion.div 
+                    key="step2"
+                    initial={{ opacity: 0, x: 20 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-6"
+                  >
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Email professionnel</label>
+                      <div className="relative group">
+                        <Mail size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <input required type="email" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="votre@email.com" />
+                      </div>
+                    </div>
 
-          <div style={{ marginTop: '32px', textAlign: 'center', fontSize: '14px' }}>
-            <span style={{ color: '#64748b' }}>{isFR ? 'Déjà membre ?' : 'Already a member?'} </span>
-            <Link href={`/${locale}/login`} style={{ color: '#0d9488', fontWeight: 700, textDecoration: 'none' }}>
-              {isFR ? 'Se connecter' : 'Log In'}
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">{isFR ? 'Spécialité / Domaine' : 'Specialization'}</label>
+                      <div className="relative group">
+                        <Award size={18} className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <input required type="text" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="Ex: Gestion des eaux transfrontalières" />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-4">
+                      <button type="button" onClick={() => setStep(1)} className="flex-1 py-5 bg-gray-50 text-gray-500 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-all">
+                        <ChevronLeft size={18} />
+                        {isFR ? 'Retour' : 'Back'}
+                      </button>
+                      <button type="button" onClick={() => setStep(3)} className="flex-[2] py-5 bg-[#0d9488] text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-teal-900/10 hover:scale-[1.02] transition-all group">
+                        {isFR ? 'Suivant' : 'Next'}
+                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+
+                {step === 3 && (
+                  <motion.div 
+                    key="step3"
+                    initial={{ opacity: 0, x: 20 }} 
+                    animate={{ opacity: 1, x: 0 }} 
+                    exit={{ opacity: 0, x: -20 }}
+                    className="space-y-6"
+                  >
+                    <div className="bg-teal-50 rounded-3xl p-8 border border-teal-100 space-y-4">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-[#0d9488] text-white rounded-xl flex items-center justify-center shadow-lg shadow-teal-900/20">
+                          <ShieldCheck size={24} />
+                        </div>
+                        <h3 className="text-lg font-black text-[#0d9488]">{isFR ? 'Contribution & Impact' : 'Contribution & Impact'}</h3>
+                      </div>
+                      <p className="text-gray-600 text-sm leading-relaxed">
+                        {isFR 
+                          ? 'En rejoignant le réseau, vous acceptez de partager vos connaissances et expertises pour des projets stratégiques au Cameroun.' 
+                          : 'By joining the network, you agree to share your knowledge and expertise for strategic projects in Cameroon.'}
+                      </p>
+                    </div>
+
+                    <div className="space-y-2">
+                      <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">{isFR ? 'Mot de passe' : 'Password'}</label>
+                      <div className="relative group">
+                        <Lock size={18} className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400" />
+                        <input required type="password" className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-12 py-4 outline-none focus:border-[#0d9488] focus:bg-white transition-all text-gray-900 font-bold" placeholder="••••••••" />
+                      </div>
+                    </div>
+
+                    <div className="flex gap-4 pt-4">
+                      <button type="button" onClick={() => setStep(2)} className="flex-1 py-5 bg-gray-50 text-gray-500 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 transition-all">
+                        <ChevronLeft size={18} />
+                        {isFR ? 'Retour' : 'Back'}
+                      </button>
+                      <button type="submit" disabled={loading} className="flex-[2] py-5 bg-[#0d9488] text-white rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-teal-900/10 hover:scale-[1.02] transition-all group disabled:opacity-50">
+                        {loading ? '...' : (isFR ? 'Valider mon inscription' : 'Validate Registration')}
+                        {!loading && <UserPlus size={20} className="group-hover:scale-110 transition-transform" />}
+                      </button>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </form>
+          </div>
+
+          <div className="bg-gray-900 p-8 text-center">
+            <span className="text-[11px] font-black text-gray-500 uppercase tracking-widest block mb-4">
+              {isFR ? 'Déjà membre du réseau ?' : 'Already part of the network?'}
+            </span>
+            <Link href={`/${locale}/login`} className="text-white font-black hover:text-[#7dd3fc] transition-colors flex items-center justify-center gap-2 group">
+              {isFR ? 'Se connecter à l\'espace diaspora' : 'Connect to diaspora space'}
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </motion.div>

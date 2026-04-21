@@ -1,56 +1,81 @@
+// MemberProfileClient.tsx
 "use client";
-
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, 
-  Mail, 
-  Phone, 
-  MapPin, 
-  GraduationCap, 
-  Briefcase, 
-  Award, 
+import {
+  User,
+  Mail,
+  Phone,
+  MapPin,
+  GraduationCap,
+  Briefcase,
+  Award,
   ChevronLeft,
-  CheckCircle2,
   Calendar,
   Edit,
   Save,
   X,
-  Loader2
+  Loader2,
+  Globe,
+  Building,
+  CheckCircle2,
+  ShieldCheck,
+  Share2,
+  Download
 } from 'lucide-react';
 import Link from 'next/link';
 import { updateExpert } from '@/lib/actions';
-import { useRouter } from 'next/navigation';
 
-export default function MemberProfileClient({ locale, member: initialMember }: { locale: string, member: any }) {
+// Utility: remove leading slashes and trim whitespace
+const normalizeMember = (data: any) => {
+  const clean = { ...data };
+  if (typeof clean.name === 'string') clean.name = clean.name.replace(/^\//, '').trim();
+  if (typeof clean.first_name === 'string') clean.first_name = clean.first_name.replace(/^\//, '').trim();
+  [
+    'profession',
+    'email',
+    'phone',
+    'city',
+    'country',
+    'degree',
+    'university',
+  ].forEach((key) => {
+    if (typeof clean[key] === 'string') clean[key] = clean[key].trim();
+  });
+  return clean;
+};
+
+// Helper to safely parse JSON‑stringified fields
+const safeParse = (data: any) => {
+  if (!data) return data;
+  if (typeof data === 'string' && (data.startsWith('{') || data.startsWith('['))) {
+    try {
+      return JSON.parse(data);
+    } catch {
+      return data;
+    }
+  }
+  return data;
+};
+
+export default function MemberProfileClient({
+  locale,
+  member: initialMember,
+}: {
+  locale: string;
+  member: any;
+}) {
   const isFR = locale === 'fr';
   const router = useRouter();
-  
-  // Helper to parse stringified JSON from Supabase if necessary
-  const safeParse = (data: any) => {
-    if (!data) return data;
-    if (typeof data === 'string' && (data.startsWith('{') || data.startsWith('['))) {
-      try {
-        return JSON.parse(data);
-      } catch (e) {
-        return data;
-      }
-    }
-    return data;
-  };
 
-  // Parse initial data
-  const getParsedData = (m: any) => ({
-    ...m,
-    name: m.name?.replace(/^\/\s*/, '') || '',
-    expertise: safeParse(m.expertise),
-    experience_years: safeParse(m.experience_years)
-  });
+  // Clean and parse incoming data
+  const member = normalizeMember(initialMember);
+  const expertiseList = Array.isArray(safeParse(member.expertise)) ? safeParse(member.expertise) : (member.expertise ? [member.expertise] : []);
+  const experience = safeParse(member.experience_years) || {};
 
-  const [member, setMember] = useState(getParsedData(initialMember));
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
-  
   const [formData, setFormData] = useState({
     name: member.name || '',
     profession: member.profession || '',
@@ -62,250 +87,287 @@ export default function MemberProfileClient({ locale, member: initialMember }: {
     university: member.university || '',
   });
 
-  // Format expertise array
-  const expertiseList = Array.isArray(member.expertise) ? member.expertise : [];
-  
-  // Format experience data
-  const exp = (typeof member.experience_years === 'object' && member.experience_years !== null) 
-    ? member.experience_years 
-    : {};
-
   const handleSave = async () => {
     setLoading(true);
-    const result = await updateExpert(member.id, formData);
-    if (result.success) {
-      setMember({ ...member, ...formData });
-      setIsEditing(false);
+    const res = await updateExpert(member.id, formData);
+    if (res.success) {
       router.refresh();
+      setIsEditing(false);
     } else {
-      alert(isFR ? "Erreur lors de la mise à jour" : "Error during update");
+      console.error('Update failed:', res.error);
     }
     setLoading(false);
   };
 
   return (
-    <div className="container py-12">
-      <div className="max-w-6xl mx-auto space-y-8">
-        {/* Back Link & Edit Toggle */}
-        <div className="flex justify-between items-center px-4">
+    <div className="min-h-screen bg-[#f8fafc] pb-32 relative overflow-hidden">
+      {/* Background Decoration */}
+      <div className="absolute top-0 left-0 w-full h-[50vh] bg-gradient-to-br from-[#0a5694] via-[#0d7ac7] to-[#0d9488]" />
+      <div className="absolute top-0 left-0 w-full h-[50vh] opacity-20 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
+      
+      <div className="container relative z-10 pt-10">
+        {/* TOP NAVIGATION */}
+        <div className="flex justify-between items-center mb-12">
           <Link 
-            href={`/${locale}/members`}
-            className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary transition-colors font-medium text-sm"
+            href={`/${locale}/members`} 
+            className="inline-flex items-center gap-3 px-6 py-3 bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white rounded-2xl transition-all font-black text-xs uppercase tracking-widest border border-white/20 shadow-xl group"
           >
-            <ChevronLeft size={16} />
-            {isFR ? 'Retour à l\'annuaire' : 'Back to directory'}
+            <ChevronLeft size={18} className="group-hover:-translate-x-1 transition-transform" />
+            {isFR ? "Annuaire" : "Directory"}
           </Link>
-          
-          <button 
-            onClick={() => setIsEditing(!isEditing)}
-            className={`inline-flex items-center gap-2 px-4 py-2 rounded-xl font-bold text-sm transition-all ${isEditing ? 'bg-red-50 text-red-600 hover:bg-red-100' : 'bg-primary/10 text-primary hover:bg-primary/20'}`}
-          >
-            {isEditing ? (
-              <><X size={16} /> {isFR ? 'Annuler' : 'Cancel'}</>
-            ) : (
-              <><Edit size={16} /> {isFR ? 'Modifier ce profil' : 'Edit profile'}</>
-            )}
-          </button>
+
+          <div className="flex gap-3">
+             <button className="w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white rounded-2xl transition-all flex items-center justify-center border border-white/20 shadow-xl">
+                <Share2 size={20} />
+             </button>
+             <button className="w-12 h-12 bg-white/10 hover:bg-white/20 backdrop-blur-xl text-white rounded-2xl transition-all flex items-center justify-center border border-white/20 shadow-xl">
+                <Download size={20} />
+             </button>
+          </div>
         </div>
 
-        {/* Profile Header Card */}
-        <motion.div 
+        {/* PROFILE CARD */}
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="premium-card overflow-hidden p-0 border-none shadow-xl"
-          style={{ backgroundColor: '#fff' }}
+          className="bg-white rounded-[4rem] shadow-2xl shadow-blue-900/10 border border-gray-100 overflow-hidden"
         >
-          <div className="h-40 bg-gradient-to-r from-[#0a5694] to-[#0d9488] relative">
-            <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover"></div>
+          {/* Profile Header */}
+          <div className="relative h-48 bg-gray-50 border-b border-gray-100 overflow-hidden">
+             <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-teal-50/50" />
+             <div className="absolute bottom-0 left-12 translate-y-1/2">
+                <div className="w-40 h-40 rounded-[3rem] bg-white p-2 shadow-2xl border border-gray-100">
+                  <div className="w-full h-full bg-gradient-to-br from-blue-50 to-teal-50 rounded-[2.5rem] flex items-center justify-center overflow-hidden text-[#0a5694]">
+                    {member.photo ? (
+                      <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
+                    ) : (
+                      <User size={80} strokeWidth={1.5} />
+                    )}
+                  </div>
+                </div>
+             </div>
+             
+             <div className="absolute top-8 right-12">
+                <button
+                  onClick={() => setIsEditing(!isEditing)}
+                  className={cn(
+                    "px-8 py-4 rounded-2xl font-black text-xs uppercase tracking-widest transition-all flex items-center gap-3",
+                    isEditing 
+                      ? "bg-red-50 text-red-600 hover:bg-red-600 hover:text-white" 
+                      : "bg-[#0a5694] text-white hover:bg-[#0a467a] shadow-xl shadow-blue-900/20"
+                  )}
+                >
+                  {isEditing ? (
+                    <><X size={18} /> {isFR ? 'Annuler' : 'Cancel'}</>
+                  ) : (
+                    <><Edit size={18} /> {isFR ? 'Éditer Profil' : 'Edit Profile'}</>
+                  )}
+                </button>
+             </div>
           </div>
 
-          <div className="px-6 md:px-10 pb-10 relative">
-            {/* Profile Photo Placeholder */}
-            <div className="absolute -top-16 left-6 md:left-10">
-              <div className="w-32 h-32 rounded-3xl bg-[#f4f6f9] border-[6px] border-white flex items-center justify-center text-[#0a5694] shadow-xl overflow-hidden">
-                <User size={64} strokeWidth={1.5} />
-              </div>
-            </div>
+          <div className="pt-24 px-12 pb-16">
+            <div className="flex flex-col lg:flex-row gap-20">
+              
+              {/* Left Column: Identity & Contact */}
+              <div className="lg:w-80 shrink-0 space-y-12">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-3 mb-2">
+                     <div className="px-3 py-1 bg-emerald-50 text-emerald-600 rounded-lg text-[10px] font-black uppercase tracking-widest flex items-center gap-1.5">
+                        <ShieldCheck size={14} />
+                        {isFR ? 'Expert Certifié' : 'Certified Expert'}
+                     </div>
+                  </div>
+                  <h1 className="text-4xl font-black text-gray-900 tracking-tight capitalize leading-tight">
+                    {member.name}
+                  </h1>
+                  <p className="text-lg font-bold text-[#0a5694] uppercase tracking-widest flex items-center gap-2">
+                    <Briefcase size={20} />
+                    {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                  </p>
+                </div>
 
-            <div className="pt-20 flex flex-col md:flex-row md:items-end justify-between gap-8">
-              <div className="space-y-4 flex-1">
-                {isEditing ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-muted-foreground uppercase">{isFR ? 'Nom Complet' : 'Full Name'}</label>
-                      <input 
-                        className="w-full p-3 rounded-xl border border-border bg-muted/50 focus:bg-white transition-all outline-none"
-                        value={formData.name}
-                        onChange={(e) => setFormData({...formData, name: e.target.value})}
-                      />
+                <div className="space-y-8 bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100">
+                  <h3 className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-6 border-b border-gray-200 pb-4">{isFR ? 'Informations Directes' : 'Direct Information'}</h3>
+                  
+                  <div className="space-y-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#0a5694] shrink-0">
+                        <MapPin size={20} />
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{isFR ? 'Localisation' : 'Location'}</div>
+                        <div className="font-bold text-gray-900">{member.city || 'Cameroun'}</div>
+                        <div className="text-xs text-gray-400 font-bold">{member.country || 'Cameroun'}</div>
+                      </div>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-muted-foreground uppercase">{isFR ? 'Profession' : 'Profession'}</label>
-                      <input 
-                        className="w-full p-3 rounded-xl border border-border bg-muted/50 focus:bg-white transition-all outline-none"
-                        value={formData.profession}
-                        onChange={(e) => setFormData({...formData, profession: e.target.value})}
-                      />
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#0a5694] shrink-0">
+                        <Mail size={20} />
+                      </div>
+                      <div className="min-w-0">
+                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">Email</div>
+                        <div className="font-bold text-gray-900 truncate">{member.email || '---'}</div>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#0a5694] shrink-0">
+                        <Phone size={20} />
+                      </div>
+                      <div>
+                        <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mb-1">{isFR ? 'Téléphone' : 'Phone'}</div>
+                        <div className="font-bold text-gray-900">{member.phone || '---'}</div>
+                      </div>
                     </div>
                   </div>
-                ) : (
-                  <div className="space-y-1">
-                    <h1 className="text-3xl md:text-4xl font-outfit font-bold capitalize text-[#0f172a]">{member.name}</h1>
-                    <p className="text-[#0a5694] font-bold text-lg flex items-center gap-2">
-                      <Briefcase size={18} />
-                      {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
-                    </p>
+                </div>
+
+                {(member.degree || member.university) && (
+                  <div className="bg-[#0a5694] text-white rounded-[2.5rem] p-10 space-y-6 relative overflow-hidden group">
+                    <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:rotate-12 transition-transform duration-700">
+                       <GraduationCap size={80} />
+                    </div>
+                    <h3 className="text-xl font-black tracking-tight relative z-10">{isFR ? 'Formation' : 'Education'}</h3>
+                    <div className="space-y-4 relative z-10">
+                      <div>
+                        <div className="text-[9px] font-black text-white/50 uppercase tracking-widest mb-1">{isFR ? 'Diplôme' : 'Degree'}</div>
+                        <div className="font-black text-sm">{member.degree}</div>
+                      </div>
+                      <div>
+                        <div className="text-[9px] font-black text-white/50 uppercase tracking-widest mb-1">{isFR ? 'Institution' : 'Institution'}</div>
+                        <div className="font-black text-sm">{member.university}</div>
+                      </div>
+                    </div>
                   </div>
                 )}
-                
-                <div className="flex flex-wrap gap-4 text-[#64748b] text-sm">
-                  {isEditing ? (
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 w-full">
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase">{isFR ? 'Ville' : 'City'}</label>
-                        <input className="w-full p-2 text-sm rounded-lg border border-border" value={formData.city} onChange={(e) => setFormData({...formData, city: e.target.value})} />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase">Email</label>
-                        <input className="w-full p-2 text-sm rounded-lg border border-border" value={formData.email} onChange={(e) => setFormData({...formData, email: e.target.value})} />
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] font-bold uppercase">{isFR ? 'Téléphone' : 'Phone'}</label>
-                        <input className="w-full p-2 text-sm rounded-lg border border-border" value={formData.phone} onChange={(e) => setFormData({...formData, phone: e.target.value})} />
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="flex items-center gap-1.5"><MapPin size={16} className="text-[#0a5694]" /> {member.city || 'Cameroun'}, {member.country || 'Cameroun'}</div>
-                      <div className="flex items-center gap-1.5"><Mail size={16} className="text-[#0a5694]" /> {member.email}</div>
-                      {member.phone && <div className="flex items-center gap-1.5"><Phone size={16} className="text-[#0a5694]" /> {member.phone}</div>}
-                    </>
-                  )}
-                </div>
               </div>
 
-              {isEditing ? (
-                <button 
-                  onClick={handleSave}
-                  disabled={loading}
-                  className="px-8 py-4 bg-[#0a5694] text-white rounded-2xl font-bold shadow-xl shadow-[#0a5694]/20 hover:bg-[#062040] transition-all flex items-center gap-3 disabled:opacity-50"
-                >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  {isFR ? 'Enregistrer les modifications' : 'Save Changes'}
-                </button>
-              ) : (
-                <button className="px-8 py-4 bg-[#0a5694] text-white rounded-2xl font-bold shadow-xl shadow-[#0a5694]/20 hover:bg-[#062040] transition-all flex items-center gap-3">
-                  <Mail size={20} />
-                  {isFR ? 'Contactez l\'expert' : 'Contact expert'}
-                </button>
-              )}
+              {/* Right Column: Main Content / Form */}
+              <div className="flex-1">
+                <AnimatePresence mode="wait">
+                  {isEditing ? (
+                    <motion.div
+                      key="edit"
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: -20 }}
+                      className="space-y-12"
+                    >
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        {Object.entries({
+                          name: isFR ? 'Nom complet' : 'Full Name',
+                          profession: isFR ? 'Profession' : 'Profession',
+                          email: 'Email professionnel',
+                          phone: isFR ? 'Téléphone' : 'Phone Number',
+                          city: isFR ? 'Ville' : 'City',
+                          country: isFR ? 'Pays' : 'Country',
+                          degree: isFR ? 'Dernier Diplôme' : 'Latest Degree',
+                          university: isFR ? 'Université / Institution' : 'University'
+                        }).map(([key, label]) => (
+                          <div key={key} className="space-y-3">
+                            <label className="text-[10px] font-black text-gray-400 uppercase tracking-widest ml-1">{label}</label>
+                            <input
+                              type="text"
+                              value={(formData as any)[key]}
+                              onChange={(e) => setFormData({ ...formData, [key]: e.target.value })}
+                              className="w-full px-6 py-4 bg-gray-50 border border-transparent rounded-2xl outline-none focus:bg-white focus:border-[#0a5694]/20 font-bold transition-all"
+                            />
+                          </div>
+                        ))}
+                      </div>
+
+                      <div className="flex justify-end gap-4 pt-10 border-t border-gray-100">
+                        <button
+                          onClick={() => setIsEditing(false)}
+                          className="px-8 py-4 bg-white border border-gray-200 text-gray-500 font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-gray-50 transition-all"
+                        >
+                          {isFR ? 'Annuler' : 'Cancel'}
+                        </button>
+                        <button
+                          onClick={handleSave}
+                          disabled={loading}
+                          className="px-10 py-4 bg-[#0a5694] text-white font-black text-xs uppercase tracking-widest rounded-2xl hover:bg-[#0a467a] transition-all disabled:opacity-70 flex items-center gap-3 shadow-xl shadow-blue-900/20"
+                        >
+                          {loading ? <Loader2 size={18} className="animate-spin" /> : <Save size={18} />}
+                          {loading ? (isFR ? 'Enregistrement...' : 'Saving...') : (isFR ? 'Sauvegarder' : 'Save')}
+                        </button>
+                      </div>
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="view"
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      exit={{ opacity: 0, x: 20 }}
+                      className="space-y-16"
+                    >
+                      {/* Expertise Section */}
+                      <section>
+                        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-gray-50">
+                           <div className="w-12 h-12 bg-blue-50 text-[#0a5694] rounded-2xl flex items-center justify-center">
+                              <Award size={24} />
+                           </div>
+                           <h2 className="text-3xl font-black text-gray-900 tracking-tight">{isFR ? "Domaines d'Expertise" : 'Areas of Expertise'}</h2>
+                        </div>
+                        
+                        {expertiseList.length > 0 ? (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            {expertiseList.map((item: string, idx: number) => (
+                              <div key={idx} className="p-6 bg-white border border-gray-100 rounded-[2rem] shadow-xl shadow-blue-900/5 flex items-center gap-4 group hover:-translate-y-1 transition-all">
+                                <div className="w-8 h-8 rounded-xl bg-blue-50 text-[#0a5694] flex items-center justify-center">
+                                   <CheckCircle2 size={16} />
+                                </div>
+                                <span className="font-black text-sm text-gray-900 uppercase tracking-widest">{item}</span>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="py-20 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200 text-center">
+                             <p className="text-gray-400 font-black uppercase tracking-widest text-xs">{isFR ? "Aucune expertise spécifiée" : "No expertise specified"}</p>
+                          </div>
+                        )}
+                      </section>
+
+                      {/* Experience Section */}
+                      <section>
+                        <div className="flex items-center gap-4 mb-10 pb-6 border-b border-gray-50">
+                           <div className="w-12 h-12 bg-teal-50 text-[#0d9488] rounded-2xl flex items-center justify-center">
+                              <Globe size={24} />
+                           </div>
+                           <h2 className="text-3xl font-black text-gray-900 tracking-tight">{isFR ? 'Expériences & Missions' : 'Experience & Missions'}</h2>
+                        </div>
+
+                        {Object.keys(experience).length > 0 ? (
+                          <div className="space-y-6">
+                            {Object.entries(experience).map(([key, value]) => (
+                              <div key={key} className="bg-gray-50/50 rounded-[2.5rem] p-10 border border-gray-100 space-y-4 hover:bg-white hover:shadow-2xl hover:shadow-blue-900/5 transition-all">
+                                <div className="text-[10px] font-black text-[#0d9488] uppercase tracking-[0.2em]">{key}</div>
+                                <p className="text-gray-600 font-bold leading-[1.8]">
+                                  {Array.isArray(value) ? value.join(', ') : (value as React.ReactNode) || '---'}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        ) : (
+                          <div className="py-20 bg-gray-50 rounded-[3rem] border border-dashed border-gray-200 text-center">
+                             <p className="text-gray-400 font-black uppercase tracking-widest text-xs">{isFR ? "Aucune expérience renseignée" : "No experience reported"}</p>
+                          </div>
+                        )}
+                      </section>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
           </div>
         </motion.div>
-
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Details */}
-          <div className="lg:col-span-2 space-y-8">
-            {/* Expertise Section */}
-            <section className="premium-card space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#f1f5f9] pb-4">
-                <Award className="text-[#0a5694]" size={24} />
-                <h2 className="text-xl font-bold font-outfit text-[#0f172a]">{isFR ? 'Domaines d\'Expertise' : 'Areas of Expertise'}</h2>
-              </div>
-              {expertiseList.length > 0 ? (
-                <div className="flex flex-wrap gap-3">
-                  {expertiseList.map((item: string, i: number) => (
-                    <span key={i} className="expert-badge" style={{ padding: '8px 16px', fontSize: '12px' }}>
-                      {item}
-                    </span>
-                  ))}
-                </div>
-              ) : (
-                <p className="text-[#64748b] italic">{isFR ? 'Aucun domaine d\'expertise spécifié.' : 'No areas of expertise specified.'}</p>
-              )}
-            </section>
-
-            {/* Experience Grid */}
-            <section className="premium-card space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#f1f5f9] pb-4">
-                <Briefcase className="text-[#0a5694]" size={24} />
-                <h2 className="text-xl font-bold font-outfit text-[#0f172a]">{isFR ? 'Expérience Sectorielle' : 'Sector Experience'}</h2>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {Object.entries(exp).map(([key, value], i) => {
-                  if (!value || (Array.isArray(value) && value.length === 0)) return null;
-                  const labels: { [k: string]: string } = isFR ? 
-                    { research: 'Recherche', management: 'Gestion', teaching: 'Enseignement', works: 'Ouvrages', supply: 'Eau Potable', sanitation: 'Assainissement' } :
-                    { research: 'Research', management: 'Management', teaching: 'Teaching', works: 'Works', supply: 'Water Supply', sanitation: 'Sanitation' };
-                  
-                  return (
-                    <div key={i} className="p-4 bg-[#f4f6f9]/50 rounded-2xl border border-[#e2e8f0] flex justify-between items-center transition-all hover:bg-white hover:border-[#0a5694]/20">
-                      <span className="text-sm font-semibold text-[#1e293b]">{labels[key] || key}</span>
-                      <span className="px-3 py-1 bg-[#0a5694]/10 text-[#0a5694] text-[11px] font-bold rounded-lg uppercase">
-                        {Array.isArray(value) ? value[0] : value}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </section>
-          </div>
-
-          {/* Right Column - Sidebar Info */}
-          <div className="space-y-8">
-            {/* Education */}
-            <section className="premium-card space-y-6">
-              <div className="flex items-center gap-3 border-b border-[#f1f5f9] pb-4">
-                <GraduationCap className="text-[#0a5694]" size={24} />
-                <h2 className="text-xl font-bold font-outfit text-[#0f172a]">{isFR ? 'Formation' : 'Education'}</h2>
-              </div>
-              
-              {isEditing ? (
-                <div className="space-y-4">
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase text-muted-foreground">{isFR ? 'Diplôme' : 'Degree'}</label>
-                    <input className="w-full p-3 rounded-xl border border-border text-sm" value={formData.degree} onChange={(e) => setFormData({...formData, degree: e.target.value})} />
-                  </div>
-                  <div className="space-y-1">
-                    <label className="text-[10px] font-bold uppercase text-muted-foreground">{isFR ? 'Université' : 'University'}</label>
-                    <input className="w-full p-3 rounded-xl border border-border text-sm" value={formData.university} onChange={(e) => setFormData({...formData, university: e.target.value})} />
-                  </div>
-                </div>
-              ) : (
-                member.degree ? (
-                  <div className="space-y-4">
-                    <div className="relative pl-6 border-l-2 border-[#0a5694]/20 space-y-1">
-                      <div className="absolute -left-[5px] top-0 w-2 h-2 rounded-full bg-[#0a5694]"></div>
-                      <h4 className="font-bold text-sm leading-tight text-[#0f172a]">{member.degree}</h4>
-                      <p className="text-xs text-[#64748b]">{member.university}</p>
-                      <div className="flex items-center gap-1 text-[10px] text-[#0a5694] font-bold uppercase mt-2">
-                        <Calendar size={10} />
-                        {member.experience_years?.graduation_year || 'N/A'}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <p className="text-xs text-[#64748b] italic">{isFR ? 'Détails non communiqués.' : 'Details not provided.'}</p>
-                )
-              )}
-            </section>
-
-            {/* Migration Source Note */}
-            <section className="p-6 bg-[#062040] rounded-[2rem] text-white space-y-3 shadow-xl">
-               <h4 className="font-bold text-[10px] uppercase tracking-[2px] opacity-60">{isFR ? 'Source des données' : 'Data Source'}</h4>
-               <p className="text-xs leading-relaxed opacity-90 italic">
-                 {isFR 
-                   ? "Ce compte a été importé avec succès depuis l'ancienne plateforme WordPress du projet Expertise Au Cameroun."
-                   : "This account was successfully imported from the original Expertise Au Cameroun WordPress platform."}
-               </p>
-               <div className="pt-2 flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></div>
-                  <span className="text-[10px] font-bold uppercase text-emerald-400">{isFR ? 'Vérifié' : 'Verified'}</span>
-               </div>
-            </section>
-          </div>
-        </div>
       </div>
     </div>
   );
+}
+
+function cn(...inputs: any[]) {
+  return inputs.filter(Boolean).join(' ');
 }
