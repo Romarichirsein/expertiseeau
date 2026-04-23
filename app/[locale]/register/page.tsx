@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { MapPin, Globe, ChevronRight, CheckCircle2, UserPlus, ArrowRight, Award } from 'lucide-react';
+import { MapPin, Globe, ChevronRight, CheckCircle, UserPlus, ArrowRight, Award } from 'lucide-react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 
@@ -104,7 +104,7 @@ export default function RegisterEntryPage() {
                   {type.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-4 text-gray-700 font-bold">
                       <div className={`w-6 h-6 rounded-full flex items-center justify-center ${type.id === 'resident' ? 'bg-blue-50 text-blue-600' : 'bg-teal-50 text-teal-600'}`}>
-                        <CheckCircle2 size={16} strokeWidth={3} />
+                        <CheckCircle size={16} strokeWidth={3} />
                       </div>
                       {feature}
                     </li>

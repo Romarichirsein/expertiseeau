@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { ShieldCheck, Target, Globe, Users, Droplets, MapPin, Building2, CheckCircle2, Award, BookOpen, ChevronRight, History, Heart, Zap } from 'lucide-react';
+import { ShieldCheck, Target, Globe, Users, Droplets, MapPin, Building2, CheckCircle, Award, BookOpen, ChevronRight, History, Heart, Zap } from 'lucide-react';
 import Link from 'next/link';
 
 export default function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -64,10 +64,10 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
               
               <div className="mt-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
                 {[
-                  { icon: CheckCircle2, text: isFR ? 'Centralisation de l\'expertise' : 'Expertise centralization' },
-                  { icon: CheckCircle2, text: isFR ? 'Valorisation des talents' : 'Talent promotion' },
-                  { icon: CheckCircle2, text: isFR ? 'Mise en réseau nationale' : 'National networking' },
-                  { icon: CheckCircle2, text: isFR ? 'Certification des profils' : 'Profile certification' },
+                  { icon: CheckCircle, text: isFR ? 'Centralisation de l\'expertise' : 'Expertise centralization' },
+                  { icon: CheckCircle, text: isFR ? 'Valorisation des talents' : 'Talent promotion' },
+                  { icon: CheckCircle, text: isFR ? 'Mise en réseau nationale' : 'National networking' },
+                  { icon: CheckCircle, text: isFR ? 'Certification des profils' : 'Profile certification' },
                 ].map((item, i) => (
                   <div key={i} className="flex items-center gap-3 text-sm font-bold text-gray-800">
                     <item.icon size={20} className="text-teal-500" />

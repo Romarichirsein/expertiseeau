@@ -8,21 +8,28 @@ import {
   Filter,
   Users,
   ChevronRight,
+  ChevronLeft,
   User,
   Loader2,
   Briefcase,
-  Globe,
   ArrowRight,
-  Award
+  Award,
+  X,
+  ChevronDown
 } from 'lucide-react';
 import Link from 'next/link';
 import { getApprovedExperts } from '@/lib/actions';
+
+const ITEMS_PER_PAGE = 12;
 
 export default function MembersPage({ params }: { params: Promise<{ locale: string }> }) {
   const [experts, setExperts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [selectedExpertise, setSelectedExpertise] = useState('All');
+  const [selectedCity, setSelectedCity] = useState('All');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [showFilters, setShowFilters] = useState(false);
   const resolvedParams = React.use(params);
   const locale = resolvedParams.locale;
   const isFR = locale === 'fr';
@@ -36,23 +43,32 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
     loadExperts();
   }, []);
 
+  // Parse expertise arrays consistently
+  const parseExpertise = (exp: any): string[] => {
+    if (Array.isArray(exp)) return exp;
+    if (typeof exp === 'string') {
+      try {
+        const parsed = JSON.parse(exp);
+        return Array.isArray(parsed) ? parsed : [exp];
+      } catch {
+        return [exp];
+      }
+    }
+    return [];
+  };
+
   const allExpertise = useMemo(() => {
     const set = new Set<string>();
     experts.forEach(e => {
-      if (Array.isArray(e.expertise)) {
-        e.expertise.forEach((ex: string) => set.add(ex));
-      } else if (typeof e.expertise === 'string') {
-        try {
-          const parsed = JSON.parse(e.expertise);
-          if (Array.isArray(parsed)) {
-            parsed.forEach((ex: string) => set.add(ex));
-          } else {
-            set.add(e.expertise);
-          }
-        } catch {
-          set.add(e.expertise);
-        }
-      }
+      parseExpertise(e.expertise).forEach((ex: string) => set.add(ex));
+    });
+    return ['All', ...Array.from(set).sort()];
+  }, [experts]);
+
+  const allCities = useMemo(() => {
+    const set = new Set<string>();
+    experts.forEach(e => {
+      if (e.city) set.add(e.city);
     });
     return ['All', ...Array.from(set).sort()];
   }, [experts]);
@@ -65,242 +81,650 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         name.toLowerCase().includes(search.toLowerCase()) ||
         profession.toLowerCase().includes(search.toLowerCase());
       
-      let expArray: string[] = [];
-      if (Array.isArray(m.expertise)) {
-        expArray = m.expertise;
-      } else if (typeof m.expertise === 'string') {
-        try {
-          const parsed = JSON.parse(m.expertise);
-          expArray = Array.isArray(parsed) ? parsed : [m.expertise];
-        } catch {
-          expArray = [m.expertise];
-        }
-      }
-
+      const expArray = parseExpertise(m.expertise);
       const matchesExpertise = 
         selectedExpertise === 'All' || 
         expArray.includes(selectedExpertise);
 
-      return matchesSearch && matchesExpertise;
-    }).slice(0, 100); 
-  }, [search, selectedExpertise, experts]);
+      const matchesCity =
+        selectedCity === 'All' ||
+        (m.city || '') === selectedCity;
+
+      return matchesSearch && matchesExpertise && matchesCity;
+    });
+  }, [search, selectedExpertise, selectedCity, experts]);
+
+  // Pagination
+  const totalPages = Math.ceil(filteredMembers.length / ITEMS_PER_PAGE);
+  const paginatedMembers = filteredMembers.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Reset page when filters change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedExpertise, selectedCity]);
+
+  const activeFiltersCount = [
+    selectedExpertise !== 'All',
+    selectedCity !== 'All',
+    search !== ''
+  ].filter(Boolean).length;
+
+  const clearAllFilters = () => {
+    setSearch('');
+    setSelectedExpertise('All');
+    setSelectedCity('All');
+  };
 
   return (
-    <div className="pb-24 bg-[#f8fafc] min-h-screen relative overflow-hidden">
-      {/* Background Decoration */}
-      <div className="absolute top-0 left-0 w-1/2 h-1/2 bg-blue-50/50 rounded-full blur-[120px] -translate-y-1/2 -translate-x-1/4 pointer-events-none" />
-
-      {/* PREMIUM HERO SECTION */}
-      <div className="relative pt-24 pb-40">
-        <div className="container relative z-10">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
-            <motion.div 
-              initial={{ opacity: 0, y: 30 }} 
-              animate={{ opacity: 1, y: 0 }} 
-              className="max-w-3xl"
-            >
-              <div className="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white shadow-xl shadow-blue-900/5 border border-gray-50 text-[#0a5694] text-xs font-black uppercase tracking-widest mb-8">
-                <Users size={16} strokeWidth={2.5} />
-                {isFR ? 'Annuaire National des Experts' : 'National Experts Directory'}
-              </div>
-              <h1 className="text-5xl md:text-7xl font-black text-gray-900 mb-8 tracking-tight leading-[1.1]">
-                {isFR ? 'Trouvez l\' ' : 'Find the '} 
-                <span className="text-[#0a5694]">{isFR ? 'Expertise' : 'Expertise'}</span>
-              </h1>
-              <p className="text-xl text-gray-500 font-medium max-w-2xl leading-relaxed">
-                {isFR 
-                  ? "Consultez le profil des professionnels certifiés du secteur de l'eau au Cameroun et facilitez vos collaborations stratégiques."
-                  : "View profiles of certified water sector professionals in Cameroon and facilitate your strategic collaborations."}
-              </p>
-            </motion.div>
-            
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.9 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              transition={{ delay: 0.2 }}
-              className="hidden lg:block shrink-0"
-            >
-              <div className="bg-white border border-gray-100 rounded-[3rem] p-10 flex items-center gap-10 shadow-2xl shadow-blue-900/5 relative overflow-hidden group">
-                <div className="absolute top-0 right-0 p-8 opacity-[0.03] group-hover:rotate-12 transition-transform duration-700">
-                  <Globe size={120} />
-                </div>
-                <div className="w-20 h-20 rounded-[1.5rem] bg-blue-50 flex items-center justify-center relative z-10">
-                  <Users size={40} className="text-[#0a5694]" />
-                </div>
-                <div className="relative z-10">
-                  <div className="text-5xl font-black text-gray-900 tracking-tighter">
-                    {loading ? '...' : experts.length}
-                  </div>
-                  <div className="text-xs font-black text-gray-400 uppercase tracking-[0.2em] mt-2">
-                    {isFR ? 'Experts Validés' : 'Validated Experts'}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
+    <div className="min-h-screen bg-white">
+      {/* PAGE HEADER - like WordPress Ultimate Member Directory */}
+      <div style={{ 
+        background: 'linear-gradient(135deg, #0a5694 0%, #0d7ac7 50%, #0d9488 100%)',
+        padding: '60px 0 40px'
+      }}>
+        <div className="container">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }}
+            style={{ textAlign: 'center' }}
+          >
+            <h1 style={{ 
+              color: 'white', 
+              fontSize: '36px', 
+              fontWeight: 300, 
+              letterSpacing: '1px',
+              fontFamily: '"Outfit", sans-serif',
+              marginBottom: '12px'
+            }}>
+              {isFR ? 'Répertoire des Membres' : 'Members Directory'}
+            </h1>
+            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '16px', fontWeight: 400 }}>
+              {isFR 
+                ? "Consultez les profils des professionnels certifiés du secteur de l'eau au Cameroun"
+                : "View profiles of certified water sector professionals in Cameroon"}
+            </p>
+          </motion.div>
         </div>
       </div>
 
-      <div className="container -mt-24 relative z-20">
-        {/* MODERN SEARCH & FILTER BAR */}
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3 }}
-          className="bg-white p-4 md:p-6 rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-gray-50 flex flex-col lg:flex-row gap-6 mb-16"
-        >
-          <div className="flex-1 relative group">
-            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0a5694] transition-colors" size={20} />
-            <input 
-              type="text" 
-              placeholder={isFR ? "Rechercher par nom ou profession..." : "Search by name or profession..."}
-              className="w-full pl-16 pr-8 py-5 bg-gray-50 border border-transparent rounded-2xl outline-none focus:bg-white focus:border-[#0a5694]/20 transition-all font-bold text-lg"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="lg:w-80 relative group">
-            <Filter className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0a5694] transition-colors" size={20} />
-            <select 
-              className="w-full pl-16 pr-10 py-5 bg-gray-50 border border-transparent rounded-2xl outline-none focus:bg-white focus:border-[#0a5694]/20 transition-all font-bold text-lg appearance-none cursor-pointer"
-              value={selectedExpertise}
-              onChange={(e) => setSelectedExpertise(e.target.value)}
-            >
-              {allExpertise.map((ex, i) => (
-                <option key={i} value={ex}>
-                  {ex === 'All' ? (isFR ? 'Toutes expertises' : 'All expertises') : ex}
-                </option>
-              ))}
-            </select>
-            <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400">
-               <ChevronRight size={20} className="rotate-90" />
+      {/* COUNTER + SEARCH BAR - WordPress UM Style */}
+      <div style={{ 
+        borderBottom: '1px solid #e5e7eb', 
+        background: '#f9fafb' 
+      }}>
+        <div className="container" style={{ padding: '20px 24px' }}>
+          <div style={{ 
+            display: 'flex', 
+            flexWrap: 'wrap',
+            alignItems: 'center', 
+            justifyContent: 'space-between',
+            gap: '16px' 
+          }}>
+            {/* Counter */}
+            <div style={{ 
+              display: 'flex', 
+              alignItems: 'center', 
+              gap: '8px',
+              color: '#6b7280',
+              fontSize: '14px',
+              fontWeight: 500
+            }}>
+              <Users size={18} style={{ color: '#0a5694' }} />
+              <span>
+                {loading ? '...' : (
+                  <><strong style={{ color: '#0a5694' }}>{filteredMembers.length}</strong> {isFR ? 'membre(s)' : 'member(s)'}</>
+                )}
+              </span>
+              {activeFiltersCount > 0 && (
+                <button 
+                  onClick={clearAllFilters}
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '2px 10px',
+                    background: '#fee2e2',
+                    color: '#dc2626',
+                    borderRadius: '12px',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    border: 'none',
+                    cursor: 'pointer'
+                  }}
+                >
+                  <X size={12} />
+                  {isFR ? 'Réinitialiser' : 'Reset'}
+                </button>
+              )}
             </div>
-          </div>
-        </motion.div>
 
-        {/* RESULTS GRID */}
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-32 space-y-8 bg-white/50 rounded-[4rem] border border-gray-100">
-            <div className="relative">
-              <div className="w-16 h-16 border-4 border-blue-50 rounded-full" />
-              <Loader2 className="w-16 h-16 animate-spin text-[#0a5694] absolute top-0 left-0" />
+            {/* Search + Filter Toggle */}
+            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+              <div style={{ position: 'relative' }}>
+                <Search 
+                  size={16} 
+                  style={{ 
+                    position: 'absolute', 
+                    left: '12px', 
+                    top: '50%', 
+                    transform: 'translateY(-50%)',
+                    color: '#9ca3af' 
+                  }} 
+                />
+                <input 
+                  type="text" 
+                  placeholder={isFR ? "Rechercher un membre..." : "Search a member..."}
+                  style={{
+                    paddingLeft: '36px',
+                    paddingRight: '16px',
+                    paddingTop: '10px',
+                    paddingBottom: '10px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    outline: 'none',
+                    fontSize: '14px',
+                    width: '280px',
+                    background: 'white',
+                    transition: 'border-color 0.2s'
+                  }}
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                  onFocus={(e) => e.target.style.borderColor = '#0a5694'}
+                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+                />
+              </div>
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  padding: '10px 16px',
+                  border: '1px solid #d1d5db',
+                  borderRadius: '8px',
+                  background: showFilters ? '#0a5694' : 'white',
+                  color: showFilters ? 'white' : '#374151',
+                  fontSize: '14px',
+                  fontWeight: 500,
+                  cursor: 'pointer',
+                  transition: 'all 0.2s'
+                }}
+              >
+                <Filter size={16} />
+                {isFR ? 'Filtres' : 'Filters'}
+                {activeFiltersCount > 0 && (
+                  <span style={{
+                    background: showFilters ? 'white' : '#0a5694',
+                    color: showFilters ? '#0a5694' : 'white',
+                    borderRadius: '50%',
+                    width: '20px',
+                    height: '20px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '11px',
+                    fontWeight: 700
+                  }}>
+                    {activeFiltersCount}
+                  </span>
+                )}
+              </button>
             </div>
-            <p className="text-gray-400 font-black uppercase tracking-widest text-xs">
-              {isFR ? "Initialisation de l'annuaire..." : "Initializing directory..."}
+          </div>
+
+          {/* Expandable Filter Panel */}
+          <AnimatePresence>
+            {showFilters && (
+              <motion.div
+                initial={{ height: 0, opacity: 0 }}
+                animate={{ height: 'auto', opacity: 1 }}
+                exit={{ height: 0, opacity: 0 }}
+                style={{ overflow: 'hidden' }}
+              >
+                <div style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  gap: '16px',
+                  paddingTop: '16px',
+                  marginTop: '16px',
+                  borderTop: '1px solid #e5e7eb'
+                }}>
+                  <div style={{ flex: '1', minWidth: '200px' }}>
+                    <label style={{ 
+                      display: 'block', 
+                      fontSize: '12px', 
+                      fontWeight: 600, 
+                      color: '#6b7280',
+                      marginBottom: '6px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {isFR ? 'Domaine d\'expertise' : 'Area of Expertise'}
+                    </label>
+                    <div style={{ position: 'relative' }}>
+                      <select 
+                        style={{
+                          width: '100%',
+                          padding: '10px 36px 10px 12px',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: '14px',
+                          background: 'white',
+                          appearance: 'none',
+                          cursor: 'pointer'
+                        }}
+                        value={selectedExpertise}
+                        onChange={(e) => setSelectedExpertise(e.target.value)}
+                      >
+                        {allExpertise.map((ex, i) => (
+                          <option key={i} value={ex}>
+                            {ex === 'All' ? (isFR ? 'Toutes les expertises' : 'All expertises') : ex}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown size={16} style={{ 
+                        position: 'absolute', 
+                        right: '12px', 
+                        top: '50%', 
+                        transform: 'translateY(-50%)', 
+                        color: '#9ca3af',
+                        pointerEvents: 'none' 
+                      }} />
+                    </div>
+                  </div>
+                  <div style={{ flex: '1', minWidth: '200px' }}>
+                    <label style={{ 
+                      display: 'block', 
+                      fontSize: '12px', 
+                      fontWeight: 600, 
+                      color: '#6b7280',
+                      marginBottom: '6px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.5px'
+                    }}>
+                      {isFR ? 'Ville' : 'City'}
+                    </label>
+                    <div style={{ position: 'relative' }}>
+                      <select 
+                        style={{
+                          width: '100%',
+                          padding: '10px 36px 10px 12px',
+                          border: '1px solid #d1d5db',
+                          borderRadius: '8px',
+                          outline: 'none',
+                          fontSize: '14px',
+                          background: 'white',
+                          appearance: 'none',
+                          cursor: 'pointer'
+                        }}
+                        value={selectedCity}
+                        onChange={(e) => setSelectedCity(e.target.value)}
+                      >
+                        {allCities.map((city, i) => (
+                          <option key={i} value={city}>
+                            {city === 'All' ? (isFR ? 'Toutes les villes' : 'All cities') : city}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown size={16} style={{ 
+                        position: 'absolute', 
+                        right: '12px', 
+                        top: '50%', 
+                        transform: 'translateY(-50%)', 
+                        color: '#9ca3af',
+                        pointerEvents: 'none' 
+                      }} />
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+
+      {/* MEMBERS GRID - WordPress UM Directory Style */}
+      <div className="container" style={{ padding: '40px 24px 60px' }}>
+        {loading ? (
+          <div style={{ 
+            display: 'flex', 
+            flexDirection: 'column', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            padding: '80px 0',
+            gap: '16px'
+          }}>
+            <Loader2 
+              size={40} 
+              style={{ color: '#0a5694', animation: 'spin 1s linear infinite' }} 
+            />
+            <p style={{ color: '#6b7280', fontSize: '14px' }}>
+              {isFR ? "Chargement de l'annuaire..." : "Loading directory..."}
             </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <AnimatePresence mode="popLayout">
-              {filteredMembers.map((member, i) => {
-                let expArray: string[] = [];
-                if (Array.isArray(member.expertise)) {
-                  expArray = member.expertise;
-                } else if (typeof member.expertise === 'string') {
-                  try {
-                    const parsed = JSON.parse(member.expertise);
-                    expArray = Array.isArray(parsed) ? parsed : [member.expertise];
-                  } catch {
-                    expArray = [member.expertise];
-                  }
-                }
-
-                return (
-                  <motion.div
-                    key={member.id}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95 }}
-                    transition={{ duration: 0.4, delay: i * 0.05 }}
-                  >
-                    <Link href={`/${locale}/members/${member.id}`} className="block h-full group">
-                      <div className="bg-white h-full rounded-[3rem] border border-gray-100 p-8 flex flex-col shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-2 transition-all duration-500 relative overflow-hidden">
-                        
-                        {/* Status Badge */}
-                        <div className="absolute top-6 right-6">
-                           <div className="w-8 h-8 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center shadow-sm">
-                              <Award size={18} />
-                           </div>
-                        </div>
-
-                        <div className="flex flex-col items-center text-center space-y-4 mb-8">
-                          <div className="w-24 h-24 rounded-[2.5rem] bg-gray-50 p-1 group-hover:scale-110 transition-transform duration-500 shadow-inner">
-                            <div className="w-full h-full rounded-[2.2rem] bg-gradient-to-br from-white to-blue-50 flex items-center justify-center text-[#0a5694] overflow-hidden border border-gray-100">
-                              {member.photo ? (
-                                <img src={member.photo} alt={member.name} className="w-full h-full object-cover" />
-                              ) : (
-                                <User size={48} strokeWidth={1.5} />
-                              )}
-                            </div>
-                          </div>
-                          
-                          <div className="space-y-1">
-                            <h3 className="text-xl font-black text-gray-900 tracking-tight group-hover:text-[#0a5694] transition-colors line-clamp-1">
-                              {member.name}
-                            </h3>
-                            <div className="text-[10px] font-black text-[#0a5694] uppercase tracking-widest flex items-center justify-center gap-2">
-                              <Briefcase size={12} />
-                              <span className="truncate">{member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}</span>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap justify-center gap-2 mb-8">
-                          {expArray.slice(0, 3).map((exp: string, idx: number) => (
-                            <span key={idx} className="px-3 py-1 bg-gray-50 border border-gray-100 text-gray-400 text-[10px] font-black rounded-lg uppercase tracking-widest">
-                              {exp}
-                            </span>
-                          ))}
-                          {expArray.length > 3 && (
-                            <span className="px-3 py-1 bg-blue-50 text-[#0a5694] text-[10px] font-black rounded-lg uppercase tracking-widest">
-                              +{expArray.length - 3}
-                            </span>
-                          )}
-                        </div>
-
-                        <div className="mt-auto pt-8 border-t border-gray-50 flex items-center justify-between">
-                          <div className="flex items-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
-                            <MapPin size={14} className="text-[#0a5694]" />
-                            {member.city || member.country || 'Cameroun'}
-                          </div>
-                          <div className="w-10 h-10 rounded-xl bg-gray-50 text-gray-300 group-hover:bg-[#0a5694] group-hover:text-white flex items-center justify-center transition-all duration-500 shadow-sm">
-                             <ArrowRight size={20} />
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </div>
-        )}
-
-        {!loading && filteredMembers.length === 0 && (
+        ) : paginatedMembers.length === 0 ? (
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-center py-32 bg-white/50 rounded-[4rem] border border-dashed border-gray-200 mt-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            style={{ 
+              textAlign: 'center', 
+              padding: '80px 0',
+              color: '#6b7280' 
+            }}
           >
-            <div className="w-24 h-24 rounded-[2.5rem] bg-gray-50 flex items-center justify-center mx-auto mb-8 text-gray-300">
-              <Search size={48} />
+            <div style={{
+              width: '80px',
+              height: '80px',
+              borderRadius: '50%',
+              background: '#f3f4f6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 20px'
+            }}>
+              <Search size={36} style={{ color: '#d1d5db' }} />
             </div>
-            <h3 className="text-3xl font-black text-gray-900 tracking-tight mb-2">
-              {isFR ? 'Aucun expert trouvé' : 'No experts found'}
+            <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#374151', marginBottom: '8px' }}>
+              {isFR ? 'Aucun membre trouvé' : 'No members found'}
             </h3>
-            <p className="text-gray-500 font-bold text-lg max-w-md mx-auto mb-10">
+            <p style={{ maxWidth: '400px', margin: '0 auto 24px', lineHeight: 1.6 }}>
               {isFR 
-                ? 'Nous n\'avons trouvé aucun profil correspondant à vos critères de recherche.' 
-                : 'We couldn\'t find any profiles matching your search criteria.'}
+                ? 'Aucun profil ne correspond à vos critères de recherche.' 
+                : 'No profiles match your search criteria.'}
             </p>
             <button 
-              onClick={() => { setSearch(''); setSelectedExpertise('All'); }}
-              className="px-10 py-4 bg-white border border-gray-200 text-[#0a5694] font-black text-sm uppercase tracking-widest rounded-2xl shadow-sm hover:shadow-xl transition-all"
+              onClick={clearAllFilters}
+              style={{
+                padding: '10px 24px',
+                background: '#0a5694',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                fontSize: '14px',
+                fontWeight: 500,
+                cursor: 'pointer'
+              }}
             >
               {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
             </button>
           </motion.div>
+        ) : (
+          <>
+            {/* Grid */}
+            <div style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+              gap: '24px'
+            }}>
+              <AnimatePresence mode="popLayout">
+                {paginatedMembers.map((member, i) => {
+                  const expArray = parseExpertise(member.expertise);
+                  return (
+                    <motion.div
+                      key={member.id}
+                      layout
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.3, delay: i * 0.03 }}
+                    >
+                      <Link href={`/${locale}/members/${member.id}`} style={{ textDecoration: 'none', display: 'block' }}>
+                        <div style={{
+                          background: 'white',
+                          border: '1px solid #e5e7eb',
+                          borderRadius: '12px',
+                          padding: '28px 20px',
+                          textAlign: 'center',
+                          transition: 'all 0.3s ease',
+                          cursor: 'pointer',
+                          position: 'relative'
+                        }}
+                        className="member-card"
+                        onMouseEnter={(e) => {
+                          e.currentTarget.style.boxShadow = '0 10px 30px rgba(10,86,148,0.12)';
+                          e.currentTarget.style.transform = 'translateY(-4px)';
+                          e.currentTarget.style.borderColor = '#0a5694';
+                        }}
+                        onMouseLeave={(e) => {
+                          e.currentTarget.style.boxShadow = 'none';
+                          e.currentTarget.style.transform = 'translateY(0)';
+                          e.currentTarget.style.borderColor = '#e5e7eb';
+                        }}
+                        >
+                          {/* Status indicator */}
+                          <div style={{
+                            position: 'absolute',
+                            top: '12px',
+                            right: '12px'
+                          }}>
+                            <Award size={16} style={{ color: '#10b981' }} />
+                          </div>
+
+                          {/* Profile Photo - WordPress UM Style (Circular) */}
+                          <div style={{
+                            width: '90px',
+                            height: '90px',
+                            borderRadius: '50%',
+                            margin: '0 auto 16px',
+                            overflow: 'hidden',
+                            border: '3px solid #e5e7eb',
+                            background: '#f3f4f6',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            transition: 'border-color 0.3s'
+                          }}>
+                            {member.photo ? (
+                              <img 
+                                src={member.photo} 
+                                alt={member.name} 
+                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                              />
+                            ) : (
+                              <User size={40} style={{ color: '#9ca3af' }} />
+                            )}
+                          </div>
+
+                          {/* Name */}
+                          <h3 style={{
+                            fontSize: '16px',
+                            fontWeight: 700,
+                            color: '#111827',
+                            marginBottom: '4px',
+                            lineHeight: 1.3,
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap'
+                          }}>
+                            {member.name}
+                          </h3>
+
+                          {/* Profession */}
+                          <div style={{
+                            fontSize: '13px',
+                            color: '#0a5694',
+                            fontWeight: 500,
+                            marginBottom: '10px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '4px'
+                          }}>
+                            <Briefcase size={13} />
+                            <span style={{ 
+                              overflow: 'hidden', 
+                              textOverflow: 'ellipsis', 
+                              whiteSpace: 'nowrap',
+                              maxWidth: '180px'
+                            }}>
+                              {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                            </span>
+                          </div>
+
+                          {/* Location */}
+                          <div style={{
+                            fontSize: '12px',
+                            color: '#6b7280',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '4px',
+                            marginBottom: '14px'
+                          }}>
+                            <MapPin size={12} />
+                            {member.city || member.country || 'Cameroun'}
+                          </div>
+
+                          {/* Expertise Tags */}
+                          <div style={{
+                            display: 'flex',
+                            flexWrap: 'wrap',
+                            justifyContent: 'center',
+                            gap: '4px'
+                          }}>
+                            {expArray.slice(0, 2).map((exp: string, idx: number) => (
+                              <span key={idx} style={{
+                                padding: '3px 8px',
+                                background: '#f0f7ff',
+                                color: '#0a5694',
+                                fontSize: '10px',
+                                fontWeight: 600,
+                                borderRadius: '4px',
+                                textTransform: 'uppercase',
+                                letterSpacing: '0.3px'
+                              }}>
+                                {exp.length > 20 ? exp.substring(0, 20) + '...' : exp}
+                              </span>
+                            ))}
+                            {expArray.length > 2 && (
+                              <span style={{
+                                padding: '3px 8px',
+                                background: '#e8ecf0',
+                                color: '#6b7280',
+                                fontSize: '10px',
+                                fontWeight: 600,
+                                borderRadius: '4px'
+                              }}>
+                                +{expArray.length - 2}
+                              </span>
+                            )}
+                          </div>
+
+                          {/* View Profile Arrow */}
+                          <div style={{
+                            marginTop: '16px',
+                            paddingTop: '14px',
+                            borderTop: '1px solid #f3f4f6',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: '6px',
+                            fontSize: '12px',
+                            fontWeight: 600,
+                            color: '#0a5694',
+                            textTransform: 'uppercase',
+                            letterSpacing: '0.5px'
+                          }}>
+                            {isFR ? 'Voir le profil' : 'View profile'}
+                            <ArrowRight size={14} />
+                          </div>
+                        </div>
+                      </Link>
+                    </motion.div>
+                  );
+                })}
+              </AnimatePresence>
+            </div>
+
+            {/* PAGINATION - WordPress Style */}
+            {totalPages > 1 && (
+              <div style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                gap: '8px',
+                marginTop: '48px',
+                paddingTop: '24px',
+                borderTop: '1px solid #e5e7eb'
+              }}>
+                <button
+                  onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '8px 14px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    background: 'white',
+                    color: currentPage === 1 ? '#d1d5db' : '#374151',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  <ChevronLeft size={16} />
+                  {isFR ? 'Préc.' : 'Prev'}
+                </button>
+
+                {Array.from({ length: totalPages }, (_, i) => i + 1)
+                  .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2)
+                  .map((page, idx, arr) => (
+                    <React.Fragment key={page}>
+                      {idx > 0 && arr[idx - 1] !== page - 1 && (
+                        <span style={{ color: '#9ca3af', fontSize: '14px' }}>...</span>
+                      )}
+                      <button
+                        onClick={() => setCurrentPage(page)}
+                        style={{
+                          width: '36px',
+                          height: '36px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          border: currentPage === page ? 'none' : '1px solid #d1d5db',
+                          borderRadius: '8px',
+                          background: currentPage === page ? '#0a5694' : 'white',
+                          color: currentPage === page ? 'white' : '#374151',
+                          fontSize: '13px',
+                          fontWeight: currentPage === page ? 700 : 500,
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {page}
+                      </button>
+                    </React.Fragment>
+                  ))
+                }
+
+                <button
+                  onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    padding: '8px 14px',
+                    border: '1px solid #d1d5db',
+                    borderRadius: '8px',
+                    background: 'white',
+                    color: currentPage === totalPages ? '#d1d5db' : '#374151',
+                    fontSize: '13px',
+                    fontWeight: 500,
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  {isFR ? 'Suiv.' : 'Next'}
+                  <ChevronRight size={16} />
+                </button>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

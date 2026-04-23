@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, User, ArrowLeft, Share2, Tag, BookOpen, Quote, ChevronRight, Globe, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Share2, Tag, BookOpen, Quote, ChevronRight, Globe } from 'lucide-react';
 import Link from 'next/link';
 
 export default function BlogPostClient({ locale, post }: { locale: string; post: any }) {
@@ -119,14 +119,14 @@ export default function BlogPostClient({ locale, post }: { locale: string; post:
                 
                 <div className="flex items-center gap-4">
                   <div className="text-xs font-black text-gray-400 uppercase tracking-widest mr-2">{isFR ? 'Partager :' : 'Share:'}</div>
-                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#1877F2] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
-                    <Facebook size={20} />
+                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#0a5694] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
+                    <Share2 size={20} />
                   </button>
-                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#1DA1F2] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
-                    <Twitter size={20} />
+                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#0d9488] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
+                    <Globe size={20} />
                   </button>
-                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#0A66C2] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
-                    <Linkedin size={20} />
+                  <button className="w-12 h-12 rounded-xl bg-gray-50 text-gray-400 hover:bg-[#0a5694] hover:text-white transition-all duration-300 flex items-center justify-center shadow-sm">
+                    <Share2 size={20} />
                   </button>
                 </div>
               </div>

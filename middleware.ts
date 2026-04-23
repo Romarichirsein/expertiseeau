@@ -26,9 +26,9 @@ export default async function middleware(request: NextRequest) {
   });
 
   // 4. Protected Routes Logic
-  // Check if the user is logged in for /dashboard routes
+  // Check if the user is logged in for /dashboard and /admin routes
   const pathname = request.nextUrl.pathname;
-  if (pathname.includes('/dashboard')) {
+  if (pathname.includes('/dashboard') || pathname.includes('/admin')) {
     const supabase = await createClient();
     const { data: { user } } = await supabase.auth.getUser();
 

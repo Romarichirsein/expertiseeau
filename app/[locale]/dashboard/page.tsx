@@ -13,8 +13,10 @@ import {
   TrendingUp,
   Clock,
   Award,
-  CheckCircle2,
-  AlertCircle
+  CheckCircle,
+  AlertCircle,
+  MapPin,
+  Globe
 } from 'lucide-react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
@@ -97,7 +99,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
            <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${
              status === 'approved' ? "bg-emerald-50 text-emerald-600" : "bg-orange-50 text-orange-600"
            }`}>
-              {status === 'approved' ? <CheckCircle2 size={28} /> : <Clock size={28} />}
+              {status === 'approved' ? <CheckCircle size={28} /> : <Clock size={28} />}
            </div>
            <div>
               <div className={`text-xl font-black tracking-tight ${
@@ -214,7 +216,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
 
           <section className="bg-gray-900 p-10 rounded-[3rem] shadow-2xl shadow-blue-900/20 text-white relative overflow-hidden group">
             <div className="absolute top-0 right-0 p-12 opacity-5 scale-150 rotate-12 group-hover:rotate-45 transition-transform duration-700">
-               <Heart size={100} />
+               <ShieldCheck size={100} />
             </div>
             <h3 className="text-2xl font-black tracking-tight leading-tight mb-4 relative z-10">{isFR ? 'Besoin d\'assistance ?' : 'Need help?'}</h3>
             <p className="text-gray-400 text-sm font-bold mb-8 relative z-10 leading-relaxed">

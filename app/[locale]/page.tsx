@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import {
   Users, Droplets, MapPin, ArrowRight, ShieldCheck, Building2, Globe,
-  ChevronRight, Award, BookOpen, Search, CheckCircle2, Star, TrendingUp, Zap, Heart
+  ChevronRight, Award, BookOpen, Search, CheckCircle, Star, TrendingUp, Zap, Heart
 } from 'lucide-react';
 import Link from 'next/link';
 
@@ -311,6 +311,28 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                </div>
             </div>
          </div>
+      </section>
+
+      {/* ==================== PARTNERS SECTION ==================== */}
+      <section className="py-20 bg-white">
+        <div className="container">
+          <div className="text-center max-w-2xl mx-auto mb-16">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 text-[#0a5694] text-xs font-black uppercase tracking-widest mb-4">
+              Partenaires
+            </span>
+            <h2 className="text-3xl md:text-5xl font-black text-gray-900 tracking-tight">
+              {isFR ? 'Ils soutiennent notre mission' : 'They support our mission'}
+            </h2>
+          </div>
+          
+          <div className="flex flex-wrap items-center justify-center gap-12 md:gap-24 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
+            <img src="/images/partners/gwp.png" alt="GWP" className="h-16 object-contain hover:scale-110 transition-transform" />
+            <img src="/images/partners/minee.png" alt="MINEE" className="h-20 object-contain hover:scale-110 transition-transform" />
+            <img src="/images/partners/unesco.png" alt="UNESCO" className="h-16 object-contain hover:scale-110 transition-transform" />
+            <img src="/images/partners/eu.jpg" alt="Union Européenne" className="h-16 object-contain hover:scale-110 transition-transform rounded-full mix-blend-multiply" />
+            <img src="/images/partners/france.png" alt="Ambassade de France" className="h-24 object-contain hover:scale-110 transition-transform" />
+          </div>
+        </div>
       </section>
 
       {/* ==================== CALL TO ACTION ==================== */}

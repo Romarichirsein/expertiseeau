@@ -2,14 +2,35 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn, ArrowRight, UserPlus, Eye, EyeOff, Globe, ShieldCheck, ChevronRight } from 'lucide-react';
+import { Mail, Lock, LogIn, ArrowRight, UserPlus, Eye, EyeOff, Globe, ShieldCheck, ChevronRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { signInWithEmail } from '@/lib/actions/auth';
 
 export default function LoginPage({ params }: { params: Promise<{ locale: string }> }) {
   const resolvedParams = React.use(params);
   const locale = resolvedParams.locale;
   const isFR = locale === 'fr';
+  const router = useRouter();
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError(null);
+    
+    const formData = new FormData(e.currentTarget);
+    const result = await signInWithEmail(formData);
+    
+    if (result.success) {
+      router.push(`/${locale}/dashboard`);
+    } else {
+      setError(result.error || 'Login failed');
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen flex items-center justify-center p-6 bg-[#f8fafc] relative overflow-hidden">
@@ -42,7 +63,12 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
           transition={{ delay: 0.1 }}
           className="bg-white rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-gray-100 p-8 md:p-12"
         >
-          <form className="space-y-6">
+          {error && (
+            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-bold border border-red-100">
+              {error}
+            </div>
+          )}
+          <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
               <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Email</label>
               <div className="relative group">
@@ -52,6 +78,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                 <input 
                   required 
                   type="email" 
+                  name="email"
                   className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0a5694] focus:bg-white transition-all text-gray-900 font-bold" 
                   placeholder="votre@email.com" 
                 />
@@ -70,6 +97,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
                 <input 
                   required 
                   type={showPassword ? "text" : "password"} 
+                  name="password"
                   className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0a5694] focus:bg-white transition-all text-gray-900 font-bold" 
                   placeholder="••••••••" 
                 />
@@ -83,9 +111,13 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
               </div>
             </div>
 
-            <button type="submit" className="w-full bg-[#0a5694] text-white py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:scale-[1.02] active:scale-[0.98] transition-all group">
-              {isFR ? 'Se connecter' : 'Log In'}
-              <LogIn size={20} className="group-hover:translate-x-1 transition-transform" />
+            <button type="submit" disabled={loading} className="w-full bg-[#0a5694] text-white py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:scale-[1.02] active:scale-[0.98] transition-all group disabled:opacity-50">
+              {loading ? <Loader2 className="animate-spin" size={20} /> : (
+                <>
+                  {isFR ? 'Se connecter' : 'Log In'}
+                  <LogIn size={20} className="group-hover:translate-x-1 transition-transform" />
+                </>
+              )}
             </button>
           </form>
 

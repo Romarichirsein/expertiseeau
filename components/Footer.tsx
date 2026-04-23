@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Globe, Share2, Link2, ExternalLink, ArrowUpRight, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, Share2, Link2, ExternalLink, ArrowUpRight } from 'lucide-react';
 
 export default function Footer({ locale = 'fr' }: { locale?: string }) {
   const isFR = locale === 'fr';
@@ -67,7 +67,7 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
             </p>
             
             <div className="flex gap-3">
-              {[Facebook, Twitter, Linkedin, Instagram].map((Icon, i) => (
+              {[Share2, Globe, Mail, Phone].map((Icon, i) => (
                 <button key={i} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#0a5694] hover:border-[#0a5694] transition-all group">
                   <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors" />
                 </button>

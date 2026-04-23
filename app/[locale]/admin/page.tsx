@@ -166,7 +166,7 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
               </div>
               <div className="pt-6">
                 <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-600 font-black text-[10px] uppercase tracking-widest">
-                  <CheckCircle2 size={14} />
+                  <ShieldCheck size={14} />
                   {isFR ? 'Système au repos' : 'System idle'}
                 </div>
               </div>

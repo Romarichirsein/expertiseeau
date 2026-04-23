@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   User, Mail, Lock, Phone, MapPin, Globe, 
-  ArrowRight, ShieldCheck, CheckCircle2, UserPlus,
+  ArrowRight, ShieldCheck, CheckCircle, UserPlus,
   ChevronLeft, Award, Heart, Briefcase, Zap
 } from 'lucide-react';
 import Link from 'next/link';
@@ -32,7 +32,7 @@ export default function RegisterDiasporaPage({ params }: { params: Promise<{ loc
       <div className="min-h-screen flex items-center justify-center p-6 bg-[#f8fafc]">
         <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-[3rem] shadow-2xl p-12 md:p-20 text-center max-w-xl border border-gray-100">
           <div className="w-24 h-24 rounded-full bg-[#0d9488] text-white flex items-center justify-center mx-auto mb-8 shadow-xl shadow-teal-500/20">
-            <CheckCircle2 size={48} />
+            <CheckCircle size={48} />
           </div>
           <h2 className="text-4xl font-black text-gray-900 mb-6 tracking-tight">{isFR ? 'Inscription Diaspora' : 'Diaspora Registered'}</h2>
           <p className="text-gray-500 text-lg leading-relaxed mb-10">
@@ -88,7 +88,7 @@ export default function RegisterDiasporaPage({ params }: { params: Promise<{ loc
                   <div className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-black transition-all ${
                     s === step ? 'bg-[#0d9488] text-white' : s < step ? 'bg-blue-500 text-white' : 'bg-white border border-gray-200 text-gray-400'
                   }`}>
-                    {s < step ? <CheckCircle2 size={16} /> : s}
+                    {s < step ? <CheckCircle size={16} /> : s}
                   </div>
                 </div>
               ))}
