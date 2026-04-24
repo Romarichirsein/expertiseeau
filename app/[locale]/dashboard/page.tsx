@@ -69,8 +69,8 @@ export default function DashboardPage({ params }: { params: Promise<{ locale: st
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-24 font-inter">
-      <div className="max-w-7xl mx-auto px-6 pt-40 space-y-10">
+    <div className="min-h-screen bg-slate-50/50 pb-32 font-inter">
+      <div className="max-w-7xl mx-auto px-6 pt-48 space-y-10">
         {/* Header Area */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 bg-white p-8 md:p-12 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-blue-900/5">
           <div className="space-y-4">

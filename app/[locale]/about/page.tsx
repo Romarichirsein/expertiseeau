@@ -65,7 +65,7 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
   return (
     <div className="min-h-screen bg-slate-50/60 pb-32 font-inter">
-      <div className="relative overflow-hidden bg-[#0a5694] pb-32 pt-40">
+      <div className="relative overflow-hidden bg-[#0a5694] pb-32 pt-48">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] bg-cover opacity-10 mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/60 to-transparent" />
 
@@ -93,12 +93,12 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
         </div>
       </div>
 
-      <div className="container relative z-20 -mt-16 px-6">
+      <div className="container relative z-20 -mt-16 px-6 pb-32">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="mb-24 rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-blue-900/5 md:p-16"
+          className="mb-32 rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-blue-900/5 md:p-16"
         >
           <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
             <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>

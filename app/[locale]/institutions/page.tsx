@@ -115,9 +115,9 @@ export default function InstitutionsPage({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 font-inter">
+    <div className="min-h-screen bg-slate-50/50 font-inter pb-32">
       {/* PREMIUM HERO SECTION */}
-      <div className="relative overflow-hidden bg-[#0a5694] pt-40 pb-32">
+      <div className="relative overflow-hidden bg-[#0a5694] pt-48 pb-32">
         <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/50 to-transparent" />
         
