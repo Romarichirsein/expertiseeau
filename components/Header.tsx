@@ -106,16 +106,17 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
             <div className="hidden md:flex items-center gap-4">
               <Link
               href={withLocale('/login')}
-              className="flex items-center gap-2.5 px-7 py-3 border-2 border-gray-200 rounded-xl text-[14px] font-black text-[#003366] bg-white hover:bg-gray-50 hover:border-[#003366] hover:scale-105 active:scale-95 transition-all shadow-sm"
+              className="group relative flex items-center gap-2.5 px-6 py-2.5 border border-slate-200 rounded-xl text-[13px] font-semibold text-slate-600 bg-white hover:bg-slate-50 hover:text-slate-900 transition-all duration-300 shadow-sm"
             >
-              <LogIn size={18} className="text-[#003366]" />
+              <LogIn size={16} strokeWidth={2.5} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
               <span>{isFR ? 'Se connecter' : 'Log in'}</span>
             </Link>
             <Link
               href={withLocale('/register')}
-              className="flex items-center gap-2.5 px-8 py-3 bg-[#1e40af] text-white rounded-xl text-[14px] font-black hover:bg-[#1a368e] hover:scale-105 active:scale-95 shadow-[0_10px_30px_rgba(30,64,175,0.3)] transition-all"
+              className="group relative flex items-center gap-2.5 px-7 py-2.5 bg-[#003366] text-white rounded-xl text-[13px] font-semibold hover:bg-[#002244] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,51,102,0.15)] overflow-hidden"
             >
-              <UserPlus size={18} />
+              <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+              <UserPlus size={16} strokeWidth={2.5} />
               <span>{isFR ? "S'inscrire" : 'Register'}</span>
             </Link>
             </div>

@@ -109,11 +109,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
               </div>
               
               <div className="flex flex-wrap gap-6 pt-6">
-                <Link href={`/${locale}/members`} className="px-12 py-6 bg-[#0a5694] text-white rounded-2xl font-black text-xl shadow-[0_20px_50px_rgba(10,86,148,0.3)] hover:bg-[#062040] hover:scale-105 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-4 group">
+                <Link href={`/${locale}/members`} className="group relative px-10 py-4 bg-[#0a5694] text-white rounded-xl font-semibold text-base shadow-[0_1px_2px_rgba(0,0,0,0.1),0_8px_20px_rgba(10,86,148,0.2)] hover:bg-[#084577] hover:-translate-y-0.5 transition-all duration-300 overflow-hidden flex items-center gap-3">
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   {isFR ? 'Explorer l\'Annuaire' : 'Explore Directory'}
-                  <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
+                  <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <Link href={`/${locale}/register`} className="px-12 py-6 bg-white text-slate-900 border-2 border-slate-200 rounded-2xl font-black text-xl shadow-xl hover:bg-slate-50 hover:border-[#0a5694] hover:text-[#0a5694] hover:scale-105 active:scale-95 transition-all">
+                <Link href={`/${locale}/register`} className="px-10 py-4 bg-white text-slate-600 border border-slate-200 rounded-xl font-semibold text-base shadow-sm hover:bg-slate-50 hover:text-slate-900 hover:-translate-y-0.5 transition-all duration-300">
                   {isFR ? 'Rejoindre le Réseau' : 'Join the Network'}
                 </Link>
               </div>
@@ -285,9 +286,10 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                        ? 'Experts camerounais résidant à l\'étranger, rejoignez le réseau national pour partager vos compétences et contribuer au développement durable du pays.'
                        : 'Cameroonian experts living abroad, join the national network to share your skills and contribute to the sustainable development of the country.'}
                   </p>
-                  <Link href={`/${locale}/register/diaspora`} className="inline-flex items-center gap-4 px-12 py-6 bg-teal-500 text-white rounded-2xl font-black text-xl hover:bg-teal-600 hover:scale-105 active:scale-95 transition-all shadow-[0_20px_50px_rgba(20,184,166,0.3)] group">
+                  <Link href={`/${locale}/register/diaspora`} className="group relative inline-flex items-center gap-3 px-10 py-4 bg-teal-500 text-white rounded-xl font-semibold text-base hover:bg-teal-600 hover:-translate-y-0.5 transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.1),0_8px_20px_rgba(20,184,166,0.2)] overflow-hidden">
+                     <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                      {isFR ? 'Rejoindre en tant qu\'Expert Diaspora' : 'Join as Diaspora Expert'}
-                     <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
+                     <ArrowRight size={18} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                   </Link>
                </motion.div>
                <div className="relative">
