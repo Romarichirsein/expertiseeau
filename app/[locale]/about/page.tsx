@@ -65,7 +65,8 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
   return (
     <div className="min-h-screen bg-slate-50/60 pb-32 font-inter">
-      <div className="relative overflow-hidden bg-[#0a5694] pb-32 pt-64">
+      <div className="h-[140px] w-full" />
+      <div className="relative overflow-hidden bg-[#0a5694] pb-32 pt-20">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] bg-cover opacity-10 mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/60 to-transparent" />
 

@@ -51,7 +51,8 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
 
   return (
     <div className="bg-slate-50/50 min-h-screen font-inter pb-32">
-      <div className="max-w-7xl mx-auto px-6 space-y-12 pt-64">
+      <div className="h-[140px] w-full" />
+      <div className="max-w-7xl mx-auto px-6 space-y-12 pt-10">
         {/* Admin Header */}
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-10">
           <div className="space-y-4">

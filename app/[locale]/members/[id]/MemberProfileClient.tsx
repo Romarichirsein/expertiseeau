@@ -132,8 +132,9 @@ export default function MemberProfileClient({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-32 pt-64 font-inter">
-      <div className="max-w-4xl mx-auto px-6 space-y-8">
+    <div className="min-h-screen bg-slate-50/50 pb-32 font-inter">
+      <div className="h-[140px] w-full" />
+      <div className="max-w-4xl mx-auto px-6 space-y-8 pt-10">
         
         {/* Navigation / Actions */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">

@@ -53,8 +53,11 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
 
   return (
     <div className="bg-white overflow-hidden font-inter pb-32">
+      {/* HEADER SPACER */}
+      <div className="h-[140px] w-full" />
+
       {/* ==================== PREMIUM HERO SECTION ==================== */}
-      <section className="relative min-h-[95vh] flex items-center pt-64 pb-40">
+      <section className="relative min-h-[80vh] flex items-center pt-20 pb-40">
         {/* Modern Background */}
         <div className="absolute inset-0">
            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-50 via-white to-blue-50/20" />
@@ -178,7 +181,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ==================== STATS STRIP ==================== */}
-      <section className="relative z-20 -mt-16 mb-32 container px-6">
+      <section className="relative z-20 py-24 container px-6">
         <motion.div 
           initial={{ opacity: 0, y: 40 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -208,7 +211,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ==================== SERVICES SECTION ==================== */}
-      <section className="py-40 bg-white">
+      <section className="py-48 bg-white border-y border-slate-50">
         <div className="container px-6">
           <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
             <div className="max-w-3xl space-y-6">
@@ -258,7 +261,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ==================== STATS SECTION ==================== */}
-      <section className="py-32 bg-[#003366] relative overflow-hidden">
+      <section className="py-48 bg-[#003366] relative overflow-hidden">
          <div className="absolute top-0 right-0 w-1/2 h-full bg-blue-600/10 blur-[150px]" />
          <div className="absolute bottom-0 left-0 w-1/2 h-full bg-[#0a5694]/20 blur-[150px]" />
          <div className="container relative z-10 px-6">
@@ -320,7 +323,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ==================== MISSION SECTION ==================== */}
-      <section className="relative py-32 bg-slate-50">
+      <section className="relative py-48 bg-slate-50">
         <div className="container px-6">
           <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
             <div className="inline-flex items-center gap-2 text-[10px] font-extrabold text-slate-400 uppercase tracking-[0.3em]">
