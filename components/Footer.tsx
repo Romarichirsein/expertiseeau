@@ -2,92 +2,90 @@
 
 import React from 'react';
 import Link from 'next/link';
-import { Mail, Phone, MapPin, Globe, Share2, Link2, ExternalLink, ArrowUpRight } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, Facebook, Twitter, Linkedin, Instagram, ArrowUpRight } from 'lucide-react';
 
 export default function Footer({ locale = 'fr' }: { locale?: string }) {
   const isFR = locale === 'fr';
 
   const footerLinks = [
     {
-      title: isFR ? 'Exploration' : 'Exploration',
+      title: isFR ? 'Navigation' : 'Navigation',
       links: [
         { label: isFR ? 'Accueil' : 'Home', href: '/' },
         { label: isFR ? 'À Propos' : 'About', href: '/about' },
-        { label: isFR ? 'Annuaire Experts' : 'Experts Directory', href: '/members' },
-        { label: isFR ? 'Annuaire Institutions' : 'Institutions', href: '/institutions' },
-        { label: isFR ? 'Galerie Photos' : 'Gallery', href: '/gallery' },
+        { label: isFR ? 'Membres' : 'Members', href: '/members' },
+        { label: isFR ? 'Institutions' : 'Institutions', href: '/institutions' },
+        { label: isFR ? 'Blog & Actualités' : 'Blog & News', href: '/blog' },
       ]
     },
     {
       title: isFR ? 'Ressources' : 'Resources',
       links: [
-        { label: isFR ? 'Actualités & Blog' : 'News & Blog', href: '/blog' },
-        { label: isFR ? 'Certification' : 'Certification', href: '/about' },
+        { label: isFR ? 'Annuaire des Experts' : 'Experts Directory', href: '/members' },
+        { label: isFR ? 'Documents Techniques' : 'Technical Docs', href: '/blog' },
         { label: isFR ? 'Partenariats' : 'Partnerships', href: '/contact' },
-        { label: isFR ? 'Centre d\'aide' : 'Help Center', href: '/contact' },
+        { label: isFR ? 'Galerie' : 'Gallery', href: '/gallery' },
       ]
     },
     {
-      title: isFR ? 'Légal' : 'Legal',
+      title: isFR ? 'Informations' : 'Information',
       links: [
-        { label: isFR ? 'Mentions Légales' : 'Legal Notice', href: '#' },
-        { label: isFR ? 'Confidentialité' : 'Privacy Policy', href: '#' },
-        { label: isFR ? 'Conditions d\'utilisation' : 'Terms of Use', href: '#' },
+        { label: isFR ? 'Contactez-nous' : 'Contact Us', href: '/contact' },
+        { label: isFR ? 'Mentions Légales' : 'Legal Notice', href: '/legal' },
+        { label: isFR ? 'Confidentialité' : 'Privacy Policy', href: '/privacy' },
       ]
     }
   ];
 
   return (
-    <footer className="bg-gray-900 text-white pt-24 pb-12 overflow-hidden relative">
-      <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#0a5694] via-[#0d9488] to-[#0a5694]" />
-      
-      <div className="container relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 mb-20">
+    <footer className="bg-slate-950 text-white pt-20 pb-10 border-t border-white/5">
+      <div className="container">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-20 mb-16">
           
-          {/* Brand Info (4 cols) */}
-          <div className="lg:col-span-4 space-y-8">
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-white rounded-2xl p-2 flex items-center justify-center shadow-2xl">
+          {/* Brand Column */}
+          <div className="lg:col-span-5 space-y-8">
+            <div className="flex flex-col gap-4">
+              <div className="w-20 h-20 bg-white rounded-2xl p-2 flex items-center justify-center">
                 <img src="/images/logo.png" alt="Logo" className="w-full h-full object-contain" />
               </div>
               <div>
-                <div className="text-xl font-black tracking-tighter leading-none">
-                  EXPERTISE <span className="text-[#7dd3fc]">AU CAMEROUN</span>
-                </div>
-                <div className="text-[10px] font-bold text-gray-500 uppercase tracking-[0.3em] mt-1">
-                  Water & Sanitation Network
-                </div>
+                <h3 className="text-xl font-extrabold tracking-tighter uppercase leading-none">
+                  Expertise <span className="text-blue-400">au Cameroun</span>
+                </h3>
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mt-1">
+                  National Water & Sanitation Network
+                </p>
               </div>
             </div>
             
-            <p className="text-gray-400 leading-relaxed text-sm max-w-sm">
+            <p className="text-slate-400 leading-relaxed text-sm max-w-md">
               {isFR 
-                ? 'La plateforme nationale de référence pour la structuration de l\'expertise camerounaise dans le secteur de l\'eau et de l\'assainissement.'
-                : 'The national reference platform for the structuring of Cameroonian expertise in the water and sanitation sector.'}
+                ? 'La plateforme d\'excellence dédiée à la structuration et à la promotion de l\'expertise camerounaise dans les secteurs vitaux de l\'eau et de l\'assainissement.'
+                : 'The platform of excellence dedicated to the structuring and promotion of Cameroonian expertise in the vital water and sanitation sectors.'}
             </p>
             
-            <div className="flex gap-3">
-              {[Share2, Globe, Mail, Phone].map((Icon, i) => (
-                <button key={i} className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center hover:bg-[#0a5694] hover:border-[#0a5694] transition-all group">
-                  <Icon size={18} className="text-gray-400 group-hover:text-white transition-colors" />
-                </button>
+            <div className="flex gap-4">
+              {[Linkedin, Twitter, Facebook, Instagram].map((Icon, i) => (
+                <Link key={i} href="#" className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center hover:bg-blue-600 hover:border-blue-600 transition-all group">
+                  <Icon size={18} className="text-slate-400 group-hover:text-white transition-colors" />
+                </Link>
               ))}
             </div>
           </div>
 
-          {/* Dynamic Links (8 cols) */}
-          <div className="lg:col-span-8 grid grid-cols-1 sm:grid-cols-3 gap-12">
+          {/* Links Columns */}
+          <div className="lg:col-span-7 grid grid-cols-2 md:grid-cols-3 gap-8">
             {footerLinks.map((section, idx) => (
               <div key={idx} className="space-y-6">
-                <h4 className="text-sm font-black uppercase tracking-widest text-[#7dd3fc]">
+                <h4 className="text-xs font-bold uppercase tracking-widest text-slate-500">
                   {section.title}
                 </h4>
                 <ul className="space-y-4">
                   {section.links.map((link, lIdx) => (
                     <li key={lIdx}>
-                      <Link href={link.href} className="text-gray-400 hover:text-white transition-all inline-flex items-center gap-1 group text-sm font-medium">
+                      <Link href={link.href} className="text-slate-400 hover:text-white transition-colors text-sm font-medium flex items-center gap-1 group">
                         {link.label}
-                        <ArrowUpRight size={14} className="opacity-0 -translate-y-1 translate-x-1 group-hover:opacity-100 group-hover:translate-y-0 group-hover:translate-x-0 transition-all" />
+                        <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
                       </Link>
                     </li>
                   ))}
@@ -97,49 +95,37 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
           </div>
         </div>
 
-        {/* Contact Info Row */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 py-10 border-t border-white/5 mb-10">
-          <div className="flex items-center gap-4 group">
-            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#7dd3fc] group-hover:bg-[#7dd3fc] group-hover:text-gray-900 transition-all">
-              <MapPin size={20} />
+        {/* Contact Strip */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-10 border-t border-white/5 mb-10">
+          {[
+            { icon: MapPin, label: isFR ? 'Adresse' : 'Address', val: 'Yaoundé, Cameroun' },
+            { icon: Phone, label: isFR ? 'Contact' : 'Contact', val: '+237 222 23 45 67' },
+            { icon: Mail, label: 'Email', val: 'contact@expertiseaucameroun.org' },
+          ].map((item, i) => (
+            <div key={i} className="flex items-center gap-4 group">
+              <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-blue-400 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <item.icon size={20} />
+              </div>
+              <div>
+                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest">{item.label}</p>
+                <p className="text-sm font-semibold">{item.val}</p>
+              </div>
             </div>
-            <div>
-              <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{isFR ? 'Bureau Central' : 'Main Office'}</div>
-              <div className="text-sm font-bold">Yaoundé, Cameroun</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 group">
-            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#7dd3fc] group-hover:bg-[#7dd3fc] group-hover:text-gray-900 transition-all">
-              <Phone size={20} />
-            </div>
-            <div>
-              <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest">{isFR ? 'Téléphone' : 'Phone'}</div>
-              <div className="text-sm font-bold">+237 222 23 45 67</div>
-            </div>
-          </div>
-          <div className="flex items-center gap-4 group">
-            <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center text-[#7dd3fc] group-hover:bg-[#7dd3fc] group-hover:text-gray-900 transition-all">
-              <Mail size={20} />
-            </div>
-            <div>
-              <div className="text-[10px] font-black text-gray-500 uppercase tracking-widest">Email</div>
-              <div className="text-sm font-bold">info@expertiseaucameroun.org</div>
-            </div>
-          </div>
+          ))}
         </div>
 
-        {/* Bottom Bar */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-white/5 text-[11px] font-bold text-gray-500 uppercase tracking-widest">
-          <div>
+        {/* Copyright */}
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 pt-10 border-t border-white/5 text-[11px] font-bold text-slate-500 uppercase tracking-widest">
+          <div className="text-center md:text-left">
             © 2025 Expertise Au Cameroun. {isFR ? 'Tous droits réservés.' : 'All rights reserved.'}
           </div>
           <div className="flex items-center gap-6">
             <div className="flex items-center gap-2">
-              <Globe size={14} className="text-[#0d9488]" />
+              <Globe size={14} className="text-blue-500" />
               <span>Cameroun - France - UE</span>
             </div>
-            <div className="hidden sm:block">
-              Propulsé par <span className="text-white">FSPI & AFD</span>
+            <div className="hidden sm:block text-slate-600">
+              Partenaires : <span className="text-slate-400">FSPI & AFD</span>
             </div>
           </div>
         </div>
@@ -147,3 +133,4 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
     </footer>
   );
 }
+

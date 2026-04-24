@@ -15,7 +15,8 @@ import {
   ArrowRight,
   Award,
   X,
-  ChevronDown
+  ChevronDown,
+  Globe
 } from 'lucide-react';
 import Link from 'next/link';
 import { getApprovedExperts } from '@/lib/actions';
@@ -43,7 +44,6 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
     loadExperts();
   }, []);
 
-  // Parse expertise arrays consistently
   const parseExpertise = (exp: any): string[] => {
     if (Array.isArray(exp)) return exp;
     if (typeof exp === 'string') {
@@ -94,14 +94,12 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
     });
   }, [search, selectedExpertise, selectedCity, experts]);
 
-  // Pagination
   const totalPages = Math.ceil(filteredMembers.length / ITEMS_PER_PAGE);
   const paginatedMembers = filteredMembers.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  // Reset page when filters change
   useEffect(() => {
     setCurrentPage(1);
   }, [search, selectedExpertise, selectedCity]);
@@ -119,159 +117,83 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* PAGE HEADER - like WordPress Ultimate Member Directory */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #0a5694 0%, #0d7ac7 50%, #0d9488 100%)',
-        padding: '60px 0 40px'
-      }}>
-        <div className="container">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            style={{ textAlign: 'center' }}
-          >
-            <h1 style={{ 
-              color: 'white', 
-              fontSize: '36px', 
-              fontWeight: 300, 
-              letterSpacing: '1px',
-              fontFamily: '"Outfit", sans-serif',
-              marginBottom: '12px'
-            }}>
-              {isFR ? 'Répertoire des Membres' : 'Members Directory'}
-            </h1>
-            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '16px', fontWeight: 400 }}>
-              {isFR 
-                ? "Consultez les profils des professionnels certifiés du secteur de l'eau au Cameroun"
-                : "View profiles of certified water sector professionals in Cameroon"}
-            </p>
-          </motion.div>
+    <div className="min-h-screen bg-slate-50/50 font-inter">
+      {/* ==================== PAGE HEADER ==================== */}
+      <div className="bg-[#062040] pt-32 pb-20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-5" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
+        
+        <div className="container relative z-10">
+          <div className="max-w-3xl">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }}
+              className="space-y-4"
+            >
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest">
+                <Users size={14} />
+                {isFR ? 'Annuaire Officiel' : 'Official Directory'}
+              </div>
+              <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight font-outfit">
+                {isFR ? 'Répertoire des Experts' : 'Experts Directory'}
+              </h1>
+              <p className="text-lg text-slate-400 font-medium">
+                {isFR 
+                  ? "Consultez les profils des professionnels certifiés du secteur de l'eau et de l'assainissement au Cameroun."
+                  : "View profiles of certified water and sanitation professionals in Cameroon."}
+              </p>
+            </motion.div>
+          </div>
         </div>
       </div>
 
-      {/* COUNTER + SEARCH BAR - WordPress UM Style */}
-      <div style={{ 
-        borderBottom: '1px solid #e5e7eb', 
-        background: '#f9fafb' 
-      }}>
-        <div className="container" style={{ padding: '20px 24px' }}>
-          <div style={{ 
-            display: 'flex', 
-            flexWrap: 'wrap',
-            alignItems: 'center', 
-            justifyContent: 'space-between',
-            gap: '16px' 
-          }}>
-            {/* Counter */}
-            <div style={{ 
-              display: 'flex', 
-              alignItems: 'center', 
-              gap: '8px',
-              color: '#6b7280',
-              fontSize: '14px',
-              fontWeight: 500
-            }}>
-              <Users size={18} style={{ color: '#0a5694' }} />
-              <span>
-                {loading ? '...' : (
-                  <><strong style={{ color: '#0a5694' }}>{filteredMembers.length}</strong> {isFR ? 'membre(s)' : 'member(s)'}</>
-                )}
-              </span>
-              {activeFiltersCount > 0 && (
-                <button 
-                  onClick={clearAllFilters}
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '2px 10px',
-                    background: '#fee2e2',
-                    color: '#dc2626',
-                    borderRadius: '12px',
-                    fontSize: '11px',
-                    fontWeight: 600,
-                    border: 'none',
-                    cursor: 'pointer'
-                  }}
-                >
-                  <X size={12} />
-                  {isFR ? 'Réinitialiser' : 'Reset'}
-                </button>
-              )}
+      {/* ==================== SEARCH & FILTERS BAR ==================== */}
+      <div className="sticky top-[72px] z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
+        <div className="container py-4">
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            {/* Search */}
+            <div className="relative w-full md:w-96 group">
+              <Search 
+                size={18} 
+                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" 
+              />
+              <input 
+                type="text" 
+                placeholder={isFR ? "Rechercher par nom ou profession..." : "Search by name or profession..."}
+                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/5 transition-all text-sm font-medium"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
             </div>
 
-            {/* Search + Filter Toggle */}
-            <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-              <div style={{ position: 'relative' }}>
-                <Search 
-                  size={16} 
-                  style={{ 
-                    position: 'absolute', 
-                    left: '12px', 
-                    top: '50%', 
-                    transform: 'translateY(-50%)',
-                    color: '#9ca3af' 
-                  }} 
-                />
-                <input 
-                  type="text" 
-                  placeholder={isFR ? "Rechercher un membre..." : "Search a member..."}
-                  style={{
-                    paddingLeft: '36px',
-                    paddingRight: '16px',
-                    paddingTop: '10px',
-                    paddingBottom: '10px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px',
-                    outline: 'none',
-                    fontSize: '14px',
-                    width: '280px',
-                    background: 'white',
-                    transition: 'border-color 0.2s'
-                  }}
-                  value={search}
-                  onChange={(e) => setSearch(e.target.value)}
-                  onFocus={(e) => e.target.style.borderColor = '#0a5694'}
-                  onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
-                />
-              </div>
+            {/* Actions */}
+            <div className="flex items-center gap-3 w-full md:w-auto">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '6px',
-                  padding: '10px 16px',
-                  border: '1px solid #d1d5db',
-                  borderRadius: '8px',
-                  background: showFilters ? '#0a5694' : 'white',
-                  color: showFilters ? 'white' : '#374151',
-                  fontSize: '14px',
-                  fontWeight: 500,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s'
-                }}
+                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl border text-sm font-bold transition-all ${
+                  showFilters 
+                    ? 'bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/20' 
+                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                }`}
               >
-                <Filter size={16} />
+                <Filter size={18} />
                 {isFR ? 'Filtres' : 'Filters'}
                 {activeFiltersCount > 0 && (
-                  <span style={{
-                    background: showFilters ? 'white' : '#0a5694',
-                    color: showFilters ? '#0a5694' : 'white',
-                    borderRadius: '50%',
-                    width: '20px',
-                    height: '20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '11px',
-                    fontWeight: 700
-                  }}>
+                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${showFilters ? 'bg-white text-slate-900' : 'bg-blue-600 text-white'}`}>
                     {activeFiltersCount}
                   </span>
                 )}
               </button>
+
+              {activeFiltersCount > 0 && (
+                <button 
+                  onClick={clearAllFilters}
+                  className="flex items-center gap-2 px-4 py-3 text-slate-500 hover:text-red-600 text-sm font-bold transition-colors"
+                >
+                  <X size={18} />
+                  <span className="hidden sm:inline">{isFR ? 'Effacer' : 'Clear'}</span>
+                </button>
+              )}
             </div>
           </div>
 
@@ -282,41 +204,16 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ height: 'auto', opacity: 1 }}
                 exit={{ height: 0, opacity: 0 }}
-                style={{ overflow: 'hidden' }}
+                className="overflow-hidden"
               >
-                <div style={{
-                  display: 'flex',
-                  flexWrap: 'wrap',
-                  gap: '16px',
-                  paddingTop: '16px',
-                  marginTop: '16px',
-                  borderTop: '1px solid #e5e7eb'
-                }}>
-                  <div style={{ flex: '1', minWidth: '200px' }}>
-                    <label style={{ 
-                      display: 'block', 
-                      fontSize: '12px', 
-                      fontWeight: 600, 
-                      color: '#6b7280',
-                      marginBottom: '6px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 mt-4 border-t border-slate-100">
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
                       {isFR ? 'Domaine d\'expertise' : 'Area of Expertise'}
                     </label>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative">
                       <select 
-                        style={{
-                          width: '100%',
-                          padding: '10px 36px 10px 12px',
-                          border: '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '14px',
-                          background: 'white',
-                          appearance: 'none',
-                          cursor: 'pointer'
-                        }}
+                        className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-600 appearance-none cursor-pointer text-sm font-medium"
                         value={selectedExpertise}
                         onChange={(e) => setSelectedExpertise(e.target.value)}
                       >
@@ -326,41 +223,16 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={16} style={{ 
-                        position: 'absolute', 
-                        right: '12px', 
-                        top: '50%', 
-                        transform: 'translateY(-50%)', 
-                        color: '#9ca3af',
-                        pointerEvents: 'none' 
-                      }} />
+                      <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                     </div>
                   </div>
-                  <div style={{ flex: '1', minWidth: '200px' }}>
-                    <label style={{ 
-                      display: 'block', 
-                      fontSize: '12px', 
-                      fontWeight: 600, 
-                      color: '#6b7280',
-                      marginBottom: '6px',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px'
-                    }}>
-                      {isFR ? 'Ville' : 'City'}
+                  <div className="space-y-2">
+                    <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                      {isFR ? 'Localisation (Ville)' : 'Location (City)'}
                     </label>
-                    <div style={{ position: 'relative' }}>
+                    <div className="relative">
                       <select 
-                        style={{
-                          width: '100%',
-                          padding: '10px 36px 10px 12px',
-                          border: '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          outline: 'none',
-                          fontSize: '14px',
-                          background: 'white',
-                          appearance: 'none',
-                          cursor: 'pointer'
-                        }}
+                        className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-600 appearance-none cursor-pointer text-sm font-medium"
                         value={selectedCity}
                         onChange={(e) => setSelectedCity(e.target.value)}
                       >
@@ -370,14 +242,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={16} style={{ 
-                        position: 'absolute', 
-                        right: '12px', 
-                        top: '50%', 
-                        transform: 'translateY(-50%)', 
-                        color: '#9ca3af',
-                        pointerEvents: 'none' 
-                      }} />
+                      <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
                     </div>
                   </div>
                 </div>
@@ -387,79 +252,50 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         </div>
       </div>
 
-      {/* MEMBERS GRID - WordPress UM Directory Style */}
-      <div className="container" style={{ padding: '40px 24px 60px' }}>
+      {/* ==================== MEMBERS GRID ==================== */}
+      <div className="container py-12 pb-24">
         {loading ? (
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            padding: '80px 0',
-            gap: '16px'
-          }}>
-            <Loader2 
-              size={40} 
-              style={{ color: '#0a5694', animation: 'spin 1s linear infinite' }} 
-            />
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>
-              {isFR ? "Chargement de l'annuaire..." : "Loading directory..."}
+          <div className="flex flex-col items-center justify-center py-32 gap-4">
+            <Loader2 size={40} className="text-blue-600 animate-spin" />
+            <p className="text-slate-500 font-medium animate-pulse">
+              {isFR ? "Initialisation de l'annuaire..." : "Loading directory..."}
             </p>
           </div>
         ) : paginatedMembers.length === 0 ? (
           <motion.div 
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            style={{ 
-              textAlign: 'center', 
-              padding: '80px 0',
-              color: '#6b7280' 
-            }}
+            className="text-center py-32 bg-white rounded-3xl border border-slate-200 shadow-sm px-6"
           >
-            <div style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              background: '#f3f4f6',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <Search size={36} style={{ color: '#d1d5db' }} />
+            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
+              <Search size={36} className="text-slate-300" />
             </div>
-            <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#374151', marginBottom: '8px' }}>
+            <h3 className="text-xl font-bold text-slate-900 mb-2">
               {isFR ? 'Aucun membre trouvé' : 'No members found'}
             </h3>
-            <p style={{ maxWidth: '400px', margin: '0 auto 24px', lineHeight: 1.6 }}>
+            <p className="text-slate-500 max-w-sm mx-auto mb-8 font-medium">
               {isFR 
-                ? 'Aucun profil ne correspond à vos critères de recherche.' 
-                : 'No profiles match your search criteria.'}
+                ? 'Nous n\'avons trouvé aucun profil correspondant à vos critères actuels.' 
+                : 'We couldn\'t find any profile matching your current criteria.'}
             </p>
             <button 
               onClick={clearAllFilters}
-              style={{
-                padding: '10px 24px',
-                background: '#0a5694',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: 500,
-                cursor: 'pointer'
-              }}
+              className="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
             >
               {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
             </button>
           </motion.div>
         ) : (
           <>
+            {/* Results Count Summary */}
+            <div className="mb-8 flex items-center justify-between">
+              <div className="text-sm text-slate-500 font-medium">
+                {isFR ? 'Affichage de' : 'Showing'} <span className="text-slate-900 font-bold">{paginatedMembers.length}</span> {isFR ? 'sur' : 'of'} <span className="text-slate-900 font-bold">{filteredMembers.length}</span> {isFR ? 'experts' : 'experts'}
+              </div>
+            </div>
+
             {/* Grid */}
-            <div style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
-              gap: '24px'
-            }}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               <AnimatePresence mode="popLayout">
                 {paginatedMembers.map((member, i) => {
                   const expArray = parseExpertise(member.expertise);
@@ -467,170 +303,69 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                     <motion.div
                       key={member.id}
                       layout
-                      initial={{ opacity: 0, y: 15 }}
-                      animate={{ opacity: 1, y: 0 }}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.3, delay: i * 0.03 }}
+                      transition={{ duration: 0.2, delay: i * 0.02 }}
                     >
-                      <Link href={`/${locale}/members/${member.id}`} style={{ textDecoration: 'none', display: 'block' }}>
-                        <div style={{
-                          background: 'white',
-                          border: '1px solid #e5e7eb',
-                          borderRadius: '12px',
-                          padding: '28px 20px',
-                          textAlign: 'center',
-                          transition: 'all 0.3s ease',
-                          cursor: 'pointer',
-                          position: 'relative'
-                        }}
-                        className="member-card"
-                        onMouseEnter={(e) => {
-                          e.currentTarget.style.boxShadow = '0 10px 30px rgba(10,86,148,0.12)';
-                          e.currentTarget.style.transform = 'translateY(-4px)';
-                          e.currentTarget.style.borderColor = '#0a5694';
-                        }}
-                        onMouseLeave={(e) => {
-                          e.currentTarget.style.boxShadow = 'none';
-                          e.currentTarget.style.transform = 'translateY(0)';
-                          e.currentTarget.style.borderColor = '#e5e7eb';
-                        }}
-                        >
-                          {/* Status indicator */}
-                          <div style={{
-                            position: 'absolute',
-                            top: '12px',
-                            right: '12px'
-                          }}>
-                            <Award size={16} style={{ color: '#10b981' }} />
+                      <Link href={`/${locale}/members/${member.id}`} className="group block bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-2xl hover:shadow-blue-900/5 hover:border-blue-200 transition-all duration-300 relative overflow-hidden">
+                        
+                        {/* Verify Badge */}
+                        <div className="absolute top-4 right-4 text-emerald-500 bg-emerald-50 p-1.5 rounded-lg shadow-sm">
+                          <ShieldCheck size={16} />
+                        </div>
+
+                        <div className="flex flex-col items-center text-center">
+                          {/* Photo */}
+                          <div className="w-24 h-24 rounded-full p-1 bg-slate-100 border border-slate-200 mb-6 group-hover:border-blue-400 transition-colors">
+                            <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
+                              {member.photo ? (
+                                <img 
+                                  src={member.photo} 
+                                  alt={member.name} 
+                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
+                                />
+                              ) : (
+                                <User size={40} className="text-slate-300" />
+                              )}
+                            </div>
                           </div>
 
-                          {/* Profile Photo - WordPress UM Style (Circular) */}
-                          <div style={{
-                            width: '90px',
-                            height: '90px',
-                            borderRadius: '50%',
-                            margin: '0 auto 16px',
-                            overflow: 'hidden',
-                            border: '3px solid #e5e7eb',
-                            background: '#f3f4f6',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            transition: 'border-color 0.3s'
-                          }}>
-                            {member.photo ? (
-                              <img 
-                                src={member.photo} 
-                                alt={member.name} 
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
-                              />
-                            ) : (
-                              <User size={40} style={{ color: '#9ca3af' }} />
-                            )}
-                          </div>
-
-                          {/* Name */}
-                          <h3 style={{
-                            fontSize: '16px',
-                            fontWeight: 700,
-                            color: '#111827',
-                            marginBottom: '4px',
-                            lineHeight: 1.3,
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap'
-                          }}>
-                            {member.name}
-                          </h3>
-
-                          {/* Profession */}
-                          <div style={{
-                            fontSize: '13px',
-                            color: '#0a5694',
-                            fontWeight: 500,
-                            marginBottom: '10px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '4px'
-                          }}>
-                            <Briefcase size={13} />
-                            <span style={{ 
-                              overflow: 'hidden', 
-                              textOverflow: 'ellipsis', 
-                              whiteSpace: 'nowrap',
-                              maxWidth: '180px'
-                            }}>
-                              {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
-                            </span>
-                          </div>
-
-                          {/* Location */}
-                          <div style={{
-                            fontSize: '12px',
-                            color: '#6b7280',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '4px',
-                            marginBottom: '14px'
-                          }}>
-                            <MapPin size={12} />
-                            {member.city || member.country || 'Cameroun'}
+                          {/* Info */}
+                          <div className="space-y-1 mb-4 w-full">
+                            <h3 className="text-lg font-bold text-slate-900 truncate px-2 group-hover:text-blue-600 transition-colors">
+                              {member.name}
+                            </h3>
+                            <div className="flex items-center justify-center gap-1.5 text-blue-600 font-bold text-[11px] uppercase tracking-wider">
+                              <Briefcase size={12} />
+                              <span className="truncate max-w-[180px]">
+                                {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                              </span>
+                            </div>
+                            <div className="flex items-center justify-center gap-1.5 text-slate-400 font-medium text-xs">
+                              <MapPin size={12} />
+                              <span className="truncate">{member.city || member.country || 'Cameroun'}</span>
+                            </div>
                           </div>
 
                           {/* Expertise Tags */}
-                          <div style={{
-                            display: 'flex',
-                            flexWrap: 'wrap',
-                            justifyContent: 'center',
-                            gap: '4px'
-                          }}>
+                          <div className="flex flex-wrap justify-center gap-1.5 mb-6">
                             {expArray.slice(0, 2).map((exp: string, idx: number) => (
-                              <span key={idx} style={{
-                                padding: '3px 8px',
-                                background: '#f0f7ff',
-                                color: '#0a5694',
-                                fontSize: '10px',
-                                fontWeight: 600,
-                                borderRadius: '4px',
-                                textTransform: 'uppercase',
-                                letterSpacing: '0.3px'
-                              }}>
-                                {exp.length > 20 ? exp.substring(0, 20) + '...' : exp}
+                              <span key={idx} className="px-2 py-1 bg-slate-50 text-slate-600 text-[10px] font-bold rounded-md border border-slate-100 truncate max-w-[100px]">
+                                {exp}
                               </span>
                             ))}
                             {expArray.length > 2 && (
-                              <span style={{
-                                padding: '3px 8px',
-                                background: '#e8ecf0',
-                                color: '#6b7280',
-                                fontSize: '10px',
-                                fontWeight: 600,
-                                borderRadius: '4px'
-                              }}>
+                              <span className="px-2 py-1 bg-slate-50 text-slate-400 text-[10px] font-bold rounded-md border border-slate-100">
                                 +{expArray.length - 2}
                               </span>
                             )}
                           </div>
 
-                          {/* View Profile Arrow */}
-                          <div style={{
-                            marginTop: '16px',
-                            paddingTop: '14px',
-                            borderTop: '1px solid #f3f4f6',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            gap: '6px',
-                            fontSize: '12px',
-                            fontWeight: 600,
-                            color: '#0a5694',
-                            textTransform: 'uppercase',
-                            letterSpacing: '0.5px'
-                          }}>
-                            {isFR ? 'Voir le profil' : 'View profile'}
-                            <ArrowRight size={14} />
+                          {/* Action */}
+                          <div className="w-full pt-4 border-t border-slate-50 flex items-center justify-center gap-2 text-[11px] font-bold text-blue-600 uppercase tracking-[0.2em] group-hover:gap-4 transition-all">
+                            {isFR ? 'Profil Complet' : 'Full Profile'}
+                            <ChevronRight size={14} />
                           </div>
                         </div>
                       </Link>
@@ -640,87 +375,48 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
               </AnimatePresence>
             </div>
 
-            {/* PAGINATION - WordPress Style */}
+            {/* ==================== PAGINATION ==================== */}
             {totalPages > 1 && (
-              <div style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                gap: '8px',
-                marginTop: '48px',
-                paddingTop: '24px',
-                borderTop: '1px solid #e5e7eb'
-              }}>
+              <div className="mt-16 flex justify-center items-center gap-2">
                 <button
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '8px 14px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px',
-                    background: 'white',
-                    color: currentPage === 1 ? '#d1d5db' : '#374151',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
-                  }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
                 >
-                  <ChevronLeft size={16} />
-                  {isFR ? 'Préc.' : 'Prev'}
+                  <ChevronLeft size={18} />
+                  <span className="hidden sm:inline">{isFR ? 'Précédent' : 'Prev'}</span>
                 </button>
 
-                {Array.from({ length: totalPages }, (_, i) => i + 1)
-                  .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 2)
-                  .map((page, idx, arr) => (
-                    <React.Fragment key={page}>
-                      {idx > 0 && arr[idx - 1] !== page - 1 && (
-                        <span style={{ color: '#9ca3af', fontSize: '14px' }}>...</span>
-                      )}
-                      <button
-                        onClick={() => setCurrentPage(page)}
-                        style={{
-                          width: '36px',
-                          height: '36px',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          border: currentPage === page ? 'none' : '1px solid #d1d5db',
-                          borderRadius: '8px',
-                          background: currentPage === page ? '#0a5694' : 'white',
-                          color: currentPage === page ? 'white' : '#374151',
-                          fontSize: '13px',
-                          fontWeight: currentPage === page ? 700 : 500,
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {page}
-                      </button>
-                    </React.Fragment>
-                  ))
-                }
+                <div className="flex items-center gap-1">
+                  {Array.from({ length: totalPages }, (_, i) => i + 1)
+                    .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
+                    .map((page, idx, arr) => (
+                      <React.Fragment key={page}>
+                        {idx > 0 && arr[idx - 1] !== page - 1 && (
+                          <span className="px-2 text-slate-300 font-bold">...</span>
+                        )}
+                        <button
+                          onClick={() => setCurrentPage(page)}
+                          className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                            currentPage === page 
+                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' 
+                              : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+                          }`}
+                        >
+                          {page}
+                        </button>
+                      </React.Fragment>
+                    ))
+                  }
+                </div>
 
                 <button
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    padding: '8px 14px',
-                    border: '1px solid #d1d5db',
-                    borderRadius: '8px',
-                    background: 'white',
-                    color: currentPage === totalPages ? '#d1d5db' : '#374151',
-                    fontSize: '13px',
-                    fontWeight: 500,
-                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
-                  }}
+                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
                 >
-                  {isFR ? 'Suiv.' : 'Next'}
-                  <ChevronRight size={16} />
+                  <span className="hidden sm:inline">{isFR ? 'Suivant' : 'Next'}</span>
+                  <ChevronRight size={18} />
                 </button>
               </div>
             )}
@@ -728,5 +424,8 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         )}
       </div>
     </div>
+  );
+}
+>
   );
 }

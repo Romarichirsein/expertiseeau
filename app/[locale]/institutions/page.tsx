@@ -16,17 +16,19 @@ import {
   ChevronDown,
   ChevronUp,
   ArrowUpDown,
-  X
+  X,
+  SearchX,
+  ShieldCheck
 } from "lucide-react";
 
 import { getInstitutions } from "@/lib/actions";
 
 const categories = [
-  { id: "all", label: "Toutes", labelEN: "All", icon: Building2, color: "#0a5694" },
-  { id: "public", label: "Secteur Public", labelEN: "Public Sector", icon: Building2, color: "#0ea5e9" },
-  { id: "ngo", label: "ONGs & OSCs", labelEN: "NGOs & CSOs", icon: Users, color: "#10b981" },
-  { id: "private", label: "Secteur Privé", labelEN: "Private Sector", icon: Briefcase, color: "#f59e0b" },
-  { id: "edu", label: "Recherche & Éducation", labelEN: "Research & Education", icon: GraduationCap, color: "#8b5cf6" },
+  { id: "all", label: "Toutes", labelEN: "All", icon: Building2, color: "blue" },
+  { id: "public", label: "Secteur Public", labelEN: "Public Sector", icon: Building2, color: "sky" },
+  { id: "ngo", label: "ONGs & OSCs", labelEN: "NGOs & CSOs", icon: Users, color: "emerald" },
+  { id: "private", label: "Secteur Privé", labelEN: "Private Sector", icon: Briefcase, color: "amber" },
+  { id: "edu", label: "Recherche & Éducation", labelEN: "Research & Education", icon: GraduationCap, color: "violet" },
 ];
 
 type SortField = 'sigle' | 'nom' | 'siege';
@@ -93,469 +95,260 @@ export default function InstitutionsPage({
   };
 
   const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return <ArrowUpDown size={14} style={{ color: '#9ca3af' }} />;
+    if (sortField !== field) return <ArrowUpDown size={14} className="text-slate-300" />;
     return sortDir === 'asc' 
-      ? <ChevronUp size={14} style={{ color: '#0a5694' }} />
-      : <ChevronDown size={14} style={{ color: '#0a5694' }} />;
+      ? <ChevronUp size={14} className="text-[#0a5694]" />
+      : <ChevronDown size={14} className="text-[#0a5694]" />;
   };
 
-  const getCategoryLabel = (catId: string) => {
+  const getCategoryColorClass = (catId: string) => {
     const cat = categories.find(c => c.id === catId);
-    if (!cat) return '';
-    return isFR ? cat.label : cat.labelEN;
-  };
-
-  const getCategoryColor = (catId: string) => {
-    const cat = categories.find(c => c.id === catId);
-    return cat ? cat.color : '#0a5694';
+    if (!cat) return 'bg-blue-50 text-blue-600 border-blue-100';
+    
+    switch(cat.color) {
+      case 'sky': return 'bg-sky-50 text-sky-600 border-sky-100';
+      case 'emerald': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
+      case 'amber': return 'bg-amber-50 text-amber-600 border-amber-100';
+      case 'violet': return 'bg-violet-50 text-violet-600 border-violet-100';
+      default: return 'bg-blue-50 text-blue-600 border-blue-100';
+    }
   };
 
   return (
-    <div className="min-h-screen bg-white">
-      {/* PAGE HEADER - WordPress Style */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #0a5694 0%, #0d7ac7 50%, #0d9488 100%)',
-        padding: '60px 0 40px'
-      }}>
-        <div className="container">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }} 
-            animate={{ opacity: 1, y: 0 }}
-            style={{ textAlign: 'center' }}
-          >
-            <h1 style={{ 
-              color: 'white', 
-              fontSize: '36px', 
-              fontWeight: 300, 
-              letterSpacing: '1px',
-              fontFamily: '"Outfit", sans-serif',
-              marginBottom: '12px'
-            }}>
+    <div className="min-h-screen bg-slate-50/50 font-inter">
+      {/* PREMIUM HERO SECTION */}
+      <div className="relative overflow-hidden bg-[#0a5694] pt-24 pb-32">
+        <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/50 to-transparent" />
+        
+        <div className="container relative z-10 px-6">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md border border-white/30">
+              <Building2 size={14} />
+              {isFR ? 'Acteurs du secteur' : 'Sector Actors'}
+            </span>
+            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight font-outfit">
               {isFR ? 'Répertoire des Institutions' : 'Institutional Directory'}
             </h1>
-            <p style={{ color: 'rgba(255,255,255,0.8)', fontSize: '16px', fontWeight: 400 }}>
+            <p className="text-xl text-blue-100 leading-relaxed opacity-90 font-medium">
               {isFR
-                ? "Les acteurs du secteur de l'eau et de l'assainissement au Cameroun"
-                : "Actors of the water and sanitation sector in Cameroon"}
+                ? "Identifiez les acteurs clés du secteur de l'eau et de l'assainissement au Cameroun."
+                : "Identify the key actors in the water and sanitation sector in Cameroon."}
             </p>
           </motion.div>
         </div>
       </div>
 
-      <div className="container" style={{ padding: '0 24px' }}>
-        {/* CATEGORY TABS - Horizontal like WordPress */}
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0',
-          borderBottom: '2px solid #e5e7eb',
-          marginTop: '0'
-        }}>
-          {categories.map((cat) => {
-            const isActive = activeTab === cat.id;
-            const CatIcon = cat.icon;
-            return (
-              <button
-                key={cat.id}
-                onClick={() => setActiveTab(cat.id)}
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: '8px',
-                  padding: '16px 20px',
-                  border: 'none',
-                  borderBottom: isActive ? `3px solid ${cat.color}` : '3px solid transparent',
-                  background: 'transparent',
-                  color: isActive ? cat.color : '#6b7280',
-                  fontSize: '14px',
-                  fontWeight: isActive ? 700 : 500,
-                  cursor: 'pointer',
-                  transition: 'all 0.2s',
-                  marginBottom: '-2px',
-                  whiteSpace: 'nowrap'
-                }}
-              >
-                <CatIcon size={16} />
-                {isFR ? cat.label : cat.labelEN}
-                {isActive && (
-                  <span style={{
-                    background: cat.color,
-                    color: 'white',
-                    borderRadius: '10px',
-                    padding: '1px 8px',
-                    fontSize: '11px',
-                    fontWeight: 700
-                  }}>
-                    {filteredData.length}
-                  </span>
-                )}
-              </button>
-            );
-          })}
-        </div>
+      <div className="container px-6 -mt-16 relative z-20 pb-32">
+        {/* TABS & SEARCH CARD */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.1 }}
+          className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-10 mb-8"
+        >
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
+            {/* TABS */}
+            <div className="flex flex-wrap gap-2">
+              {categories.map((cat) => {
+                const isActive = activeTab === cat.id;
+                const CatIcon = cat.icon;
+                return (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveTab(cat.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
+                      isActive 
+                        ? 'bg-[#0a5694] text-white border-[#0a5694] shadow-lg shadow-blue-900/10' 
+                        : 'bg-slate-50 text-slate-500 border-slate-100 hover:bg-white hover:border-slate-300'
+                    }`}
+                  >
+                    <CatIcon size={16} />
+                    {isFR ? cat.label : cat.labelEN}
+                  </button>
+                );
+              })}
+            </div>
 
-        {/* SEARCH + COUNT BAR */}
-        <div style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: '16px',
-          padding: '20px 0',
-          borderBottom: '1px solid #f3f4f6'
-        }}>
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            color: '#6b7280',
-            fontSize: '14px'
-          }}>
-            <Building2 size={18} style={{ color: '#0a5694' }} />
-            <span>
-              <strong style={{ color: '#111827' }}>{filteredData.length}</strong>{' '}
-              {isFR ? 'institution(s)' : 'institution(s)'}
-            </span>
-            {search && (
+            {/* SEARCH */}
+            <div className="relative group">
+              <Search 
+                size={18} 
+                className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0a5694] transition-colors" 
+              />
+              <input
+                type="text"
+                placeholder={isFR ? "Rechercher une institution..." : "Search institution..."}
+                className="w-full lg:w-[360px] pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-[#0a5694] focus:ring-4 focus:ring-blue-600/5 transition-all text-slate-900 font-semibold text-sm"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+          </div>
+        </motion.div>
+
+        {/* RESULTS BAR */}
+        <div className="flex items-center justify-between mb-6 px-4">
+           <div className="flex items-center gap-3 text-xs font-bold text-slate-400 uppercase tracking-widest">
+              <Building2 size={16} className="text-[#0a5694]" />
+              <span>
+                <strong className="text-slate-900">{filteredData.length}</strong>{' '}
+                {isFR ? 'institutions trouvées' : 'institutions found'}
+              </span>
+           </div>
+           {search && (
               <button 
                 onClick={() => setSearch('')}
-                style={{
-                  display: 'inline-flex',
-                  alignItems: 'center',
-                  gap: '4px',
-                  padding: '2px 8px',
-                  background: '#fee2e2',
-                  color: '#dc2626',
-                  borderRadius: '12px',
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  border: 'none',
-                  cursor: 'pointer'
-                }}
+                className="flex items-center gap-2 px-3 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-red-100 hover:bg-red-100 transition-colors"
               >
-                <X size={10} />
-                {isFR ? 'Réinitialiser' : 'Reset'}
+                <X size={12} />
+                {isFR ? 'Effacer la recherche' : 'Clear search'}
               </button>
-            )}
-          </div>
-          <div style={{ position: 'relative' }}>
-            <Search 
-              size={16} 
-              style={{ 
-                position: 'absolute', 
-                left: '12px', 
-                top: '50%', 
-                transform: 'translateY(-50%)',
-                color: '#9ca3af' 
-              }} 
-            />
-            <input
-              type="text"
-              placeholder={isFR ? "Rechercher (nom, sigle, ville)..." : "Search (name, acronym, city)..."}
-              style={{
-                paddingLeft: '36px',
-                paddingRight: '16px',
-                paddingTop: '10px',
-                paddingBottom: '10px',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                outline: 'none',
-                fontSize: '14px',
-                width: '320px',
-                background: 'white',
-                transition: 'border-color 0.2s'
-              }}
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onFocus={(e) => e.target.style.borderColor = '#0a5694'}
-              onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
-            />
-          </div>
+           )}
         </div>
 
-        {/* TABLE - WordPress TablePress Style */}
-        {loading ? (
-          <div style={{ 
-            display: 'flex', 
-            flexDirection: 'column', 
-            alignItems: 'center', 
-            justifyContent: 'center', 
-            padding: '80px 0',
-            gap: '16px'
-          }}>
-            <Loader2 
-              size={40} 
-              style={{ color: '#0a5694', animation: 'spin 1s linear infinite' }} 
-            />
-            <p style={{ color: '#6b7280', fontSize: '14px' }}>
-              {isFR ? "Chargement du répertoire..." : "Loading directory..."}
-            </p>
-          </div>
-        ) : filteredData.length === 0 ? (
-          <div style={{ 
-            textAlign: 'center', 
-            padding: '80px 0',
-            color: '#6b7280' 
-          }}>
-            <div style={{
-              width: '80px',
-              height: '80px',
-              borderRadius: '50%',
-              background: '#f3f4f6',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 20px'
-            }}>
-              <Building2 size={36} style={{ color: '#d1d5db' }} />
+        {/* CONTENT AREA */}
+        <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-xl shadow-blue-900/5 overflow-hidden">
+          {loading ? (
+            <div className="py-32 flex flex-col items-center justify-center gap-4">
+              <Loader2 size={48} className="text-[#0a5694] animate-spin" strokeWidth={1.5} />
+              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
+                {isFR ? "Chargement du répertoire..." : "Loading directory..."}
+              </p>
             </div>
-            <h3 style={{ fontSize: '20px', fontWeight: 600, color: '#374151', marginBottom: '8px' }}>
-              {isFR ? 'Aucune institution trouvée' : 'No institutions found'}
-            </h3>
-            <p style={{ maxWidth: '400px', margin: '0 auto 24px', lineHeight: 1.6 }}>
-              {isFR
-                ? 'Aucune institution ne correspond à vos critères de recherche.'
-                : 'No institutions match your search criteria.'}
-            </p>
-            <button 
-              onClick={() => { setSearch(''); setActiveTab('all'); }}
-              style={{
-                padding: '10px 24px',
-                background: '#0a5694',
-                color: 'white',
-                border: 'none',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: 500,
-                cursor: 'pointer'
-              }}
-            >
-              {isFR ? 'Réinitialiser' : 'Reset'}
-            </button>
-          </div>
-        ) : (
-          <div style={{ 
-            overflowX: 'auto', 
-            marginTop: '8px',
-            marginBottom: '60px'
-          }}>
-            <table style={{
-              width: '100%',
-              borderCollapse: 'collapse',
-              fontSize: '14px'
-            }}>
-              <thead>
-                <tr style={{ background: '#f9fafb' }}>
-                  <th 
-                    onClick={() => handleSort('sigle')}
-                    style={{
-                      padding: '14px 16px',
-                      textAlign: 'left',
-                      fontWeight: 700,
-                      fontSize: '12px',
-                      color: '#374151',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px',
-                      borderBottom: '2px solid #e5e7eb',
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                      whiteSpace: 'nowrap',
-                      width: '120px'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {isFR ? 'Sigle' : 'Acronym'}
-                      <SortIcon field="sigle" />
-                    </div>
-                  </th>
-                  <th 
-                    onClick={() => handleSort('nom')}
-                    style={{
-                      padding: '14px 16px',
-                      textAlign: 'left',
-                      fontWeight: 700,
-                      fontSize: '12px',
-                      color: '#374151',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px',
-                      borderBottom: '2px solid #e5e7eb',
-                      cursor: 'pointer',
-                      userSelect: 'none'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {isFR ? 'Nom de l\'institution' : 'Institution Name'}
-                      <SortIcon field="nom" />
-                    </div>
-                  </th>
-                  <th 
-                    onClick={() => handleSort('siege')}
-                    style={{
-                      padding: '14px 16px',
-                      textAlign: 'left',
-                      fontWeight: 700,
-                      fontSize: '12px',
-                      color: '#374151',
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.5px',
-                      borderBottom: '2px solid #e5e7eb',
-                      cursor: 'pointer',
-                      userSelect: 'none',
-                      width: '120px'
-                    }}
-                  >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                      {isFR ? 'Siège' : 'Headquarters'}
-                      <SortIcon field="siege" />
-                    </div>
-                  </th>
-                  <th style={{
-                    padding: '14px 16px',
-                    textAlign: 'left',
-                    fontWeight: 700,
-                    fontSize: '12px',
-                    color: '#374151',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    borderBottom: '2px solid #e5e7eb'
-                  }}>
-                    {isFR ? 'Mandat / Mission' : 'Mandate / Mission'}
-                  </th>
-                  <th style={{
-                    padding: '14px 16px',
-                    textAlign: 'center',
-                    fontWeight: 700,
-                    fontSize: '12px',
-                    color: '#374151',
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.5px',
-                    borderBottom: '2px solid #e5e7eb',
-                    width: '80px'
-                  }}>
-                    {isFR ? 'Site' : 'Website'}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <AnimatePresence>
-                  {filteredData.map((inst, i) => (
-                    <motion.tr
-                      key={inst.id || i}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ delay: i * 0.02 }}
-                      style={{
-                        borderBottom: '1px solid #f3f4f6',
-                        transition: 'background 0.2s',
-                        cursor: 'default'
-                      }}
-                      onMouseEnter={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = '#f0f7ff';
-                      }}
-                      onMouseLeave={(e) => {
-                        (e.currentTarget as HTMLElement).style.background = 'transparent';
-                      }}
-                    >
-                      {/* Sigle */}
-                      <td style={{ 
-                        padding: '14px 16px', 
-                        verticalAlign: 'top' 
-                      }}>
-                        <span style={{
-                          display: 'inline-block',
-                          padding: '4px 10px',
-                          background: `${getCategoryColor(inst.category || 'public')}10`,
-                          color: getCategoryColor(inst.category || 'public'),
-                          fontWeight: 700,
-                          fontSize: '12px',
-                          borderRadius: '6px',
-                          letterSpacing: '0.3px'
-                        }}>
-                          {inst.sigle}
-                        </span>
-                      </td>
+          ) : filteredData.length === 0 ? (
+            <div className="py-32 flex flex-col items-center justify-center text-center px-6">
+              <div className="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 mb-6">
+                <SearchX size={40} />
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-2 font-outfit">
+                {isFR ? 'Aucun résultat' : 'No results found'}
+              </h3>
+              <p className="text-slate-500 font-medium max-w-sm mb-8">
+                {isFR
+                  ? 'Aucune institution ne correspond à vos critères de recherche ou de filtrage.'
+                  : 'No institutions match your search or filter criteria.'}
+              </p>
+              <button 
+                onClick={() => { setSearch(''); setActiveTab('all'); }}
+                className="px-8 py-3 bg-[#0a5694] text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-900/10 hover:bg-[#062040] transition-all"
+              >
+                {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
+              </button>
+            </div>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full border-collapse">
+                <thead>
+                  <tr className="bg-slate-50/50">
+                    <th onClick={() => handleSort('sigle')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
+                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
+                        {isFR ? 'Sigle' : 'Acronym'}
+                        <SortIcon field="sigle" />
+                      </div>
+                    </th>
+                    <th onClick={() => handleSort('nom')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
+                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
+                        {isFR ? 'Institution' : 'Institution'}
+                        <SortIcon field="nom" />
+                      </div>
+                    </th>
+                    <th onClick={() => handleSort('siege')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
+                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
+                        {isFR ? 'Siège' : 'HQ'}
+                        <SortIcon field="siege" />
+                      </div>
+                    </th>
+                    <th className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                      {isFR ? 'Mandat' : 'Mandate'}
+                    </th>
+                    <th className="px-8 py-6 text-center text-[11px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
+                      Site
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-50">
+                  <AnimatePresence>
+                    {filteredData.map((inst, i) => (
+                      <motion.tr
+                        key={inst.id || i}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: i * 0.01 }}
+                        className="hover:bg-blue-50/30 transition-all group"
+                      >
+                        <td className="px-8 py-6 align-top">
+                          <span className={`inline-block px-3 py-1 rounded-lg font-bold text-xs border tracking-wide shadow-sm ${getCategoryColorClass(inst.category)}`}>
+                            {inst.sigle}
+                          </span>
+                        </td>
+                        <td className="px-8 py-6 align-top">
+                          <div className="flex flex-col gap-1">
+                             <span className="text-sm font-extrabold text-slate-900 leading-relaxed group-hover:text-[#0a5694] transition-colors">
+                               {inst.nom}
+                             </span>
+                             <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                               <ShieldCheck size={12} className="text-emerald-500" />
+                               {isFR ? 'Inscrit' : 'Registered'}
+                             </div>
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 align-top">
+                          <div className="flex items-center gap-2 text-slate-600 font-semibold text-sm">
+                            <MapPin size={14} className="text-[#0a5694]/40" />
+                            {inst.siege || inst.city || '---'}
+                          </div>
+                        </td>
+                        <td className="px-8 py-6 align-top max-w-md">
+                          <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3">
+                            {inst.mandat || inst.mission || '—'}
+                          </p>
+                        </td>
+                        <td className="px-8 py-6 align-top text-center">
+                          {inst.site ? (
+                            <a
+                              href={inst.site}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-[#0a5694] hover:text-white hover:shadow-lg hover:shadow-blue-900/10 transition-all border border-slate-100"
+                              title={inst.site}
+                            >
+                              <ExternalLink size={16} />
+                            </a>
+                          ) : (
+                            <span className="text-slate-200 text-xs">---</span>
+                          )}
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
+                </tbody>
+              </table>
+            </div>
+          )}
+        </div>
 
-                      {/* Nom */}
-                      <td style={{ 
-                        padding: '14px 16px', 
-                        fontWeight: 600, 
-                        color: '#111827',
-                        verticalAlign: 'top',
-                        lineHeight: 1.5
-                      }}>
-                        {inst.nom}
-                      </td>
-
-                      {/* Siège */}
-                      <td style={{ 
-                        padding: '14px 16px', 
-                        color: '#6b7280', 
-                        verticalAlign: 'top' 
-                      }}>
-                        <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                          <MapPin size={13} style={{ color: '#0a5694', flexShrink: 0 }} />
-                          {inst.siege || inst.city || 'Cameroun'}
-                        </div>
-                      </td>
-
-                      {/* Mandat */}
-                      <td style={{ 
-                        padding: '14px 16px', 
-                        color: '#6b7280',
-                        lineHeight: 1.6,
-                        verticalAlign: 'top',
-                        fontSize: '13px'
-                      }}>
-                        {inst.mandat || inst.mission || '—'}
-                      </td>
-
-                      {/* Site */}
-                      <td style={{ 
-                        padding: '14px 16px', 
-                        textAlign: 'center', 
-                        verticalAlign: 'top' 
-                      }}>
-                        {inst.site ? (
-                          <a
-                            href={inst.site}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            style={{
-                              display: 'inline-flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
-                              width: '34px',
-                              height: '34px',
-                              borderRadius: '8px',
-                              background: '#f0f7ff',
-                              color: '#0a5694',
-                              transition: 'all 0.2s',
-                              textDecoration: 'none'
-                            }}
-                            onMouseEnter={(e) => {
-                              e.currentTarget.style.background = '#0a5694';
-                              e.currentTarget.style.color = 'white';
-                            }}
-                            onMouseLeave={(e) => {
-                              e.currentTarget.style.background = '#f0f7ff';
-                              e.currentTarget.style.color = '#0a5694';
-                            }}
-                            title={inst.site}
-                          >
-                            <Globe size={16} />
-                          </a>
-                        ) : (
-                          <span style={{ color: '#d1d5db', fontSize: '13px' }}>—</span>
-                        )}
-                      </td>
-                    </motion.tr>
-                  ))}
-                </AnimatePresence>
-              </tbody>
-            </table>
-          </div>
-        )}
+        {/* INFO FOOTER */}
+        <div className="mt-12 p-10 bg-[#0a5694] rounded-[2.5rem] relative overflow-hidden">
+           <div className="absolute top-0 right-0 p-10 opacity-5">
+              <Building2 size={160} />
+           </div>
+           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
+              <div className="max-w-xl">
+                 <h3 className="text-2xl font-extrabold text-white mb-3 font-outfit tracking-tight">
+                    {isFR ? 'Votre institution n\'est pas listée ?' : 'Is your institution missing?'}
+                 </h3>
+                 <p className="text-blue-100 font-medium opacity-90">
+                    {isFR 
+                      ? "Participez à la cartographie du secteur en soumettant votre institution au répertoire national." 
+                      : "Participate in sector mapping by submitting your institution to the national directory."}
+                 </p>
+              </div>
+              <button className="px-10 py-4 bg-white text-[#0a5694] rounded-xl font-bold text-sm shadow-xl shadow-blue-950/20 hover:bg-blue-50 transition-all whitespace-nowrap">
+                 {isFR ? 'Soumettre une institution' : 'Submit Institution'}
+              </button>
+           </div>
+        </div>
       </div>
     </div>
   );
