@@ -1,22 +1,17 @@
 import React from 'react';
 import { 
-  User as UserIcon, 
   Settings, 
   Eye, 
-  FileEdit, 
-  Bell, 
   LogOut, 
   ShieldCheck,
-  Briefcase,
-  ExternalLink,
-  ChevronRight,
   TrendingUp,
   Clock,
   Award,
   CheckCircle,
   AlertCircle,
   MapPin,
-  Globe
+  ChevronRight,
+  FileEdit
 } from 'lucide-react';
 import Link from 'next/link';
 import { createClient } from '@/lib/supabase/server';
@@ -35,8 +30,7 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
     redirect(`/${locale}/login`);
   }
 
-  // Fetch expert profile from the 'experts' table linked by auth ID
-  const { data: expert, error: expertError } = await supabase
+  const { data: expert } = await supabase
     .from('experts')
     .select('*')
     .eq('id', user.id)
@@ -47,26 +41,26 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
   const profession = expert?.profession || (isFR ? 'Expert en Ressources en Eau' : 'Water Resources Expert');
 
   return (
-    <div className="max-w-7xl mx-auto space-y-12 pb-24 px-6 md:px-12">
-      {/* Welcome Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 pt-8">
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-[#0a5694]/10 text-[#0a5694] font-black text-[10px] uppercase tracking-[0.2em] w-fit">
+    <div className="max-w-6xl mx-auto px-6 py-12 space-y-10">
+      {/* Header Area */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b border-gray-100 pb-10">
+        <div className="space-y-2">
+          <div className="flex items-center gap-2 text-[10px] font-bold text-[#0a5694] uppercase tracking-widest">
             <ShieldCheck size={14} />
-            {isFR ? 'Tableau de Bord Sécurisé' : 'Secure Dashboard'}
+            {isFR ? 'Espace Sécurisé' : 'Secure Space'}
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-gray-900 tracking-tight">
+          <h1 className="text-3xl font-bold text-gray-900">
             {isFR ? 'Bonjour, ' : 'Hello, '} <span className="text-[#0a5694]">{displayName.split(' ')[0]}</span>
           </h1>
-          <p className="text-gray-500 font-bold text-lg">
+          <p className="text-sm text-gray-500 font-medium">
             {isFR ? 'Gérez votre visibilité au sein du réseau national.' : 'Manage your visibility within the national network.'}
           </p>
         </div>
         
-        <div className="flex flex-wrap gap-4">
+        <div className="flex flex-wrap gap-3">
           {expert?.id && (
-            <Link href={`/${locale}/members/${expert.id}`} className="px-6 py-4 bg-white text-gray-900 border border-gray-100 rounded-2xl font-black text-sm flex items-center gap-2 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all">
-              <Eye size={20} className="text-[#0a5694]" />
+            <Link href={`/${locale}/members/${expert.id}`} className="px-5 py-2.5 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-700 flex items-center gap-2 hover:bg-gray-50 transition-all">
+              <Eye size={18} className="text-[#0a5694]" />
               {isFR ? 'Voir mon profil' : 'View my profile'}
             </Link>
           )}
@@ -75,160 +69,128 @@ export default async function DashboardPage({ params }: { params: Promise<{ loca
             await signOut();
             redirect(`/${locale}/login`);
           }}>
-            <button className="px-6 py-4 bg-red-50 text-red-600 rounded-2xl font-black text-sm flex items-center gap-2 hover:bg-red-600 hover:text-white transition-all group">
-              <LogOut size={20} className="group-hover:-translate-x-1 transition-transform" />
-              {isFR ? 'Quitter' : 'Logout'}
+            <button className="px-5 py-2.5 bg-red-50 text-red-600 border border-red-100 rounded-xl text-sm font-bold flex items-center gap-2 hover:bg-red-600 hover:text-white transition-all">
+              <LogOut size={18} />
+              {isFR ? 'Déconnexion' : 'Logout'}
             </button>
           </form>
         </div>
       </div>
 
-      {/* Overview Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-blue-900/5 group hover:border-[#0a5694]/20 transition-all">
-           <div className="w-14 h-14 bg-blue-50 rounded-2xl flex items-center justify-center text-[#0a5694] mb-6 group-hover:scale-110 transition-transform">
-              <TrendingUp size={28} />
+      {/* Stats Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+           <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 bg-blue-50 text-[#0a5694] rounded-lg flex items-center justify-center">
+                 <TrendingUp size={20} />
+              </div>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{isFR ? 'Vues' : 'Views'}</span>
            </div>
-           <div>
-              <div className="text-4xl font-black text-gray-900 tracking-tighter">04</div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">{isFR ? 'Consultations du profil' : 'Profile views'}</div>
+           <div className="text-3xl font-bold text-gray-900">04</div>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+           <div className="flex items-center justify-between mb-4">
+              <div className={`w-10 h-10 rounded-lg flex items-center justify-center ${status === 'approved' ? 'bg-emerald-50 text-emerald-600' : 'bg-orange-50 text-orange-600'}`}>
+                 {status === 'approved' ? <CheckCircle size={20} /> : <Clock size={20} />}
+              </div>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Statut</span>
+           </div>
+           <div className={`text-lg font-bold ${status === 'approved' ? 'text-emerald-600' : 'text-orange-600'}`}>
+              {status === 'approved' ? (isFR ? 'Approuvé' : 'Approved') : (isFR ? 'En attente' : 'Pending')}
            </div>
         </div>
 
-        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-blue-900/5 group hover:border-emerald-500/20 transition-all">
-           <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform ${
-             status === 'approved' ? "bg-emerald-50 text-emerald-600" : "bg-orange-50 text-orange-600"
-           }`}>
-              {status === 'approved' ? <CheckCircle size={28} /> : <Clock size={28} />}
-           </div>
-           <div>
-              <div className={`text-xl font-black tracking-tight ${
-                 status === 'approved' ? "text-emerald-600" : "text-orange-600"
-              }`}>
-                {status === 'approved' 
-                  ? (isFR ? 'Statut Approuvé' : 'Status Approved') 
-                  : (isFR ? 'En Attente' : 'Pending Verification')}
+        <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+           <div className="flex items-center justify-between mb-4">
+              <div className="w-10 h-10 bg-purple-50 text-purple-600 rounded-lg flex items-center justify-center">
+                 <Award size={20} />
               </div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">
-                {status === 'approved' 
-                  ? (isFR ? 'Profil visible par les institutions' : 'Profile visible to institutions')
-                  : (isFR ? 'Validation administrative en cours' : 'Administrative validation in progress')}
-              </div>
+              <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Niveau</span>
            </div>
-        </div>
-
-        <div className="bg-white p-8 rounded-[2.5rem] border border-gray-100 shadow-xl shadow-blue-900/5 group hover:border-purple-500/20 transition-all">
-           <div className="w-14 h-14 bg-purple-50 rounded-2xl flex items-center justify-center text-purple-600 mb-6 group-hover:scale-110 transition-transform">
-              <Award size={28} />
-           </div>
-           <div>
-              <div className="text-xl font-black text-gray-900 tracking-tight">Expert Certifié</div>
-              <div className="text-[10px] font-black text-gray-400 uppercase tracking-widest mt-2">{isFR ? 'Niveau d\'accréditation' : 'Accreditation level'}</div>
-           </div>
+           <div className="text-lg font-bold text-gray-900">Expert Certifié</div>
         </div>
       </div>
 
-      {/* Main Content Sections */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
-        <div className="lg:col-span-2 space-y-8">
-          <section className="bg-white rounded-[3rem] border border-gray-100 shadow-2xl shadow-blue-900/5 overflow-hidden">
-            <div className="px-10 py-8 border-b border-gray-50 flex items-center justify-between bg-gray-50/50">
-              <div className="flex items-center gap-4">
-                <div className="w-10 h-10 rounded-xl bg-white shadow-sm flex items-center justify-center text-[#0a5694]">
-                  <Settings size={20} />
-                </div>
-                <h3 className="text-xl font-black text-gray-900 tracking-tight">{isFR ? 'Informations Professionnelles' : 'Professional Information'}</h3>
+      {/* Main Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="px-6 py-4 bg-gray-50 border-b border-gray-200 flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <Settings size={18} className="text-gray-400" />
+                <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">{isFR ? 'Informations' : 'Information'}</h3>
               </div>
-              <button className="px-4 py-2 bg-[#0a5694] text-white rounded-xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-all">{isFR ? 'Modifier' : 'Edit'}</button>
+              <Link href={`/${locale}/members/${user.id}`} className="text-xs font-bold text-[#0a5694] hover:underline">
+                {isFR ? 'Modifier' : 'Edit'}
+              </Link>
             </div>
             
-            <div className="p-10 space-y-10">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                <div className="space-y-3">
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{isFR ? 'Profession actuelle' : 'Current Profession'}</div>
-                  <div className="text-lg font-black text-gray-900">{profession}</div>
+            <div className="p-8 space-y-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">{isFR ? 'Profession' : 'Profession'}</span>
+                  <p className="text-base font-bold text-gray-800">{profession}</p>
                 </div>
-                <div className="space-y-3">
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">Email de contact</div>
-                  <div className="text-lg font-black text-gray-900">{user.email}</div>
-                </div>
-                <div className="space-y-4 md:col-span-2">
-                  <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400">{isFR ? 'Domaines d\'Expertise' : 'Areas of Expertise'}</div>
-                  <div className="flex flex-wrap gap-2">
-                    {expert?.expertise?.map((exp: string, i: number) => (
-                      <span key={i} className="px-4 py-2 bg-gray-50 border border-gray-100 text-[#0a5694] text-xs font-black rounded-xl uppercase tracking-wider">
-                        {exp}
-                      </span>
-                    )) || <span className="text-gray-400 font-bold italic">{isFR ? 'Non spécifié' : 'Not specified'}</span>}
-                  </div>
+                <div className="space-y-1">
+                  <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider">Email</span>
+                  <p className="text-base font-bold text-gray-800">{user.email}</p>
                 </div>
               </div>
-              
-              <div className="pt-10 border-t border-gray-100">
-                <div className="text-[10px] font-black uppercase tracking-[0.2em] text-gray-400 mb-6">{isFR ? 'Documents & Ressources' : 'Documents & Resources'}</div>
+
+              <div className="pt-6 border-t border-gray-100">
+                <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-4">{isFR ? 'Actions rapides' : 'Quick Actions'}</span>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <button className="p-6 bg-[#f8fafc] rounded-[2rem] flex items-center justify-between group hover:bg-white hover:shadow-xl hover:border-[#0a5694]/20 border border-transparent transition-all">
-                    <div className="flex items-center gap-4">
-                       <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#0a5694] shadow-sm">
-                         <FileEdit size={24} />
-                       </div>
-                       <span className="text-sm font-black text-gray-900">{isFR ? 'Mettre à jour mon CV' : 'Update my CV'}</span>
+                  <Link href={`/${locale}/members/${user.id}`} className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between hover:bg-white hover:border-[#0a5694] transition-all group">
+                    <div className="flex items-center gap-3">
+                       <FileEdit size={18} className="text-[#0a5694]" />
+                       <span className="text-sm font-bold text-gray-700">{isFR ? 'Mettre à jour le CV' : 'Update CV'}</span>
                     </div>
-                    <ChevronRight size={20} className="text-gray-300 group-hover:text-[#0a5694] group-hover:translate-x-1 transition-all" />
-                  </button>
-                  <button className="p-6 bg-[#f8fafc] rounded-[2rem] flex items-center justify-between group hover:bg-white hover:shadow-xl hover:border-[#0a5694]/20 border border-transparent transition-all">
-                    <div className="flex items-center gap-4">
-                       <div className="w-12 h-12 bg-white rounded-xl flex items-center justify-center text-[#0a5694] shadow-sm">
-                         <MapPin size={24} />
-                       </div>
-                       <span className="text-sm font-black text-gray-900">{isFR ? 'Localisation & Contact' : 'Location & Contact'}</span>
+                    <ChevronRight size={16} className="text-gray-300 group-hover:text-[#0a5694]" />
+                  </Link>
+                  <Link href={`/${locale}/members/${user.id}`} className="p-4 bg-gray-50 rounded-xl border border-gray-100 flex items-center justify-between hover:bg-white hover:border-[#0a5694] transition-all group">
+                    <div className="flex items-center gap-3">
+                       <MapPin size={18} className="text-[#0a5694]" />
+                       <span className="text-sm font-bold text-gray-700">{isFR ? 'Contact & Localisation' : 'Contact & Location'}</span>
                     </div>
-                    <ChevronRight size={20} className="text-gray-300 group-hover:text-[#0a5694] group-hover:translate-x-1 transition-all" />
-                  </button>
+                    <ChevronRight size={16} className="text-gray-300 group-hover:text-[#0a5694]" />
+                  </Link>
                 </div>
               </div>
             </div>
-          </section>
+          </div>
         </div>
 
-        <div className="space-y-8">
-          <section className="bg-white p-10 rounded-[3rem] border border-gray-100 shadow-2xl shadow-blue-900/5 space-y-8">
-            <div className="flex items-center gap-4 border-b border-gray-50 pb-6">
-              <div className="w-10 h-10 rounded-xl bg-orange-50 text-orange-600 flex items-center justify-center">
-                <Bell size={20} />
+        <div className="space-y-6">
+          <div className="bg-white p-6 rounded-2xl border border-gray-200 shadow-sm">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="w-8 h-8 bg-orange-50 text-orange-600 rounded-lg flex items-center justify-center">
+                <AlertCircle size={18} />
               </div>
-              <h3 className="text-xl font-black text-gray-900 tracking-tight">{isFR ? 'Alertes' : 'Notifications'}</h3>
+              <h3 className="text-sm font-bold text-gray-900 uppercase tracking-wider">{isFR ? 'Notifications' : 'Notifications'}</h3>
             </div>
-            <div className="space-y-4">
-              <div className="p-6 bg-orange-50 rounded-3xl border border-orange-100/50">
-                <div className="flex items-start gap-3">
-                  <AlertCircle size={18} className="text-orange-600 mt-1" />
-                  <div className="space-y-1">
-                    <span className="font-black text-xs text-orange-600 uppercase tracking-widest block">{isFR ? 'Action Requise' : 'Action Required'}</span>
-                    <p className="text-gray-600 text-sm font-bold leading-relaxed">
-                      {isFR ? 'Complétez votre biographie pour augmenter votre score de visibilité.' : 'Complete your biography to increase your visibility score.'}
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="p-4 bg-orange-50 rounded-xl border border-orange-100">
+              <p className="text-xs font-bold text-orange-800 leading-relaxed">
+                {isFR ? 'Complétez votre profil pour être visible par les institutions.' : 'Complete your profile to be visible to institutions.'}
+              </p>
             </div>
-          </section>
+          </div>
 
-          <section className="bg-gray-900 p-10 rounded-[3rem] shadow-2xl shadow-blue-900/20 text-white relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-12 opacity-5 scale-150 rotate-12 group-hover:rotate-45 transition-transform duration-700">
-               <ShieldCheck size={100} />
-            </div>
-            <h3 className="text-2xl font-black tracking-tight leading-tight mb-4 relative z-10">{isFR ? 'Besoin d\'assistance ?' : 'Need help?'}</h3>
-            <p className="text-gray-400 text-sm font-bold mb-8 relative z-10 leading-relaxed">
-              {isFR ? 'Notre équipe support est disponible pour vous accompagner dans l\'utilisation de la plateforme.' : 'Our support team is available to assist you in using the platform.'}
+          <div className="bg-gray-900 p-8 rounded-2xl text-white">
+            <h3 className="text-lg font-bold mb-3">{isFR ? 'Besoin d\'aide ?' : 'Need help?'}</h3>
+            <p className="text-xs text-gray-400 font-medium mb-6 leading-relaxed">
+              {isFR ? 'Contactez notre support technique pour toute question relative à votre compte.' : 'Contact our technical support for any questions regarding your account.'}
             </p>
-            <button className="w-full py-4 bg-white text-gray-900 rounded-2xl font-black text-sm flex items-center justify-center gap-2 hover:bg-gray-100 hover:scale-105 transition-all relative z-10">
+            <button className="w-full py-3 bg-white text-gray-900 rounded-xl font-bold text-xs uppercase tracking-wider hover:bg-gray-100 transition-all">
               {isFR ? 'Contacter le support' : 'Contact Support'}
-              <ExternalLink size={18} />
             </button>
-          </section>
+          </div>
         </div>
       </div>
+    </div>
+  );
+}
+v>
     </div>
   );
 }

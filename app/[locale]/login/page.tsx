@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Mail, Lock, LogIn, ArrowRight, UserPlus, Eye, EyeOff, Globe, ShieldCheck, ChevronRight, Loader2 } from 'lucide-react';
+import { Mail, Lock, LogIn, UserPlus, Eye, EyeOff, Globe, ShieldCheck, ChevronRight, Loader2 } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { signInWithEmail } from '@/lib/actions/auth';
@@ -33,135 +33,115 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-[#f8fafc] relative overflow-hidden">
-      {/* Background Orbs */}
-      <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-[20%] -left-[10%] w-[60%] h-[60%] bg-blue-50 rounded-full blur-[120px] opacity-50" />
-        <div className="absolute -bottom-[20%] -right-[10%] w-[60%] h-[60%] bg-teal-50 rounded-full blur-[120px] opacity-50" />
-      </div>
-
-      <div className="max-w-[480px] w-full relative z-10">
+    <div className="min-h-screen flex items-center justify-center p-6 bg-gray-50/50">
+      <div className="max-w-[440px] w-full">
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-center mb-10"
+          className="text-center mb-8"
         >
-          <Link href={`/${locale}`} className="inline-block mb-8">
-            <img src="/images/logo.png" alt="Logo" className="h-16 mx-auto" />
+          <Link href={`/${locale}`} className="inline-block mb-6">
+            <img src="/images/logo.png" alt="Logo" className="h-14 mx-auto" />
           </Link>
-          <h1 className="text-3xl font-black text-gray-900 tracking-tight mb-3">
+          <h1 className="text-2xl font-bold text-gray-900 tracking-tight mb-2">
             {isFR ? 'Accès Membres' : 'Member Access'}
           </h1>
-          <p className="text-gray-500 font-medium">
+          <p className="text-sm text-gray-500 font-medium">
             {isFR ? 'Connectez-vous pour gérer votre profil expert.' : 'Log in to manage your expert profile.'}
           </p>
         </motion.div>
 
         <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
-          className="bg-white rounded-[2.5rem] shadow-2xl shadow-blue-900/5 border border-gray-100 p-8 md:p-12"
+          className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8 md:p-10"
         >
           {error && (
-            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-2xl text-sm font-bold border border-red-100">
+            <div className="mb-6 p-4 bg-red-50 text-red-600 rounded-xl text-xs font-bold border border-red-100">
               {error}
             </div>
           )}
-          <form className="space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-2">
-              <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] ml-1">Email</label>
-              <div className="relative group">
-                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0a5694] transition-colors">
-                  <Mail size={20} />
-                </div>
+          <form className="space-y-5" onSubmit={handleSubmit}>
+            <div className="space-y-1.5">
+              <label className="text-xs font-bold text-gray-400 uppercase tracking-wider ml-1">Email</label>
+              <div className="relative">
+                <Mail size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input 
                   required 
                   type="email" 
                   name="email"
-                  className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0a5694] focus:bg-white transition-all text-gray-900 font-bold" 
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-12 py-3.5 outline-none focus:bg-white focus:border-[#0a5694] transition-all text-gray-900 font-medium" 
                   placeholder="votre@email.com" 
                 />
               </div>
             </div>
 
-            <div className="space-y-2">
+            <div className="space-y-1.5">
               <div className="flex justify-between items-center ml-1">
-                <label className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em]">{isFR ? 'Mot de passe' : 'Password'}</label>
-                <Link href="#" className="text-[10px] font-black text-[#0a5694] hover:underline uppercase tracking-widest">{isFR ? 'Oublié ?' : 'Forgot?'}</Link>
+                <label className="text-xs font-bold text-gray-400 uppercase tracking-wider">{isFR ? 'Mot de passe' : 'Password'}</label>
+                <Link href="#" className="text-[10px] font-bold text-[#0a5694] hover:underline uppercase tracking-wider">{isFR ? 'Oublié ?' : 'Forgot?'}</Link>
               </div>
-              <div className="relative group">
-                <div className="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-[#0a5694] transition-colors">
-                  <Lock size={20} />
-                </div>
+              <div className="relative">
+                <Lock size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" />
                 <input 
                   required 
                   type={showPassword ? "text" : "password"} 
                   name="password"
-                  className="w-full bg-[#f8fafc] border border-gray-100 rounded-2xl px-14 py-4 outline-none focus:border-[#0a5694] focus:bg-white transition-all text-gray-900 font-bold" 
+                  className="w-full bg-gray-50 border border-gray-200 rounded-xl px-12 py-3.5 outline-none focus:bg-white focus:border-[#0a5694] transition-all text-gray-900 font-medium" 
                   placeholder="••••••••" 
                 />
                 <button 
                   type="button" 
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                 >
-                  {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
               </div>
             </div>
 
-            <button type="submit" disabled={loading} className="w-full bg-[#0a5694] text-white py-5 rounded-2xl font-black text-lg flex items-center justify-center gap-3 shadow-xl shadow-blue-900/10 hover:scale-[1.02] active:scale-[0.98] transition-all group disabled:opacity-50">
-              {loading ? <Loader2 className="animate-spin" size={20} /> : (
+            <button type="submit" disabled={loading} className="w-full bg-[#0a5694] text-white py-4 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-lg shadow-blue-900/10 hover:bg-[#0a467a] transition-all disabled:opacity-50">
+              {loading ? <Loader2 className="animate-spin" size={18} /> : (
                 <>
                   {isFR ? 'Se connecter' : 'Log In'}
-                  <LogIn size={20} className="group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
           </form>
 
-          <div className="mt-12 text-center">
-            <div className="relative mb-8">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-gray-100"></div></div>
-              <div className="relative flex justify-center text-[10px] font-black uppercase tracking-[0.2em]"><span className="bg-white px-4 text-gray-400">{isFR ? 'Nouveau sur le réseau ?' : 'New to the network?'}</span></div>
-            </div>
+          <div className="mt-10 pt-10 border-t border-gray-100">
+            <p className="text-center text-xs font-bold text-gray-400 uppercase tracking-wider mb-6">
+               {isFR ? 'Nouveau sur le réseau ?' : 'New to the network?'}
+            </p>
             
-            <div className="grid grid-cols-1 gap-4">
-              <Link href={`/${locale}/register/resident`} className="flex items-center justify-between p-5 bg-[#f8fafc] rounded-2xl border border-gray-100 hover:border-[#0a5694]/30 hover:bg-white transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-blue-50 text-[#0a5694] flex items-center justify-center">
-                    <UserPlus size={20} />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-black text-gray-900">{isFR ? 'Expert Résident' : 'Resident Expert'}</div>
-                    <div className="text-[10px] font-bold text-gray-400">{isFR ? 'Basé au Cameroun' : 'Based in Cameroon'}</div>
-                  </div>
+            <div className="grid grid-cols-1 gap-3">
+              <Link href={`/${locale}/register/resident`} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-[#0a5694] hover:bg-white transition-all group">
+                <div className="flex items-center gap-3">
+                  <UserPlus size={18} className="text-[#0a5694]" />
+                  <span className="text-sm font-bold text-gray-700">{isFR ? 'Expert Résident' : 'Resident Expert'}</span>
                 </div>
-                <ChevronRight size={18} className="text-gray-300 group-hover:text-[#0a5694] group-hover:translate-x-1 transition-all" />
+                <ChevronRight size={16} className="text-gray-300 group-hover:text-[#0a5694] group-hover:translate-x-1 transition-all" />
               </Link>
 
-              <Link href={`/${locale}/register/diaspora`} className="flex items-center justify-between p-5 bg-[#f8fafc] rounded-2xl border border-gray-100 hover:border-teal-500/30 hover:bg-white transition-all group">
-                <div className="flex items-center gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-teal-50 text-teal-600 flex items-center justify-center">
-                    <Globe size={20} />
-                  </div>
-                  <div className="text-left">
-                    <div className="text-sm font-black text-gray-900">{isFR ? 'Expert Diaspora' : 'Diaspora Expert'}</div>
-                    <div className="text-[10px] font-bold text-gray-400">{isFR ? 'Basé à l\'étranger' : 'Based abroad'}</div>
-                  </div>
+              <Link href={`/${locale}/register/diaspora`} className="flex items-center justify-between p-4 bg-gray-50 rounded-xl border border-gray-100 hover:border-[#0a5694] hover:bg-white transition-all group">
+                <div className="flex items-center gap-3">
+                  <Globe size={18} className="text-[#0a5694]" />
+                  <span className="text-sm font-bold text-gray-700">{isFR ? 'Expert Diaspora' : 'Diaspora Expert'}</span>
                 </div>
-                <ChevronRight size={18} className="text-gray-300 group-hover:text-teal-600 group-hover:translate-x-1 transition-all" />
+                <ChevronRight size={16} className="text-gray-300 group-hover:text-[#0a5694] group-hover:translate-x-1 transition-all" />
               </Link>
             </div>
           </div>
         </motion.div>
 
-        <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-black text-gray-400 uppercase tracking-widest">
+        <div className="mt-8 flex items-center justify-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest">
           <ShieldCheck size={14} className="text-[#0a5694]" />
           <span>Accès sécurisé par l'État du Cameroun</span>
         </div>
       </div>
     </div>
+  );
+}
   );
 }
