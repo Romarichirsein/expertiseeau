@@ -43,7 +43,7 @@ export default function RegisterEntryPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-32 relative overflow-hidden font-inter">
+    <div className="min-h-screen bg-slate-50/50 pt-44 pb-32 relative overflow-hidden font-inter">
       {/* Background Orbs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-blue-100/30 rounded-full blur-[100px]" />

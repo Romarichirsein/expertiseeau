@@ -132,7 +132,7 @@ export default function MemberProfileClient({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-32 pt-32 font-inter">
+    <div className="min-h-screen bg-slate-50/50 pb-32 pt-44 font-inter">
       <div className="max-w-4xl mx-auto px-6 space-y-8">
         
         {/* Navigation / Actions */}

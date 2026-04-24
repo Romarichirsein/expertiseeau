@@ -33,7 +33,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50/50 font-inter">
+    <div className="min-h-screen flex items-center justify-center p-6 pt-32 bg-slate-50/50 font-inter">
       <div className="max-w-[460px] w-full">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}

@@ -14,6 +14,7 @@ import {
   Briefcase,
   ArrowRight,
   Award,
+  ShieldCheck,
   X,
   ChevronDown,
   Globe
@@ -119,7 +120,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
   return (
     <div className="min-h-screen bg-slate-50/50 font-inter">
       {/* ==================== PAGE HEADER ==================== */}
-      <div className="bg-[#062040] pt-32 pb-20 relative overflow-hidden">
+      <div className="bg-[#062040] pt-44 pb-20 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-5" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
         
@@ -424,8 +425,5 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         )}
       </div>
     </div>
-  );
-}
->
   );
 }

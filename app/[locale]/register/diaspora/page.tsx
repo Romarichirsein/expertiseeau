@@ -29,7 +29,7 @@ export default function RegisterDiasporaPage({ params }: { params: Promise<{ loc
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-6 bg-slate-50/50 font-inter">
+      <div className="min-h-screen flex items-center justify-center p-6 pt-32 bg-slate-50/50 font-inter">
         <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-12 text-center max-w-md">
           <div className="w-20 h-20 rounded-full bg-teal-50 text-teal-500 flex items-center justify-center mx-auto mb-8">
             <CheckCircle size={40} />
@@ -50,7 +50,7 @@ export default function RegisterDiasporaPage({ params }: { params: Promise<{ loc
   }
 
   return (
-    <div className="min-h-screen bg-slate-50/50 py-32 font-inter">
+    <div className="min-h-screen bg-slate-50/50 pt-44 pb-32 font-inter">
       <div className="max-w-[680px] mx-auto px-6">
         <motion.div 
           initial={{ opacity: 0, y: 10 }}

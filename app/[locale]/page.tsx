@@ -54,7 +54,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   return (
     <div className="bg-white overflow-hidden font-inter">
       {/* ==================== PREMIUM HERO SECTION ==================== */}
-      <section className="relative min-h-[90vh] flex items-center pt-20 pb-32">
+      <section className="relative min-h-[90vh] flex items-center pt-40 pb-32">
         {/* Modern Background */}
         <div className="absolute inset-0">
            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-50 via-white to-blue-50/20" />
