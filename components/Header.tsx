@@ -105,19 +105,19 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
             
             <div className="hidden md:flex items-center gap-4">
               <Link
-                href={withLocale('/login')}
-                className="flex items-center gap-2.5 px-6 py-3 border border-gray-200 rounded-xl text-[14px] font-bold text-[#003366] bg-white hover:bg-gray-50 hover:border-gray-300 transition-all shadow-sm"
-              >
-                <LogIn size={18} className="text-[#003366]" />
-                <span>{isFR ? 'Se connecter' : 'Log in'}</span>
-              </Link>
-              <Link
-                href={withLocale('/register')}
-                className="flex items-center gap-2.5 px-7 py-3 bg-[#1e40af] text-white rounded-xl text-[14px] font-extrabold hover:bg-[#1a368e] shadow-lg shadow-blue-900/20 transition-all active:scale-95"
-              >
-                <UserPlus size={18} />
-                <span>{isFR ? "S'inscrire" : 'Register'}</span>
-              </Link>
+              href={withLocale('/login')}
+              className="flex items-center gap-2.5 px-7 py-3 border-2 border-gray-200 rounded-xl text-[14px] font-black text-[#003366] bg-white hover:bg-gray-50 hover:border-[#003366] hover:scale-105 active:scale-95 transition-all shadow-sm"
+            >
+              <LogIn size={18} className="text-[#003366]" />
+              <span>{isFR ? 'Se connecter' : 'Log in'}</span>
+            </Link>
+            <Link
+              href={withLocale('/register')}
+              className="flex items-center gap-2.5 px-8 py-3 bg-[#1e40af] text-white rounded-xl text-[14px] font-black hover:bg-[#1a368e] hover:scale-105 active:scale-95 shadow-[0_10px_30px_rgba(30,64,175,0.3)] transition-all"
+            >
+              <UserPlus size={18} />
+              <span>{isFR ? "S'inscrire" : 'Register'}</span>
+            </Link>
             </div>
 
             {/* MOBILE TOGGLE */}

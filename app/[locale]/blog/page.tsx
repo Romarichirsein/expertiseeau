@@ -78,7 +78,7 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
   return (
     <div className="pb-32 bg-slate-50/50 min-h-screen font-inter">
       {/* PREMIUM HERO SECTION */}
-      <div className="relative overflow-hidden bg-[#0a5694] pt-48 pb-40">
+      <div className="relative overflow-hidden bg-[#0a5694] pt-64 pb-40">
         <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/50 to-transparent" />
         

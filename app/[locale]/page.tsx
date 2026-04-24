@@ -54,7 +54,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
   return (
     <div className="bg-white overflow-hidden font-inter pb-32">
       {/* ==================== PREMIUM HERO SECTION ==================== */}
-      <section className="relative min-h-[95vh] flex items-center pt-48 pb-32">
+      <section className="relative min-h-[95vh] flex items-center pt-64 pb-40">
         {/* Modern Background */}
         <div className="absolute inset-0">
            <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-slate-50 via-white to-blue-50/20" />
@@ -105,12 +105,12 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                 </p>
               </div>
               
-              <div className="flex flex-wrap gap-6 pt-4">
-                <Link href={`/${locale}/members`} className="px-10 py-5 bg-[#0a5694] text-white rounded-2xl font-extrabold text-lg shadow-2xl shadow-blue-950/20 hover:bg-[#062040] hover:-translate-y-1 transition-all flex items-center gap-4 group">
+              <div className="flex flex-wrap gap-6 pt-6">
+                <Link href={`/${locale}/members`} className="px-12 py-6 bg-[#0a5694] text-white rounded-2xl font-black text-xl shadow-[0_20px_50px_rgba(10,86,148,0.3)] hover:bg-[#062040] hover:scale-105 hover:-translate-y-1 active:scale-95 transition-all flex items-center gap-4 group">
                   {isFR ? 'Explorer l\'Annuaire' : 'Explore Directory'}
-                  <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                  <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
                 </Link>
-                <Link href={`/${locale}/register`} className="px-10 py-5 bg-white text-slate-900 border border-slate-200 rounded-2xl font-extrabold text-lg shadow-sm hover:bg-slate-50 hover:border-slate-300 transition-all">
+                <Link href={`/${locale}/register`} className="px-12 py-6 bg-white text-slate-900 border-2 border-slate-200 rounded-2xl font-black text-xl shadow-xl hover:bg-slate-50 hover:border-[#0a5694] hover:text-[#0a5694] hover:scale-105 active:scale-95 transition-all">
                   {isFR ? 'Rejoindre le Réseau' : 'Join the Network'}
                 </Link>
               </div>
@@ -208,7 +208,7 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
       </section>
 
       {/* ==================== SERVICES SECTION ==================== */}
-      <section className="py-32 bg-white">
+      <section className="py-40 bg-white">
         <div className="container px-6">
           <div className="flex flex-col md:flex-row justify-between items-end gap-10 mb-20">
             <div className="max-w-3xl space-y-6">
@@ -282,9 +282,9 @@ export default function HomePage({ params }: { params: Promise<{ locale: string 
                        ? 'Experts camerounais résidant à l\'étranger, rejoignez le réseau national pour partager vos compétences et contribuer au développement durable du pays.'
                        : 'Cameroonian experts living abroad, join the national network to share your skills and contribute to the sustainable development of the country.'}
                   </p>
-                  <Link href={`/${locale}/register/diaspora`} className="inline-flex items-center gap-4 px-10 py-5 bg-teal-500 text-white rounded-2xl font-extrabold text-lg hover:bg-teal-600 hover:-translate-y-1 transition-all shadow-2xl shadow-teal-500/30 group">
+                  <Link href={`/${locale}/register/diaspora`} className="inline-flex items-center gap-4 px-12 py-6 bg-teal-500 text-white rounded-2xl font-black text-xl hover:bg-teal-600 hover:scale-105 active:scale-95 transition-all shadow-[0_20px_50px_rgba(20,184,166,0.3)] group">
                      {isFR ? 'Rejoindre en tant qu\'Expert Diaspora' : 'Join as Diaspora Expert'}
-                     <ArrowRight size={22} className="group-hover:translate-x-1 transition-transform" />
+                     <ArrowRight size={24} className="group-hover:translate-x-2 transition-transform" />
                   </Link>
                </motion.div>
                <div className="relative">
