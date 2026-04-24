@@ -118,9 +118,10 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
   ];
 
   return (
-    <footer className="bg-[#061126] text-white">
-      <div className="mx-auto max-w-[1640px] px-5 pb-8 pt-24 sm:px-8 lg:px-12 xl:px-14">
-        <div className="grid gap-14 lg:grid-cols-[1.08fr_1.62fr] lg:items-start lg:gap-16">
+    <footer className="px-4 md:px-8 pb-8 pt-10">
+      <div className="mx-auto max-w-[1550px] bg-[#061126] text-white rounded-[3rem] shadow-2xl overflow-hidden border border-white/5">
+        <div className="px-8 pb-12 pt-20 sm:px-12 lg:px-16 xl:px-20">
+          <div className="grid gap-16 lg:grid-cols-[1fr_1.5fr] lg:items-start lg:gap-20">
           <div className="space-y-20 lg:border-r lg:border-white/10 lg:pr-14">
             <div className="flex items-start gap-5">
               <div className="flex shrink-0 items-center justify-center rounded-[34px] bg-white p-3 shadow-[0_18px_40px_rgba(0,0,0,0.22)]">
