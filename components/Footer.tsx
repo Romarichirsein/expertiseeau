@@ -119,9 +119,9 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
 
   return (
     <footer className="bg-[#061126] text-white">
-      <div className="mx-auto max-w-[1640px] px-5 pb-8 pt-14 sm:px-8 lg:px-12 xl:px-14">
+      <div className="mx-auto max-w-[1640px] px-5 pb-8 pt-24 sm:px-8 lg:px-12 xl:px-14">
         <div className="grid gap-14 lg:grid-cols-[1.08fr_1.62fr] lg:items-start lg:gap-16">
-          <div className="space-y-10 lg:border-r lg:border-white/10 lg:pr-14">
+          <div className="space-y-20 lg:border-r lg:border-white/10 lg:pr-14">
             <div className="flex items-start gap-5">
               <div className="flex shrink-0 items-center justify-center rounded-[34px] bg-white p-3 shadow-[0_18px_40px_rgba(0,0,0,0.22)]">
                 <img
@@ -137,7 +137,7 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
                   <br />
                   <span className="text-[#3d8bff]">Cameroun</span>
                 </h3>
-                <p className="mt-4 text-[11px] font-bold uppercase tracking-[0.36em] text-slate-500 sm:text-[12px]">
+                <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.36em] text-slate-500 sm:text-[12px]">
                   Water &amp; Sanitation Network
                 </p>
               </div>
@@ -149,7 +149,7 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
                 : 'The national reference platform designed to structure, elevate, and connect Cameroonian expertise in the water and sanitation sectors.'}
             </p>
 
-            <div className="grid gap-4 sm:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-3">
               {stats.map((item) => (
                 <div
                   key={item.label}
@@ -166,7 +166,7 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
               ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-x-10 gap-y-4">
+            <div className="flex flex-wrap items-center gap-x-14 gap-y-6">
               {quickActions.map((item) => (
                 <Link
                   key={item.label}
