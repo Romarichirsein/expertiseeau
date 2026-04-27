@@ -172,14 +172,14 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
                 ))}
               </div>
 
-              <div className="flex flex-wrap items-center gap-x-14 gap-y-6">
+              <div className="flex flex-wrap items-center gap-4">
                 {quickActions.map((item) => (
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="inline-flex items-center gap-4 text-[18px] font-medium text-slate-200 transition-colors hover:text-white"
+                    className="btn-premium btn-secondary !bg-white/5 !border-white/10 !text-white hover:!bg-white/10 !px-6 !py-3 !text-[14px]"
                   >
-                    <item.icon size={28} className="text-[#3d8bff]" />
+                    <item.icon size={20} className="text-[#3d8bff]" />
                     <span>{item.label}</span>
                   </Link>
                 ))}

@@ -231,7 +231,7 @@ export default function InstitutionsPage({
               </p>
               <button 
                 onClick={() => { setSearch(''); setActiveTab('all'); }}
-                className="px-8 py-3 bg-[#0a5694] text-white rounded-xl font-bold text-sm shadow-lg shadow-blue-900/10 hover:bg-[#062040] transition-all"
+                className="btn-premium btn-primary !px-8 !py-3"
               >
                 {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
               </button>
@@ -344,7 +344,7 @@ export default function InstitutionsPage({
                       : "Participate in sector mapping by submitting your institution to the national directory."}
                  </p>
               </div>
-              <button className="px-10 py-4 bg-white text-[#0a5694] rounded-xl font-bold text-sm shadow-xl shadow-blue-950/20 hover:bg-blue-50 transition-all whitespace-nowrap">
+              <button className="btn-premium btn-secondary !px-10 !py-4 whitespace-nowrap">
                  {isFR ? 'Soumettre une institution' : 'Submit Institution'}
               </button>
            </div>

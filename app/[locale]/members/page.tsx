@@ -281,7 +281,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
             </p>
             <button 
               onClick={clearAllFilters}
-              className="px-8 py-3 bg-blue-600 text-white rounded-xl font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-600/20"
+              className="btn-premium btn-primary !px-8 !py-3"
             >
               {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
             </button>

@@ -144,7 +144,7 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       <textarea required rows={6} className="w-full bg-slate-50 border border-slate-200 rounded-2xl px-6 py-4 outline-none focus:border-[#0a5694] focus:bg-white focus:ring-4 focus:ring-blue-600/5 transition-all text-slate-900 font-semibold text-sm resize-none leading-relaxed" placeholder={isFR ? "Comment pouvons-nous vous aider ?" : "How can we help you?"}></textarea>
                     </div>
 
-                    <button type="submit" className="w-full bg-[#0a5694] text-white py-5 rounded-2xl font-extrabold text-lg flex items-center justify-center gap-4 shadow-xl shadow-blue-900/10 hover:bg-[#062040] hover:-translate-y-1 transition-all group">
+                    <button type="submit" className="btn-premium btn-primary w-full !py-5">
                       {isFR ? 'Envoyer le message' : 'Send Message'}
                       <Send size={22} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
                     </button>

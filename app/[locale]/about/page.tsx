@@ -226,17 +226,17 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
                 : 'Join a community of committed experts and help shape innovative water solutions in Cameroon.'}
             </p>
 
-            <div className="flex flex-col justify-center gap-6 sm:flex-row">
+            <div className="flex flex-col justify-center gap-4 sm:flex-row">
               <Link
                 href={`/${locale}/register/resident`}
-                className="rounded-2xl bg-[#0a5694] px-10 py-5 text-lg font-extrabold text-white shadow-xl shadow-blue-950/20 transition-all hover:bg-blue-700"
+                className="btn-premium btn-primary !px-12 !py-4"
               >
-                {isFR ? 'Rejoindre le reseau' : 'Join the network'}
+                {isFR ? 'Rejoindre le réseau' : 'Join the network'}
               </Link>
 
               <Link
                 href={`/${locale}/contact`}
-                className="rounded-2xl border border-white/10 bg-white/10 px-10 py-5 text-lg font-extrabold text-white backdrop-blur-sm transition-all hover:bg-white/20"
+                className="btn-premium btn-secondary !px-12 !py-4"
               >
                 {isFR ? 'Nous contacter' : 'Contact us'}
               </Link>
