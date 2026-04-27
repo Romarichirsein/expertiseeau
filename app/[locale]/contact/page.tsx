@@ -37,9 +37,8 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
 
   return (
     <div className="pb-32 bg-slate-50/50 min-h-screen font-inter">
-      <div className="h-[140px] w-full" />
       {/* PREMIUM HERO SECTION */}
-      <div className="relative overflow-hidden bg-[#0a5694] pt-20 pb-32">
+      <div className="relative overflow-hidden bg-[#0a5694] pt-16 pb-24">
         <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
         <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/50 to-transparent" />
         

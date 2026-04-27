@@ -52,8 +52,8 @@ export default async function RootLayout({
           {/* Header pleine largeur en haut */}
           <Header locale={locale} />
 
-          {/* Contenu principal */}
-          <main id="main-content">
+          {/* Contenu principal — pt-[136px] compense le header fixe */}
+          <main id="main-content" className="pt-[136px]">
             {children}
           </main>
 

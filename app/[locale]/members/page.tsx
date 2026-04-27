@@ -119,9 +119,8 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
 
   return (
     <div className="min-h-screen bg-slate-50/50 font-inter pb-32">
-      <div className="h-[140px] w-full" />
       {/* ==================== PAGE HEADER ==================== */}
-      <div className="bg-[#062040] pt-20 pb-20 relative overflow-hidden">
+      <div className="bg-[#062040] pt-16 pb-16 relative overflow-hidden">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-5" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
         
