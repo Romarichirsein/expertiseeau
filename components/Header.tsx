@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Globe, LogIn, Mail, Menu, Phone, UserPlus, X } from 'lucide-react';
+import { Globe, LogIn, Mail, Menu, Phone, UserPlus, X, ChevronDown } from 'lucide-react';
 
 const navItems = [
   { label: 'Accueil', labelEn: 'Home', href: '/' },
@@ -19,8 +19,15 @@ const navItems = [
 export default function Header({ locale = 'fr' }: { locale?: string }) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const isFR = locale === 'fr';
   const basePath = pathname.replace(/^\/(fr|en)/, '') || '/';
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   const withLocale = (href: string) => (href === '/' ? `/${locale}` : `/${locale}${href}`);
 
@@ -28,160 +35,158 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
     pathname === `/${locale}${href}` || (href === '/' && pathname === `/${locale}`);
 
   return (
-    <header className="fixed left-0 right-0 top-0 z-[100] w-full font-inter">
-      {/* ================= TOP BAR ================= */}
-      <div className="bg-[#003366] text-white py-2.5 text-[12px] font-medium border-b border-white/5">
-        <div className="max-w-[1550px] mx-auto px-8 flex justify-between items-center">
-          <div className="flex items-center gap-6">
-            <div className="flex items-center gap-2">
-              <Phone size={14} className="text-white/80" />
-              <span className="font-semibold">+237 222 23 45 67</span>
+    <header className={`fixed left-0 right-0 top-0 z-[100] w-full transition-all duration-500 ${
+      scrolled ? 'translate-y-0' : 'translate-y-0'
+    }`}>
+      
+      {/* ================= TOP BAR (PREMIUM MINIMAL) ================= */}
+      <div className="bg-[#062040] text-white/80 py-2 text-[11px] font-bold tracking-[0.1em] uppercase border-b border-white/5">
+        <div className="max-w-[1600px] mx-auto px-10 flex justify-between items-center">
+          <div className="flex items-center gap-8">
+            <div className="flex items-center gap-2.5 hover:text-white transition-colors cursor-pointer">
+              <Phone size={13} className="text-blue-400" />
+              <span>+237 222 23 45 67</span>
             </div>
-            <span className="text-white/20 font-light">|</span>
-            <div className="flex items-center gap-2">
-              <Mail size={14} className="text-white/80" />
-              <span className="font-semibold">contact@expertiseaucameroun.org</span>
+            <div className="hidden sm:flex items-center gap-2.5 hover:text-white transition-colors cursor-pointer">
+              <Mail size={13} className="text-blue-400" />
+              <span>contact@expertiseaucameroun.org</span>
             </div>
           </div>
 
-          <div className="flex items-center gap-5">
-            <span className="text-white/70 uppercase tracking-widest text-[10px] font-bold hidden sm:block">Institutional Portal</span>
-            <span className="text-white/20 font-light hidden sm:block">|</span>
-            <div className="flex items-center gap-3">
-              <Globe size={14} className="text-white/80" />
-              <div className="flex items-center gap-2 font-bold">
-                <Link href={`/fr${basePath}`} className={`transition-colors ${locale === 'fr' ? 'text-white' : 'text-white/40 hover:text-white'}`}>FR</Link>
-                <span className="text-white/20 font-light">|</span>
-                <Link href={`/en${basePath}`} className={`transition-colors ${locale === 'en' ? 'text-white' : 'text-white/40 hover:text-white'}`}>EN</Link>
+          <div className="flex items-center gap-6">
+            <span className="hidden lg:block text-white/40 font-black">Portal v2.0</span>
+            <div className="h-3 w-px bg-white/10 hidden lg:block" />
+            <div className="flex items-center gap-4">
+              <Globe size={13} className="text-blue-400" />
+              <div className="flex items-center gap-2">
+                <Link href={`/fr${basePath}`} className={`transition-all ${locale === 'fr' ? 'text-white scale-110' : 'text-white/40 hover:text-white'}`}>FR</Link>
+                <span className="text-white/10">|</span>
+                <Link href={`/en${basePath}`} className={`transition-all ${locale === 'en' ? 'text-white scale-110' : 'text-white/40 hover:text-white'}`}>EN</Link>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ================= MAIN NAV BAR ================= */}
-      <div className="bg-white border-b border-gray-100 shadow-sm">
-        <div className="max-w-[1550px] mx-auto px-8 h-24 flex items-center justify-between">
+      {/* ================= MAIN NAV BAR (GLASSMORPHISM) ================= */}
+      <div className={`transition-all duration-500 ${
+        scrolled 
+        ? 'bg-white/90 backdrop-blur-xl shadow-[0_10px_40px_rgba(0,0,0,0.08)] py-3' 
+        : 'bg-white py-5'
+      }`}>
+        <div className="max-w-[1600px] mx-auto px-10 flex items-center justify-between">
           
-          {/* LOGO SECTION */}
-          <Link href={`/${locale}`} className="flex items-center gap-5 shrink-0">
-            <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center shadow-xl border border-gray-100 overflow-hidden">
-              <img src="/images/logo.png" alt="Logo" className="w-12 h-12 object-contain" />
-            </div>
-            <div>
-              <div className="text-[19px] font-black text-[#003366] leading-none tracking-tight uppercase font-outfit">
-                Expertise Au Cameroun
+          {/* LOGO AREA */}
+          <Link href={`/${locale}`} className="flex items-center gap-4 group">
+            <div className="relative">
+              <div className="w-14 h-14 bg-white rounded-2xl flex items-center justify-center shadow-xl border border-slate-100 group-hover:scale-105 transition-transform duration-500 overflow-hidden p-2">
+                <img src="/images/logo.png" alt="Logo" className="w-full h-full object-contain" />
               </div>
-              <div className="text-[11px] font-bold text-gray-400 uppercase tracking-[0.3em] mt-1.5">
+              <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-white" />
+            </div>
+            <div className="hidden sm:block">
+              <div className="text-[20px] font-black text-[#062040] leading-none tracking-tight uppercase font-outfit">
+                Expertise <span className="text-blue-600">au</span> Cameroun
+              </div>
+              <div className="text-[9px] font-black text-slate-400 uppercase tracking-[0.4em] mt-1.5 opacity-80">
                 Water & Sanitation Network
               </div>
             </div>
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
-          <nav className="hidden xl:flex items-center gap-2">
+          {/* DESKTOP NAVIGATION (Modern centered) */}
+          <nav className="hidden xl:flex items-center gap-1">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 href={withLocale(item.href)}
-                className={`relative px-4 py-2 text-[15px] font-bold tracking-tight transition-colors ${
-                  isActive(item.href) ? 'text-[#003366]' : 'text-gray-500 hover:text-[#003366]'
+                className={`relative px-5 py-2 text-[14px] font-extrabold tracking-tight transition-all duration-300 rounded-xl ${
+                  isActive(item.href) 
+                  ? 'text-blue-600 bg-blue-50/50' 
+                  : 'text-slate-500 hover:text-[#062040] hover:bg-slate-50'
                 }`}
               >
                 {isFR ? item.label : item.labelEn}
                 {isActive(item.href) && (
                   <motion.div 
-                    layoutId="header-active"
-                    className="absolute bottom-0 left-4 right-4 h-[2px] bg-[#003366]" 
+                    layoutId="activeNav"
+                    className="absolute bottom-1.5 left-5 right-5 h-0.5 bg-blue-600 rounded-full" 
                   />
                 )}
               </Link>
             ))}
           </nav>
 
-          {/* ACTION BUTTONS & SEPARATOR */}
-          <div className="flex items-center gap-6">
-            <div className="hidden xl:block w-px h-10 bg-gray-200" />
-            
-            <div className="hidden md:flex items-center gap-4">
+          {/* ACTIONS (Premium Buttons) */}
+          <div className="flex items-center gap-4">
+            <div className="hidden lg:flex items-center gap-3">
               <Link
-              href={withLocale('/login')}
-              className="group relative flex items-center gap-2.5 px-6 py-2.5 border border-slate-200 rounded-xl text-[13px] font-semibold text-slate-600 bg-white hover:bg-slate-50 hover:text-slate-900 transition-all duration-300 shadow-sm"
-            >
-              <LogIn size={16} strokeWidth={2.5} className="text-slate-400 group-hover:text-slate-600 transition-colors" />
-              <span>{isFR ? 'Se connecter' : 'Log in'}</span>
-            </Link>
-            <Link
-              href={withLocale('/register')}
-              className="group relative flex items-center gap-2.5 px-7 py-2.5 bg-[#003366] text-white rounded-xl text-[13px] font-semibold hover:bg-[#002244] hover:-translate-y-0.5 transition-all duration-300 shadow-[0_1px_2px_rgba(0,0,0,0.1),0_4px_12px_rgba(0,51,102,0.15)] overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-gradient-to-t from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              <UserPlus size={16} strokeWidth={2.5} />
-              <span>{isFR ? "S'inscrire" : 'Register'}</span>
-            </Link>
+                href={withLocale('/login')}
+                className="btn-premium btn-secondary !px-6 !py-2.5 !text-[13px]"
+              >
+                <LogIn size={15} strokeWidth={2.5} className="opacity-70" />
+                <span>{isFR ? 'Connexion' : 'Login'}</span>
+              </Link>
+              <Link
+                href={withLocale('/register')}
+                className="btn-premium btn-primary !px-7 !py-2.5 !text-[13px] shadow-blue-900/20"
+              >
+                <UserPlus size={15} strokeWidth={2.5} />
+                <span>{isFR ? "S'inscrire" : 'Register'}</span>
+              </Link>
             </div>
 
-            {/* MOBILE TOGGLE */}
+            {/* MOBILE MENU TOGGLE */}
             <button
-              className="xl:hidden p-3 text-[#003366] bg-gray-50 rounded-2xl hover:bg-gray-100 transition-colors"
+              className="xl:hidden w-12 h-12 flex items-center justify-center text-[#062040] bg-slate-50 rounded-xl hover:bg-slate-100 transition-all border border-slate-200"
               onClick={() => setMobileOpen(!mobileOpen)}
             >
-              {mobileOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE OVERLAY */}
       <AnimatePresence>
         {mobileOpen && (
-          <>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 top-[140px] bg-black/40 backdrop-blur-sm z-[90]"
-              onClick={() => setMobileOpen(false)}
-            />
-            <motion.div
-              initial={{ x: '100%' }}
-              animate={{ x: 0 }}
-              exit={{ x: '100%' }}
-              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-              className="fixed right-0 top-[140px] bottom-0 w-[85%] max-w-[340px] bg-white z-[100] shadow-2xl p-8 flex flex-col"
-            >
-              <nav className="flex flex-col gap-1">
-                {navItems.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={withLocale(item.href)}
-                    className={`px-5 py-4 rounded-2xl text-base font-bold transition-all ${
-                      isActive(item.href) ? 'bg-blue-50 text-[#003366]' : 'text-gray-700 hover:bg-gray-50'
-                    }`}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {isFR ? item.label : item.labelEn}
-                  </Link>
-                ))}
-              </nav>
-              <div className="mt-auto flex flex-col gap-3 pt-8 border-t border-gray-100">
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className="xl:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-3xl shadow-2xl border border-slate-100 overflow-hidden p-6 z-[100]"
+          >
+            <div className="flex flex-col gap-1">
+              {navItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={withLocale(item.href)}
+                  className={`px-6 py-4 rounded-2xl text-[15px] font-bold transition-all ${
+                    isActive(item.href) ? 'bg-blue-50 text-blue-600' : 'text-slate-600 hover:bg-slate-50'
+                  }`}
+                  onClick={() => setMobileOpen(false)}
+                >
+                  {isFR ? item.label : item.labelEn}
+                </Link>
+              ))}
+              <div className="mt-4 pt-6 border-t border-slate-100 grid grid-cols-2 gap-4">
                 <Link
                   href={withLocale('/login')}
-                  className="flex items-center justify-center gap-3 w-full py-4 border border-gray-200 rounded-2xl font-bold text-[#003366]"
+                  className="btn-premium btn-secondary !w-full"
+                  onClick={() => setMobileOpen(false)}
                 >
-                  <LogIn size={20} />
-                  {isFR ? 'Se connecter' : 'Log in'}
+                  {isFR ? 'Connexion' : 'Login'}
                 </Link>
                 <Link
                   href={withLocale('/register')}
-                  className="flex items-center justify-center gap-3 w-full py-4 bg-[#1e40af] text-white rounded-2xl font-black shadow-xl shadow-blue-900/10"
+                  className="btn-premium btn-primary !w-full"
+                  onClick={() => setMobileOpen(false)}
                 >
-                  <UserPlus size={20} />
                   {isFR ? "S'inscrire" : 'Register'}
                 </Link>
               </div>
-            </motion.div>
-          </>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
