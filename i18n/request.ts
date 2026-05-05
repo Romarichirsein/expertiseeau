@@ -1,21 +1,17 @@
-import {getRequestConfig} from 'next-intl/server';
-import {notFound} from 'next/navigation';
+import { getRequestConfig } from 'next-intl/server';
+import { routing } from './routing';
 
-const locales = ['fr', 'en'];
-
-export default getRequestConfig(async ({requestLocale}) => {
+export default getRequestConfig(async ({ requestLocale }) => {
   // next-intl v4: requestLocale is a Promise that must be awaited
   let locale = await requestLocale;
 
-  // Fallback to default locale if undefined
-  if (!locale) locale = 'fr';
-
-  // Validate the locale
-  if (!locales.includes(locale)) notFound();
+  // Fallback to default locale if undefined or not in routing locales
+  if (!locale || !routing.locales.includes(locale as any)) {
+    locale = routing.defaultLocale;
+  }
 
   return {
     locale,
     messages: (await import(`../messages/${locale}.json`)).default
   };
 });
-

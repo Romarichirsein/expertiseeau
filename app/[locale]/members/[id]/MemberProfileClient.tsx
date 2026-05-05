@@ -1,4 +1,3 @@
-// MemberProfileClient.tsx
 "use client";
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
@@ -18,11 +17,19 @@ import {
   Loader2,
   Camera,
   Globe,
-  ShieldCheck
+  ShieldCheck,
+  Zap,
+  Star,
+  Download,
+  Share2
 } from 'lucide-react';
 import Link from 'next/link';
 import { updateExpert } from '@/lib/actions';
 import { supabase } from '@/lib/supabase';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 // Utility: remove leading slashes and trim whitespace
 const normalizeMember = (data: any) => {
@@ -132,108 +139,118 @@ export default function MemberProfileClient({
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pb-32 font-inter">
-      <div className="max-w-4xl mx-auto px-6 space-y-8 pt-10">
+    <div className="min-h-screen bg-background pb-32 font-inter transition-colors duration-500 relative overflow-hidden">
+      {/* Background Orbs */}
+      <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-primary/10 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-teal-500/5 blur-[120px] rounded-full -translate-x-1/3 translate-y-1/3 pointer-events-none" />
+
+      <div className="container relative z-10 max-w-5xl mx-auto px-6 pt-32 lg:pt-40 space-y-12">
         
         {/* Navigation / Actions */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <Link 
-            href={`/${locale}/members`} 
-            className="flex items-center gap-2 text-slate-500 hover:text-[#0a5694] transition-all text-sm font-bold group"
-          >
-            <div className="p-2 rounded-lg bg-white border border-slate-200 group-hover:border-[#0a5694] group-hover:bg-blue-50 transition-all">
-               <ChevronLeft size={16} />
-            </div>
-            {isFR ? "Retour à l'annuaire" : "Back to Directory"}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <Link href={`/${locale}/members`} passHref>
+            <Button variant="ghost" className="h-14 px-6 rounded-2xl gap-3 text-muted-foreground hover:text-primary transition-all group font-black text-xs uppercase tracking-widest">
+              <div className="w-10 h-10 rounded-xl bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all shadow-sm">
+                <ChevronLeft size={20} strokeWidth={3} />
+              </div>
+              {isFR ? "Retour à l'annuaire" : "Back to Directory"}
+            </Button>
           </Link>
           
-          <button
+          <Button
             onClick={() => setIsEditing(!isEditing)}
-            className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all border shadow-sm ${
-              isEditing 
-                ? 'bg-white text-red-600 border-red-100 hover:bg-red-50' 
-                : 'bg-white text-slate-700 border-slate-200 hover:border-[#0a5694] hover:text-[#0a5694] hover:shadow-md'
+            variant={isEditing ? "outline" : "premium"}
+            className={`h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest gap-3 shadow-xl ${
+              isEditing ? "border-red-500/20 text-red-500 bg-red-500/5 hover:bg-red-500 hover:text-white" : ""
             }`}
           >
-            {isEditing ? <X size={18} /> : <Edit size={18} />}
-            {isEditing ? (isFR ? 'Annuler' : 'Cancel') : (isFR ? 'Modifier le profil' : 'Edit Profile')}
-          </button>
+            {isEditing ? <X size={20} strokeWidth={3} /> : <Edit size={20} strokeWidth={3} />}
+            {isEditing ? (isFR ? 'Annuler' : 'Cancel') : (isFR ? 'Éditer mon profil' : 'Edit My Profile')}
+          </Button>
         </div>
 
-        {/* MAIN PROFILE CARD */}
+        {/* MAIN PROFILE HEADER CARD */}
         <motion.div 
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-white rounded-[2.5rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-12 relative overflow-hidden"
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
         >
-          {/* Decorative background element */}
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-bl-[5rem] pointer-events-none" />
-          
-          <div className="flex flex-col md:flex-row gap-10 items-start relative z-10">
-            {/* Avatar Section */}
-            <div className="relative shrink-0 group">
-              <div className="w-40 h-40 rounded-[2rem] bg-slate-50 border border-slate-100 flex items-center justify-center overflow-hidden shadow-inner">
-                {formData.photo ? (
-                  <img src={formData.photo} alt={formData.name} className="w-full h-full object-cover" />
-                ) : (
-                  <div className="text-[#0a5694]/20">
-                     <User size={80} strokeWidth={1} />
+          <Card className="rounded-[4rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl overflow-hidden p-12 md:p-16 relative">
+            {/* Decorative background element */}
+            <div className="absolute top-0 right-0 w-[40%] h-full bg-gradient-to-l from-primary/10 to-transparent pointer-events-none" />
+            
+            <CardContent className="p-0 flex flex-col lg:flex-row gap-16 items-center lg:items-start relative z-10 text-center lg:text-left">
+              {/* Avatar Section */}
+              <div className="relative shrink-0 group">
+                <div className="w-56 h-56 rounded-[3.5rem] p-1.5 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 flex items-center justify-center overflow-hidden shadow-2xl group-hover:border-primary/50 transition-all duration-700">
+                  <div className="w-full h-full rounded-[3.2rem] overflow-hidden bg-white dark:bg-slate-800 flex items-center justify-center">
+                    {formData.photo ? (
+                      <img src={formData.photo} alt={formData.name} className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" />
+                    ) : (
+                      <div className="text-slate-200 dark:text-slate-700">
+                         <User size={100} strokeWidth={1} />
+                      </div>
+                    )}
                   </div>
+                </div>
+                {isEditing && (
+                  <button 
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute inset-0 bg-primary/60 backdrop-blur-md flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all rounded-[3.5rem] shadow-2xl"
+                  >
+                    {uploading ? <Loader2 className="animate-spin w-10 h-10" /> : <Camera size={48} strokeWidth={2.5} />}
+                  </button>
                 )}
-              </div>
-              {isEditing && (
-                <button 
-                  onClick={() => fileInputRef.current?.click()}
-                  className="absolute inset-0 bg-[#0a5694]/60 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition-all rounded-[2rem]"
-                >
-                  {uploading ? <Loader2 className="animate-spin" /> : <Camera size={32} />}
-                </button>
-              )}
-              <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} className="hidden" accept="image/*" />
-            </div>
-
-            {/* Info Section */}
-            <div className="flex-1 space-y-4">
-              <div className="space-y-1">
-                 <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-50 text-emerald-600 text-[10px] font-bold uppercase tracking-widest w-fit border border-emerald-100">
-                    <ShieldCheck size={12} />
-                    {isFR ? 'Profil Certifié' : 'Certified Profile'}
-                 </div>
-                 <h1 className="text-3xl md:text-4xl font-extrabold text-slate-900 capitalize font-outfit tracking-tight">{formData.name}</h1>
-                 <p className="text-lg text-[#0a5694] font-bold flex items-center gap-2">
-                    <Briefcase size={20} className="text-[#0a5694]/50" />
-                    {formData.profession || (isFR ? 'Expert en Eau' : 'Water Expert')}
-                 </p>
+                <input type="file" ref={fileInputRef} onChange={handlePhotoUpload} className="hidden" accept="image/*" />
+                
+                {/* Status Badge */}
+                <div className="absolute -bottom-6 left-1/2 -translate-x-1/2 lg:left-auto lg:right-[-10px] lg:translate-x-0 bg-emerald-500 text-white px-6 py-3 rounded-2xl border-8 border-background dark:border-slate-900/60 flex items-center gap-2.5 shadow-2xl whitespace-nowrap">
+                  <ShieldCheck size={20} strokeWidth={3} />
+                  <span className="text-[11px] font-black uppercase tracking-[0.2em]">{isFR ? 'Certifié' : 'Certified'}</span>
+                </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-4 pt-6 border-t border-slate-50">
-                 <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
-                       <MapPin size={16} />
-                    </div>
-                    {formData.city}, {formData.country}
-                 </div>
-                 <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
-                       <Mail size={16} />
-                    </div>
-                    {formData.email}
-                 </div>
-                 <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
-                       <Phone size={16} />
-                    </div>
-                    {formData.phone}
-                 </div>
-                 <div className="flex items-center gap-3 text-sm text-slate-600 font-medium">
-                    <div className="w-8 h-8 rounded-lg bg-slate-50 flex items-center justify-center text-slate-400">
-                       <Globe size={16} />
-                    </div>
-                    {isFR ? 'Membre National' : 'National Member'}
-                 </div>
+              {/* Info Section */}
+              <div className="flex-1 space-y-8 pt-4">
+                <div className="space-y-6">
+                   <h1 className="text-5xl md:text-7xl font-black text-foreground capitalize font-outfit tracking-tight leading-none uppercase">
+                     {formData.name}
+                   </h1>
+                   <div className="flex flex-wrap justify-center lg:justify-start items-center gap-4">
+                      <div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-primary/10 text-primary font-black text-[11px] uppercase tracking-[0.2em] border border-primary/20 backdrop-blur-md shadow-sm">
+                        <Briefcase size={18} strokeWidth={2.5} />
+                        {formData.profession || (isFR ? 'Expert en Eau' : 'Water Expert')}
+                      </div>
+                      <div className="flex items-center gap-3 px-6 py-3 rounded-2xl bg-white/40 dark:bg-white/5 text-muted-foreground font-black text-[11px] uppercase tracking-[0.2em] border border-white/20 dark:border-white/10 backdrop-blur-md shadow-sm">
+                        <MapPin size={18} strokeWidth={2.5} />
+                        {formData.city}, {formData.country}
+                      </div>
+                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-white/20 dark:border-white/5">
+                   <div className="flex items-center justify-center lg:justify-start gap-5 group cursor-pointer">
+                      <div className="w-14 h-14 rounded-2xl bg-white/40 dark:bg-white/5 flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-all shadow-inner border border-white/20 dark:border-white/10">
+                         <Mail size={24} strokeWidth={2.5} />
+                      </div>
+                      <div className="text-left">
+                         <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-1.5">Email Institutional</div>
+                         <div className="text-base font-bold text-foreground break-all">{formData.email}</div>
+                      </div>
+                   </div>
+                   <div className="flex items-center justify-center lg:justify-start gap-5 group cursor-pointer">
+                      <div className="w-14 h-14 rounded-2xl bg-white/40 dark:bg-white/5 flex items-center justify-center text-muted-foreground group-hover:text-primary group-hover:bg-primary/10 transition-all shadow-inner border border-white/20 dark:border-white/10">
+                         <Phone size={24} strokeWidth={2.5} />
+                      </div>
+                      <div className="text-left">
+                         <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-1.5">{isFR ? 'Ligne Directe' : 'Direct Line'}</div>
+                         <div className="text-base font-bold text-foreground">{formData.phone}</div>
+                      </div>
+                   </div>
+                </div>
               </div>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
         </motion.div>
 
         <AnimatePresence mode="wait">
@@ -243,132 +260,156 @@ export default function MemberProfileClient({
               initial={{ opacity: 0, scale: 0.98 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.98 }}
-              className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-12 space-y-10"
+              className="space-y-12"
             >
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-x-10 gap-y-8">
-                {[
-                  { name: 'name', label: isFR ? 'Nom complet' : 'Full Name' },
-                  { name: 'profession', label: isFR ? 'Profession' : 'Profession' },
-                  { name: 'email', label: 'Email' },
-                  { name: 'phone', label: isFR ? 'Téléphone' : 'Phone' },
-                  { name: 'city', label: isFR ? 'Ville' : 'City' },
-                  { name: 'country', label: isFR ? 'Pays' : 'Country' },
-                  { name: 'degree', label: isFR ? 'Dernier Diplôme' : 'Latest Degree' },
-                  { name: 'university', label: 'Université / Institution' },
-                ].map((field) => (
-                  <div key={field.name} className="space-y-2">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest ml-1">{field.label}</label>
-                    <input
-                      type="text"
-                      value={(formData as any)[field.name]}
-                      onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
-                      className="w-full px-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-[#0a5694] focus:ring-4 focus:ring-blue-600/5 transition-all text-slate-900 font-semibold text-sm"
-                    />
+              <Card className="rounded-[4rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl p-12 md:p-16">
+                <CardContent className="p-0 space-y-12">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-10">
+                    {[
+                      { name: 'name', label: isFR ? 'Identité Nominale' : 'Nominal Identity' },
+                      { name: 'profession', label: isFR ? 'Spécialité Principale' : 'Main Specialization' },
+                      { name: 'email', label: 'Email Institutionnel' },
+                      { name: 'phone', label: isFR ? 'Numéro Stratégique' : 'Strategic Number' },
+                      { name: 'city', label: isFR ? 'Ville de Résidence' : 'City of Residence' },
+                      { name: 'country', label: isFR ? 'Pays d\'Opération' : 'Country of Operation' },
+                      { name: 'degree', label: isFR ? 'Plus Haut Diplôme' : 'Highest Degree' },
+                      { name: 'university', label: 'Institution / Université' },
+                    ].map((field) => (
+                      <div key={field.name} className="space-y-3">
+                        <Label className="ml-2 uppercase tracking-widest text-[11px] font-black text-muted-foreground">{field.label}</Label>
+                        <Input
+                          type="text"
+                          value={(formData as any)[field.name]}
+                          onChange={(e) => setFormData({ ...formData, [field.name]: e.target.value })}
+                          className="h-14 rounded-2xl bg-white/50 dark:bg-black/20 border-white/20 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold"
+                        />
+                      </div>
+                    ))}
                   </div>
-                ))}
-              </div>
 
-              <div className="flex justify-end gap-4 pt-10 border-t border-slate-100">
-                <button
-                  onClick={() => setIsEditing(false)}
-                  className="px-6 py-3 bg-slate-100 text-slate-500 font-bold rounded-xl hover:bg-slate-200 transition-all text-sm"
-                >
-                  {isFR ? 'Annuler' : 'Cancel'}
-                </button>
-                <button
-                  onClick={handleSave}
-                  disabled={loading}
-                  className="px-10 py-3 bg-[#0a5694] text-white font-bold rounded-xl hover:bg-[#062040] shadow-lg shadow-blue-900/10 transition-all disabled:opacity-50 flex items-center gap-3 text-sm"
-                >
-                  {loading ? <Loader2 className="animate-spin" size={20} /> : <Save size={20} />}
-                  {loading ? (isFR ? 'Enregistrement...' : 'Saving...') : (isFR ? 'Sauvegarder les modifications' : 'Save Changes')}
-                </button>
-              </div>
+                  <div className="flex flex-col sm:flex-row justify-end gap-6 pt-12 border-t border-white/20 dark:border-white/5">
+                    <Button
+                      variant="outline"
+                      onClick={() => setIsEditing(false)}
+                      className="h-14 px-10 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] border-white/20 dark:border-white/10 hover:bg-slate-100 dark:hover:bg-white/10"
+                    >
+                      {isFR ? 'Abandonner' : 'Discard'}
+                    </Button>
+                    <Button
+                      onClick={handleSave}
+                      disabled={loading}
+                      variant="premium"
+                      className="h-14 px-12 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] shadow-2xl shadow-primary/30"
+                    >
+                      {loading ? <Loader2 className="animate-spin w-5 h-5 mr-3" /> : <Save size={20} strokeWidth={3} className="mr-3" />}
+                      {loading ? (isFR ? 'Transmission...' : 'Transmitting...') : (isFR ? 'Valider les modifications' : 'Validate Changes')}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
             </motion.div>
           ) : (
             <motion.div
               key="view"
-              initial={{ opacity: 0, y: 10 }}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              className="grid grid-cols-1 gap-8"
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+              className="grid grid-cols-1 gap-12"
             >
-              {/* Grid for sub-sections */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                  {/* Expertise */}
-                 <div className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-10 space-y-8">
-                   <div className="flex items-center gap-3 border-b border-slate-50 pb-6">
-                     <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#0a5694]">
-                        <Award size={24} />
+                 <Card className="rounded-[4rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl p-12 md:p-14 transition-all duration-700 hover:border-primary/20">
+                   <CardContent className="p-0 space-y-10">
+                     <div className="flex items-center gap-5 border-b border-white/20 dark:border-white/5 pb-8">
+                       <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+                          <Award size={32} strokeWidth={2.5} />
+                       </div>
+                       <h2 className="text-3xl font-black text-foreground font-outfit uppercase tracking-tight">{isFR ? "Domaines d'Expertise" : 'Expertise Fields'}</h2>
                      </div>
-                     <h2 className="text-xl font-extrabold text-slate-900 font-outfit">{isFR ? "Champs d'Expertise" : 'Expertise Fields'}</h2>
-                   </div>
-                   {initialExpertise.length > 0 ? (
-                     <div className="flex flex-wrap gap-2">
-                       {initialExpertise.map((item: string, idx: number) => (
-                         <span key={idx} className="px-4 py-2 bg-slate-50 text-slate-700 text-xs font-bold rounded-xl border border-slate-100 shadow-sm">
-                           {item}
-                         </span>
-                       ))}
-                     </div>
-                   ) : (
-                     <p className="text-slate-400 italic text-sm">{isFR ? "Aucune expertise spécifiée" : "No expertise specified"}</p>
-                   )}
-                 </div>
+                     {initialExpertise.length > 0 ? (
+                       <div className="flex flex-wrap gap-3">
+                         {initialExpertise.map((item: string, idx: number) => (
+                           <span key={idx} className="px-6 py-3.5 bg-white/40 dark:bg-white/5 text-muted-foreground text-[11px] font-black uppercase tracking-[0.2em] rounded-2xl border border-white/20 dark:border-white/5 shadow-sm transition-all hover:border-primary/50 hover:bg-white dark:hover:bg-white/10 hover:text-primary hover:scale-105">
+                             {item}
+                           </span>
+                         ))}
+                       </div>
+                     ) : (
+                       <div className="py-10 text-center bg-white/20 dark:bg-black/20 rounded-[2rem] border border-dashed border-white/20 dark:border-white/10">
+                         <p className="text-muted-foreground italic text-sm font-medium">{isFR ? "Aucune expertise stratégique spécifiée" : "No strategic expertise specified"}</p>
+                       </div>
+                     )}
+                   </CardContent>
+                 </Card>
 
                  {/* Education */}
-                 <div className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-10 space-y-8">
-                   <div className="flex items-center gap-3 border-b border-slate-50 pb-6">
-                     <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#0a5694]">
-                        <GraduationCap size={24} />
+                 <Card className="rounded-[4rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl p-12 md:p-14 transition-all duration-700 hover:border-primary/20">
+                   <CardContent className="p-0 space-y-10">
+                     <div className="flex items-center gap-5 border-b border-white/20 dark:border-white/5 pb-8">
+                       <div className="w-16 h-16 rounded-2xl bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+                          <GraduationCap size={32} strokeWidth={2.5} />
+                       </div>
+                       <h2 className="text-3xl font-black text-foreground font-outfit uppercase tracking-tight">{isFR ? 'Parcours Académique' : 'Academic Path'}</h2>
                      </div>
-                     <h2 className="text-xl font-extrabold text-slate-900 font-outfit">{isFR ? 'Cursus Académique' : 'Education'}</h2>
-                   </div>
-                   <div className="space-y-4">
-                      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-100">
-                         <p className="font-extrabold text-slate-900 text-sm mb-1">{formData.degree || '---'}</p>
-                         <p className="text-xs text-[#0a5694] font-bold uppercase tracking-wider">{formData.university || '---'}</p>
-                      </div>
-                      <div className="flex items-center gap-2 text-slate-400 text-[10px] font-bold uppercase tracking-widest pl-2">
-                         <ShieldCheck size={12} />
-                         {isFR ? 'Vérifié par ExpertiseAuCameroun' : 'Verified by ExpertiseAuCameroun'}
-                      </div>
-                   </div>
-                 </div>
+                     <div className="space-y-6">
+                        <div className="p-10 bg-white/40 dark:bg-black/20 rounded-[2.5rem] border border-white/20 dark:border-white/10 group hover:border-primary/40 transition-all duration-500 shadow-xl">
+                           <p className="font-black text-foreground text-2xl mb-3 leading-tight group-hover:text-primary transition-colors font-outfit uppercase tracking-tight">{formData.degree || '---'}</p>
+                           <p className="text-[12px] text-primary font-black uppercase tracking-[0.4em] opacity-80">{formData.university || '---'}</p>
+                        </div>
+                        <div className="flex items-center gap-3 text-muted-foreground text-[10px] font-black uppercase tracking-[0.4em] pl-6">
+                           <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_15px_rgba(16,185,129,0.5)]" />
+                           {isFR ? 'Authentifié par le Réseau Institutionnel' : 'Authenticated by Institutional Network'}
+                        </div>
+                     </div>
+                   </CardContent>
+                 </Card>
               </div>
 
               {/* Experience - Full Width */}
-              <div className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-12 space-y-8">
-                <div className="flex items-center gap-3 border-b border-slate-50 pb-6">
-                  <div className="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-[#0a5694]">
-                     <Briefcase size={24} />
-                  </div>
-                  <h2 className="text-2xl font-extrabold text-slate-900 font-outfit">{isFR ? 'Expérience Sectorielle' : 'Sectoral Experience'}</h2>
-                </div>
-                {Object.keys(initialExperience).length > 0 ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    {Object.entries(initialExperience).map(([key, value]) => (
-                      <div key={key} className="flex flex-col p-5 bg-slate-50/50 rounded-2xl border border-slate-100 hover:border-blue-100 transition-colors">
-                        <span className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">{key}</span>
-                        <span className="text-base text-slate-900 font-bold">
-                          {Array.isArray(value) ? value.join(', ') : (value as string)}
-                        </span>
+              <Card className="rounded-[4.5rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl p-12 md:p-20 transition-all duration-700 hover:border-primary/20">
+                <CardContent className="p-0 space-y-16">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-8 border-b border-white/20 dark:border-white/5 pb-12">
+                    <div className="flex items-center gap-8">
+                      <div className="w-20 h-20 rounded-[2rem] bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+                         <Briefcase size={40} strokeWidth={2.5} />
                       </div>
-                    ))}
+                      <div className="space-y-2">
+                        <h2 className="text-4xl font-black text-foreground font-outfit uppercase tracking-tight">{isFR ? 'Missions & Réalisations' : 'Missions & Achievements'}</h2>
+                        <p className="text-muted-foreground font-medium">{isFR ? 'Historique des interventions stratégiques certifiées.' : 'History of certified strategic interventions.'}</p>
+                      </div>
+                    </div>
+                    <Button variant="outline" className="h-14 px-8 rounded-2xl font-black text-[11px] uppercase tracking-[0.2em] gap-3 border-white/20 dark:border-white/10">
+                      <Download size={18} />
+                      {isFR ? 'Télécharger le Portfolio' : 'Download Portfolio'}
+                    </Button>
                   </div>
-                ) : (
-                  <p className="text-slate-400 italic text-sm">{isFR ? "Aucune expérience renseignée" : "No experience reported"}</p>
-                )}
-              </div>
+                  {Object.keys(initialExperience).length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+                      {Object.entries(initialExperience).map(([key, value]) => (
+                        <div key={key} className="flex flex-col p-10 bg-white/40 dark:bg-black/20 rounded-[3rem] border border-white/20 dark:border-white/10 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500 group">
+                          <div className="flex items-center justify-between mb-6">
+                            <span className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.4em] group-hover:text-primary transition-colors">{key}</span>
+                            <Zap size={18} className="text-primary/40 group-hover:text-primary transition-colors" />
+                          </div>
+                          <span className="text-xl text-foreground font-black font-outfit leading-tight uppercase tracking-tight transition-colors">
+                            {Array.isArray(value) ? value.join(', ') : (value as string)}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="py-32 text-center bg-white/20 dark:bg-black/20 rounded-[4rem] border-4 border-dashed border-white/10">
+                      <Zap size={64} className="mx-auto text-primary/20 mb-8" />
+                      <p className="text-muted-foreground italic text-lg font-medium">{isFR ? "Aucun historique de mission disponible" : "No mission history available"}</p>
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
     </div>
   );
-}
-
-
-function cn(...inputs: any[]) {
-  return inputs.filter(Boolean).join(' ');
 }

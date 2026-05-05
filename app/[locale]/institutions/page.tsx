@@ -3,48 +3,28 @@
 import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  Building2,
-  Search,
-  MapPin,
-  ExternalLink,
-  GraduationCap,
-  Users,
-  Briefcase,
-  Loader2,
-  Filter,
-  Globe,
-  ChevronDown,
-  ChevronUp,
-  ArrowUpDown,
-  X,
-  SearchX,
-  ShieldCheck
+  Building2, Search, MapPin, ExternalLink, GraduationCap, Users,
+  Briefcase, Loader2, X, SearchX, ShieldCheck, ChevronRight, Zap, Globe, Sparkles
 } from "lucide-react";
-
+import Link from "next/link";
 import { getInstitutions } from "@/lib/actions";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Card, CardContent } from "@/components/ui/card";
 
 const categories = [
-  { id: "all", label: "Toutes", labelEN: "All", icon: Building2, color: "blue" },
-  { id: "public", label: "Secteur Public", labelEN: "Public Sector", icon: Building2, color: "sky" },
-  { id: "ngo", label: "ONGs & OSCs", labelEN: "NGOs & CSOs", icon: Users, color: "emerald" },
-  { id: "private", label: "Secteur Privé", labelEN: "Private Sector", icon: Briefcase, color: "amber" },
-  { id: "edu", label: "Recherche & Éducation", labelEN: "Research & Education", icon: GraduationCap, color: "violet" },
+  { id: "all", label: "Toutes", labelEN: "All", icon: Building2 },
+  { id: "public", label: "Public", labelEN: "Public", icon: Building2 },
+  { id: "ngo", label: "ONGs", labelEN: "NGOs", icon: Users },
+  { id: "private", label: "Privé", labelEN: "Private", icon: Briefcase },
+  { id: "edu", label: "Éducation", labelEN: "Education", icon: GraduationCap },
 ];
 
-type SortField = 'sigle' | 'nom' | 'siege';
-type SortDir = 'asc' | 'desc';
-
-export default function InstitutionsPage({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}) {
+export default function InstitutionsPage({ params }: { params: Promise<{ locale: string }> }) {
   const [institutions, setInstitutions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState("all");
   const [search, setSearch] = useState("");
-  const [sortField, setSortField] = useState<SortField>('nom');
-  const [sortDir, setSortDir] = useState<SortDir>('asc');
   const resolvedParams = React.use(params);
   const locale = resolvedParams.locale;
   const isFR = locale === "fr";
@@ -59,7 +39,7 @@ export default function InstitutionsPage({
   }, []);
 
   const filteredData = useMemo(() => {
-    let result = institutions.filter((inst) => {
+    return institutions.filter((inst) => {
       const matchesTab =
         activeTab === "all" ||
         inst.category === activeTab ||
@@ -67,288 +47,202 @@ export default function InstitutionsPage({
       const q = search.toLowerCase();
       const matchesSearch =
         (inst.nom || "").toLowerCase().includes(q) ||
-        (inst.sigle || "").toLowerCase().includes(q) ||
-        (inst.siege || "").toLowerCase().includes(q) ||
-        (inst.mandat || "").toLowerCase().includes(q);
+        (inst.sigle || "").toLowerCase().includes(q);
       return matchesTab && matchesSearch;
     });
-
-    // Sort
-    result.sort((a, b) => {
-      const aVal = (a[sortField] || '').toLowerCase();
-      const bVal = (b[sortField] || '').toLowerCase();
-      if (aVal < bVal) return sortDir === 'asc' ? -1 : 1;
-      if (aVal > bVal) return sortDir === 'asc' ? 1 : -1;
-      return 0;
-    });
-
-    return result;
-  }, [institutions, activeTab, search, sortField, sortDir]);
-
-  const handleSort = (field: SortField) => {
-    if (sortField === field) {
-      setSortDir(d => d === 'asc' ? 'desc' : 'asc');
-    } else {
-      setSortField(field);
-      setSortDir('asc');
-    }
-  };
-
-  const SortIcon = ({ field }: { field: SortField }) => {
-    if (sortField !== field) return <ArrowUpDown size={14} className="text-slate-300" />;
-    return sortDir === 'asc' 
-      ? <ChevronUp size={14} className="text-[#0a5694]" />
-      : <ChevronDown size={14} className="text-[#0a5694]" />;
-  };
-
-  const getCategoryColorClass = (catId: string) => {
-    const cat = categories.find(c => c.id === catId);
-    if (!cat) return 'bg-blue-50 text-blue-600 border-blue-100';
-    
-    switch(cat.color) {
-      case 'sky': return 'bg-sky-50 text-sky-600 border-sky-100';
-      case 'emerald': return 'bg-emerald-50 text-emerald-600 border-emerald-100';
-      case 'amber': return 'bg-amber-50 text-amber-600 border-amber-100';
-      case 'violet': return 'bg-violet-50 text-violet-600 border-violet-100';
-      default: return 'bg-blue-50 text-blue-600 border-blue-100';
-    }
-  };
+  }, [institutions, activeTab, search]);
 
   return (
-    <div className="min-h-screen bg-slate-50/50 font-inter pb-32">
-      {/* PREMIUM HERO SECTION */}
-      <div className="relative overflow-hidden bg-[#0a5694] pt-16 pb-24">
-        <div className="absolute inset-0 opacity-10 bg-[url('/images/hero-pattern.svg')] bg-cover mix-blend-overlay" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/50 to-transparent" />
+    <div className="min-h-screen bg-background font-inter pb-32 transition-colors duration-500 overflow-hidden relative">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/10 blur-[180px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-teal-500/5 blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
+      {/* PAGE HEADER */}
+      <div className="bg-slate-900 pt-32 md:pt-48 pb-24 md:pb-32 relative overflow-hidden transition-colors duration-500">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.05] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
         
         <div className="container relative z-10 px-6">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl">
-            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/20 text-white text-[10px] font-bold uppercase tracking-widest mb-6 backdrop-blur-md border border-white/30">
-              <Building2 size={14} />
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl space-y-8"
+          >
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em] backdrop-blur-xl shadow-2xl">
+              <Building2 size={18} />
               {isFR ? 'Acteurs du secteur' : 'Sector Actors'}
-            </span>
-            <h1 className="text-4xl md:text-5xl font-extrabold text-white mb-6 tracking-tight font-outfit">
-              {isFR ? 'Répertoire des Institutions' : 'Institutional Directory'}
+            </div>
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight font-outfit leading-[0.9]">
+              {isFR ? 'Les ' : 'Institutional '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? 'Institutions' : 'Directory'}</span>
             </h1>
-            <p className="text-xl text-blue-100 leading-relaxed opacity-90 font-medium">
+            <p className="text-xl md:text-2xl text-slate-400 font-normal max-w-2xl font-inter leading-relaxed">
               {isFR
-                ? "Identifiez les acteurs clés du secteur de l'eau et de l'assainissement au Cameroun."
-                : "Identify the key actors in the water and sanitation sector in Cameroon."}
+                ? "Identifiez les acteurs clés du secteur de l'eau et de l'assainissement au Cameroun. Une base de données institutionnelle certifiée."
+                : "Identify key actors in the water and sanitation sector in Cameroon. A certified institutional database."}
             </p>
           </motion.div>
         </div>
       </div>
 
-      <div className="container px-6 -mt-16 relative z-20 pb-32">
-        {/* TABS & SEARCH CARD */}
+      <div className="container -mt-16 md:-mt-24 relative z-20 px-6">
+        {/* FILTERS CARD */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="bg-white rounded-[2rem] border border-slate-200 shadow-xl shadow-blue-900/5 p-8 md:p-10 mb-8"
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
-          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-8">
-            {/* TABS */}
-            <div className="flex flex-wrap gap-2">
-              {categories.map((cat) => {
-                const isActive = activeTab === cat.id;
-                const CatIcon = cat.icon;
-                return (
-                  <button
+          <Card className="p-8 md:p-12 rounded-[3.5rem] border-white/20 dark:border-white/5 shadow-2xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-3xl overflow-hidden">
+            <CardContent className="p-0 flex flex-col lg:flex-row justify-between items-center gap-10">
+              {/* TABS */}
+              <div className="flex flex-wrap justify-center lg:justify-start gap-3">
+                {categories.map((cat) => (
+                  <Button
                     key={cat.id}
                     onClick={() => setActiveTab(cat.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold transition-all border ${
-                      isActive 
-                        ? 'bg-[#0a5694] text-white border-[#0a5694] shadow-lg shadow-blue-900/10' 
-                        : 'bg-slate-50 text-slate-500 border-slate-100 hover:bg-white hover:border-slate-300'
+                    variant={activeTab === cat.id ? "premium" : "outline"}
+                    className={`h-14 px-8 rounded-2xl font-black text-[10px] uppercase tracking-widest transition-all gap-2.5 ${
+                      activeTab === cat.id 
+                        ? 'shadow-xl shadow-primary/20' 
+                        : 'bg-white/50 dark:bg-white/5 border-white/20 dark:border-white/10 text-muted-foreground'
                     }`}
                   >
-                    <CatIcon size={16} />
+                    <cat.icon size={18} />
                     {isFR ? cat.label : cat.labelEN}
-                  </button>
-                );
-              })}
-            </div>
+                  </Button>
+                ))}
+              </div>
 
-            {/* SEARCH */}
-            <div className="relative group">
-              <Search 
-                size={18} 
-                className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-[#0a5694] transition-colors" 
-              />
-              <input
-                type="text"
-                placeholder={isFR ? "Rechercher une institution..." : "Search institution..."}
-                className="w-full lg:w-[360px] pl-12 pr-5 py-3.5 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-[#0a5694] focus:ring-4 focus:ring-blue-600/5 transition-all text-slate-900 font-semibold text-sm"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-              />
-            </div>
-          </div>
+              {/* SEARCH */}
+              <div className="relative group w-full lg:max-w-md">
+                <Search size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" />
+                <Input
+                  type="text"
+                  placeholder={isFR ? "Rechercher une institution..." : "Search institution..."}
+                  className="w-full h-16 pl-16 pr-8 bg-white/50 dark:bg-white/5 border-white/20 dark:border-white/5 rounded-2xl outline-none focus-visible:ring-primary/20 text-base font-bold shadow-inner"
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+            </CardContent>
+          </Card>
         </motion.div>
 
-        {/* RESULTS BAR */}
-        <div className="flex items-center justify-between mb-6 px-4">
-           <div className="flex items-center gap-3 text-xs font-bold text-slate-400 uppercase tracking-widest">
-              <Building2 size={16} className="text-[#0a5694]" />
-              <span>
-                <strong className="text-slate-900">{filteredData.length}</strong>{' '}
-                {isFR ? 'institutions trouvées' : 'institutions found'}
-              </span>
-           </div>
-           {search && (
-              <button 
-                onClick={() => setSearch('')}
-                className="flex items-center gap-2 px-3 py-1 bg-red-50 text-red-600 rounded-full text-[10px] font-bold uppercase tracking-widest border border-red-100 hover:bg-red-100 transition-colors"
-              >
-                <X size={12} />
-                {isFR ? 'Effacer la recherche' : 'Clear search'}
-              </button>
-           )}
-        </div>
-
-        {/* CONTENT AREA */}
-        <div className="bg-white rounded-[2.5rem] border border-slate-200 shadow-xl shadow-blue-900/5 overflow-hidden">
+        {/* RESULTS */}
+        <div className="mt-16">
           {loading ? (
-            <div className="py-32 flex flex-col items-center justify-center gap-4">
-              <Loader2 size={48} className="text-[#0a5694] animate-spin" strokeWidth={1.5} />
-              <p className="text-sm font-bold text-slate-400 uppercase tracking-widest">
-                {isFR ? "Chargement du répertoire..." : "Loading directory..."}
+            <div className="py-40 flex flex-col items-center justify-center gap-6">
+              <Loader2 size={48} className="text-primary animate-spin" />
+              <p className="text-muted-foreground font-black text-xs uppercase tracking-[0.4em] animate-pulse">
+                {isFR ? "Chargement des institutions..." : "Loading institutions..."}
               </p>
             </div>
           ) : filteredData.length === 0 ? (
-            <div className="py-32 flex flex-col items-center justify-center text-center px-6">
-              <div className="w-20 h-20 rounded-full bg-slate-50 flex items-center justify-center text-slate-300 mb-6">
-                <SearchX size={40} />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="py-40 text-center space-y-8 bg-white/40 dark:bg-white/5 backdrop-blur-2xl rounded-[4rem] border border-white/20 dark:border-white/5 shadow-2xl px-10"
+            >
+              <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto shadow-inner">
+                <SearchX size={48} className="text-primary" />
               </div>
-              <h3 className="text-2xl font-extrabold text-slate-900 mb-2 font-outfit">
-                {isFR ? 'Aucun résultat' : 'No results found'}
-              </h3>
-              <p className="text-slate-500 font-medium max-w-sm mb-8">
-                {isFR
-                  ? 'Aucune institution ne correspond à vos critères de recherche ou de filtrage.'
-                  : 'No institutions match your search or filter criteria.'}
-              </p>
-              <button 
-                onClick={() => { setSearch(''); setActiveTab('all'); }}
-                className="btn-premium btn-primary !px-8 !py-3"
+              <h3 className="text-3xl font-black text-foreground font-outfit uppercase tracking-tight">{isFR ? 'Aucun résultat trouvé' : 'No results found'}</h3>
+              <Button 
+                variant="premium"
+                onClick={() => { setSearch(''); setActiveTab('all'); }} 
+                className="h-14 px-10 rounded-2xl font-black uppercase text-[11px] tracking-widest"
               >
-                {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
-              </button>
-            </div>
+                {isFR ? 'Réinitialiser' : 'Reset Filters'}
+              </Button>
+            </motion.div>
           ) : (
-            <div className="overflow-x-auto">
-              <table className="w-full border-collapse">
-                <thead>
-                  <tr className="bg-slate-50/50">
-                    <th onClick={() => handleSort('sigle')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
-                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
-                        {isFR ? 'Sigle' : 'Acronym'}
-                        <SortIcon field="sigle" />
-                      </div>
-                    </th>
-                    <th onClick={() => handleSort('nom')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
-                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
-                        {isFR ? 'Institution' : 'Institution'}
-                        <SortIcon field="nom" />
-                      </div>
-                    </th>
-                    <th onClick={() => handleSort('siege')} className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest cursor-pointer select-none group border-b border-slate-100">
-                      <div className="flex items-center gap-2 group-hover:text-[#0a5694] transition-colors">
-                        {isFR ? 'Siège' : 'HQ'}
-                        <SortIcon field="siege" />
-                      </div>
-                    </th>
-                    <th className="px-8 py-6 text-left text-[11px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                      {isFR ? 'Mandat' : 'Mandate'}
-                    </th>
-                    <th className="px-8 py-6 text-center text-[11px] font-bold text-slate-400 uppercase tracking-widest border-b border-slate-100">
-                      Site
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-50">
-                  <AnimatePresence>
-                    {filteredData.map((inst, i) => (
-                      <motion.tr
-                        key={inst.id || i}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: i * 0.01 }}
-                        className="hover:bg-blue-50/30 transition-all group"
-                      >
-                        <td className="px-8 py-6 align-top">
-                          <span className={`inline-block px-3 py-1 rounded-lg font-bold text-xs border tracking-wide shadow-sm ${getCategoryColorClass(inst.category)}`}>
-                            {inst.sigle}
-                          </span>
-                        </td>
-                        <td className="px-8 py-6 align-top">
-                          <div className="flex flex-col gap-1">
-                             <span className="text-sm font-extrabold text-slate-900 leading-relaxed group-hover:text-[#0a5694] transition-colors">
-                               {inst.nom}
-                             </span>
-                             <div className="flex items-center gap-1.5 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
-                               <ShieldCheck size={12} className="text-emerald-500" />
-                               {isFR ? 'Inscrit' : 'Registered'}
-                             </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              <AnimatePresence mode="popLayout">
+                {filteredData.map((inst, i) => (
+                  <motion.div
+                    key={inst.id || i}
+                    layout
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, delay: i * 0.05 }}
+                  >
+                    <Link 
+                      href={`/${locale}/institutions/${inst.id}`}
+                      className="group block h-full"
+                    >
+                      <Card className="h-full bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl rounded-[3rem] border border-white/20 dark:border-white/5 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/10 group-hover:-translate-y-2 transition-all duration-700 flex flex-col justify-between p-0 overflow-hidden">
+                        <CardContent className="p-10 space-y-8">
+                          <div className="flex justify-between items-start">
+                            <span className="px-5 py-2 bg-primary/10 text-primary text-[11px] font-black uppercase tracking-widest rounded-2xl border border-primary/20 backdrop-blur-md">
+                              {inst.sigle || 'INST'}
+                            </span>
+                            <div className="text-emerald-500 bg-emerald-500/10 p-2 rounded-xl border border-emerald-500/20 shadow-sm backdrop-blur-md">
+                              <ShieldCheck size={24} strokeWidth={2.5} />
+                            </div>
                           </div>
-                        </td>
-                        <td className="px-8 py-6 align-top">
-                          <div className="flex items-center gap-2 text-slate-600 font-semibold text-sm">
-                            <MapPin size={14} className="text-[#0a5694]/40" />
-                            {inst.siege || inst.city || '---'}
+                          <div className="space-y-4">
+                            <h3 className="text-2xl font-black text-foreground font-outfit leading-tight group-hover:text-primary transition-colors line-clamp-2 uppercase tracking-tight">
+                              {inst.nom}
+                            </h3>
+                            <p className="text-base text-muted-foreground line-clamp-3 leading-relaxed font-medium">
+                              {inst.mandat || (isFR ? 'Mandat institutionnel certifié au service de la nation.' : 'Certified institutional mandate at the service of the nation.')}
+                            </p>
                           </div>
-                        </td>
-                        <td className="px-8 py-6 align-top max-w-md">
-                          <p className="text-xs text-slate-500 font-medium leading-relaxed line-clamp-3">
-                            {inst.mandat || inst.mission || '—'}
-                          </p>
-                        </td>
-                        <td className="px-8 py-6 align-top text-center">
-                          {inst.site ? (
-                            <a
-                              href={inst.site}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="inline-flex items-center justify-center w-10 h-10 rounded-xl bg-slate-50 text-slate-400 hover:bg-[#0a5694] hover:text-white hover:shadow-lg hover:shadow-blue-900/10 transition-all border border-slate-100"
-                              title={inst.site}
-                            >
-                              <ExternalLink size={16} />
-                            </a>
-                          ) : (
-                            <span className="text-slate-200 text-xs">---</span>
-                          )}
-                        </td>
-                      </motion.tr>
-                    ))}
-                  </AnimatePresence>
-                </tbody>
-              </table>
+                        </CardContent>
+                        
+                        <div className="px-10 py-8 bg-white/40 dark:bg-black/20 border-t border-white/20 dark:border-white/5 flex items-center justify-between group-hover:bg-primary group-hover:text-white transition-all duration-700">
+                          <div className="flex items-center gap-3 text-[11px] font-black text-muted-foreground uppercase tracking-[0.2em] group-hover:text-white transition-colors">
+                            <MapPin size={18} strokeWidth={2.5} className="text-primary group-hover:text-white" />
+                            {inst.siege || 'Yaoundé'}
+                          </div>
+                          <div className="w-12 h-12 bg-white dark:bg-slate-900 rounded-2xl flex items-center justify-center text-primary group-hover:bg-white/20 group-hover:text-white transition-all duration-700 shadow-sm">
+                            <ChevronRight size={24} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
+                          </div>
+                        </div>
+                      </Card>
+                    </Link>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
             </div>
           )}
         </div>
 
-        {/* INFO FOOTER */}
-        <div className="mt-12 p-10 bg-[#0a5694] rounded-[2.5rem] relative overflow-hidden">
-           <div className="absolute top-0 right-0 p-10 opacity-5">
-              <Building2 size={160} />
-           </div>
-           <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-8">
-              <div className="max-w-xl">
-                 <h3 className="text-2xl font-extrabold text-white mb-3 font-outfit tracking-tight">
-                    {isFR ? 'Votre institution n\'est pas listée ?' : 'Is your institution missing?'}
+        {/* FINAL CTA */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          className="mt-32 p-14 md:p-24 bg-slate-900 dark:bg-black/40 rounded-[4rem] text-white relative overflow-hidden shadow-2xl border border-white/10"
+        >
+           <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full translate-x-1/2 -translate-y-1/2" />
+           <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-500/10 blur-[100px] rounded-full -translate-x-1/2 translate-y-1/2" />
+           
+           <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-16 text-center lg:text-left">
+              <div className="max-w-2xl space-y-8">
+                 <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em]">
+                    <Sparkles size={18} />
+                    {isFR ? 'Expansion du réseau' : 'Network Expansion'}
+                 </div>
+                 <h3 className="text-4xl md:text-6xl font-black font-outfit leading-[1.1] tracking-tight">
+                    {isFR ? 'Votre institution n\'est pas encore ' : 'Your institution is not yet '}
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? 'listée' : 'listed'}</span> ?
                  </h3>
-                 <p className="text-blue-100 font-medium opacity-90">
+                 <p className="text-xl text-slate-400 font-medium leading-relaxed">
                     {isFR 
-                      ? "Participez à la cartographie du secteur en soumettant votre institution au répertoire national." 
-                      : "Participate in sector mapping by submitting your institution to the national directory."}
+                      ? "Inscrivez votre organisation au répertoire national certifié pour augmenter votre visibilité institutionnelle." 
+                      : "Register your organization to the certified national directory to increase your institutional visibility."}
                  </p>
               </div>
-              <button className="btn-premium btn-secondary !px-10 !py-4 whitespace-nowrap">
-                 {isFR ? 'Soumettre une institution' : 'Submit Institution'}
-              </button>
+              <Button variant="premium" className="h-20 px-14 rounded-[1.75rem] shadow-2xl text-xl font-black uppercase tracking-widest gap-4 group">
+                 {isFR ? 'Soumettre l\'Institution' : 'Submit Institution'}
+                 <ArrowRight size={24} className="group-hover:translate-x-1 transition-transform" />
+              </Button>
            </div>
-        </div>
+        </motion.div>
       </div>
     </div>
   );

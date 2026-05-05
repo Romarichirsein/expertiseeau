@@ -34,6 +34,9 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
+import dynamic from "next/dynamic";
+const ThemeProvider = dynamic(() => import("../../components/ThemeProvider").then(mod => mod.ThemeProvider), { ssr: false });
+
 export default async function RootLayout({
   children,
   params
@@ -48,18 +51,25 @@ export default async function RootLayout({
   return (
     <html lang={locale} className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
       <body suppressHydrationWarning>
-        <NextIntlClientProvider messages={messages}>
-          {/* Header pleine largeur en haut */}
-          <Header locale={locale} />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="light"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextIntlClientProvider messages={messages}>
+            {/* Header pleine largeur en haut */}
+            <Header locale={locale} />
 
-          {/* Contenu principal — pt-[136px] compense le header fixe */}
-          <main id="main-content" className="pt-[136px]">
-            {children}
-          </main>
+            {/* Contenu principal — pt-24 compense le header fixe */}
+            <main id="main-content" className="pt-24 lg:pt-[130px]">
+              {children}
+            </main>
 
-          {/* Footer pleine largeur en bas */}
-          <Footer locale={locale} />
-        </NextIntlClientProvider>
+            {/* Footer pleine largeur en bas */}
+            <Footer locale={locale} />
+          </NextIntlClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

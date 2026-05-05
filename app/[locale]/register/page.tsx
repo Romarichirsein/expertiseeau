@@ -43,67 +43,74 @@ export default function RegisterEntryPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50/50 pt-44 pb-32 relative overflow-hidden font-inter">
-      {/* Background Orbs */}
+    <div className="min-h-screen bg-white dark:bg-secondary pt-44 pb-32 relative overflow-hidden font-inter transition-colors duration-500">
+      {/* Background Blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <div className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-blue-100/30 rounded-full blur-[100px]" />
-        <div className="absolute -bottom-[10%] -right-[5%] w-[40%] h-[40%] bg-teal-100/20 rounded-full blur-[100px]" />
+        <div className="absolute -top-[10%] -left-[5%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[150px] opacity-20" />
+        <div className="absolute -bottom-[10%] -right-[5%] w-[40%] h-[40%] bg-primary-light/10 rounded-full blur-[150px] opacity-20" />
       </div>
 
-      <div className="container relative z-10 max-w-6xl">
-        <div className="text-center space-y-6 mb-20">
+      <div className="container relative z-10 max-w-6xl px-6">
+        <div className="text-center space-y-8 mb-24">
           <motion.div 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="inline-flex p-4 rounded-2xl bg-white shadow-xl shadow-blue-900/5 text-[#0a5694] mb-4 border border-slate-100"
+            initial={{ opacity: 0, scale: 0.9, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="inline-flex p-6 rounded-[2.5rem] bg-white dark:bg-white/10 shadow-2xl shadow-slate-900/5 text-primary dark:text-primary-light mb-8 border border-slate-100 dark:border-white/10 backdrop-blur-xl"
           >
-            <UserPlus size={40} />
+            <UserPlus size={56} strokeWidth={1} />
           </motion.div>
+
           <motion.h1 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight font-outfit"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-6xl md:text-8xl font-black text-secondary dark:text-white tracking-tight font-outfit leading-[0.95] transition-colors duration-500"
           >
-            {isFR ? 'Rejoignez l\'Expertise' : 'Join the Network'}
+            {isFR ? "Rejoignez l'Élite de " : 'Join the Elite '}
+            <span className="text-primary dark:text-primary-light italic">{isFR ? "l'Expertise" : 'Network'}</span>
           </motion.h1>
+
           <motion.p 
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.1 }}
-            className="text-lg text-slate-500 font-medium max-w-2xl mx-auto leading-relaxed"
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+            className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-normal max-w-4xl mx-auto leading-relaxed font-inter transition-colors duration-500"
           >
             {isFR 
-              ? 'Choisissez le profil qui correspond à votre situation pour commencer votre parcours dans le réseau national certifié.'
-              : 'Choose the profile that matches your situation to start your journey in the certified national network.'}
+              ? 'Choisissez le profil institutionnel qui correspond à votre situation pour commencer votre parcours dans le réseau national certifié.'
+              : 'Choose the institutional profile that matches your situation to start your journey in the certified national network.'}
           </motion.p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
           {types.map((type, i) => (
             <motion.div
               key={type.id}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 40 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 + (i * 0.1) }}
-              className="group relative bg-white border border-slate-200 rounded-[2.5rem] p-8 md:p-12 shadow-xl shadow-blue-900/5 hover:shadow-2xl hover:shadow-blue-900/10 hover:-translate-y-1 transition-all duration-500"
+              transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 + (i * 0.15) }}
+              className="premium-card group relative bg-white dark:bg-secondary border border-slate-100 dark:border-white/5 !p-12 md:!p-16 overflow-hidden !rounded-[4rem] transition-all duration-700 hover:border-primary/20 hover:shadow-[0_60px_100px_-20px_rgba(15,23,42,0.1)]"
             >
-              <div className="relative z-10 space-y-8">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${type.color} text-white flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-500`}>
-                  <type.icon size={32} />
+              <div className="relative z-10 space-y-10">
+                <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br ${type.color} text-white flex items-center justify-center shadow-[0_20px_50px_rgba(0,0,0,0.2)] group-hover:scale-110 group-hover:-rotate-6 transition-all duration-1000`}>
+                  <type.icon size={40} strokeWidth={1.5} />
                 </div>
 
-                <div className="space-y-3">
-                  <div className="space-y-1">
-                    <span className={`text-[10px] font-bold uppercase tracking-widest ${type.accent}`}>{type.subtitle}</span>
-                    <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight font-outfit">{type.title}</h2>
+                <div className="space-y-6">
+                  <div className="space-y-3">
+                    <span className={`text-[11px] font-black uppercase tracking-[0.4em] ${type.accent} dark:text-primary-light transition-colors`}>{type.subtitle}</span>
+                    <h2 className="text-4xl md:text-5xl font-black text-secondary dark:text-white tracking-tight font-outfit transition-colors">{type.title}</h2>
                   </div>
-                  <p className="text-slate-500 font-medium leading-relaxed">{type.description}</p>
+                  <p className="text-lg text-slate-500 dark:text-slate-400 font-normal leading-relaxed font-inter transition-colors">{type.description}</p>
                 </div>
 
-                <ul className="space-y-3 py-2 border-y border-slate-50">
+                <ul className="space-y-6 py-10 border-y border-slate-100 dark:border-white/5 transition-colors">
                   {type.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-3 text-slate-600 text-sm font-semibold">
-                      <CheckCircle size={18} className={type.accent} />
+                    <li key={idx} className="flex items-center gap-5 text-slate-600 dark:text-slate-400 text-base font-bold font-inter">
+                      <div className={`w-7 h-7 rounded-lg flex items-center justify-center bg-slate-50 dark:bg-white/5 ${type.accent} dark:text-primary-light transition-colors`}>
+                        <CheckCircle size={18} strokeWidth={3} />
+                      </div>
                       {feature}
                     </li>
                   ))}
@@ -111,39 +118,39 @@ export default function RegisterEntryPage() {
 
                 <Link 
                   href={`/${locale}/register/${type.id}`}
-                  className="flex items-center justify-between w-full p-5 bg-slate-50 group-hover:bg-[#0a5694] group-hover:text-white rounded-2xl transition-all duration-300 font-bold text-base group/btn shadow-sm"
+                  className="btn-premium flex items-center justify-between w-full p-8 bg-slate-50 dark:bg-white/5 group-hover:bg-primary group-hover:text-white transition-all duration-700 font-black uppercase tracking-[0.2em] text-xs group/btn rounded-[1.5rem] border border-transparent dark:border-white/5"
                 >
                   {isFR ? 'Commencer l\'inscription' : 'Start registration'}
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 bg-white shadow-sm group-hover/btn:translate-x-1 ${type.accent}`}>
-                    <ArrowRight size={20} />
+                  <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-700 bg-white dark:bg-secondary shadow-sm group-hover/btn:translate-x-1 group-hover/btn:scale-110 ${type.accent} dark:text-primary-light`}>
+                    <ArrowRight size={24} strokeWidth={3} />
                   </div>
                 </Link>
               </div>
               
               {/* Subtle Decorative Icon */}
-              <div className="absolute -bottom-6 -right-6 opacity-[0.03] group-hover:opacity-[0.08] transition-opacity duration-700 pointer-events-none">
-                 <type.icon size={200} />
+              <div className="absolute -bottom-10 -right-10 opacity-[0.02] group-hover:opacity-[0.06] transition-opacity duration-1000 pointer-events-none">
+                 <type.icon size={260} strokeWidth={1} />
               </div>
             </motion.div>
           ))}
         </div>
 
         <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="mt-16 text-center py-8 px-8 bg-white rounded-3xl border border-slate-100 flex flex-col md:flex-row items-center justify-center gap-4 md:gap-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 1 }}
+          className="mt-20 text-center py-12 px-12 bg-white dark:bg-secondary rounded-[3.5rem] border border-slate-100 dark:border-white/5 shadow-2xl shadow-slate-900/5 flex flex-col md:flex-row items-center justify-center gap-8 md:gap-14 transition-colors duration-500"
         >
-          <div className="flex items-center gap-2 text-slate-400 font-bold uppercase tracking-widest text-[10px]">
-            <Award size={14} className="text-blue-600" />
-            <span>Plateforme Officielle certifiée par l&apos;État</span>
+          <div className="flex items-center gap-4 text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.3em] text-[11px]">
+            <Award size={22} className="text-primary dark:text-primary-light" strokeWidth={2.5} />
+            <span>Plateforme Officielle AES-256 certifiée</span>
           </div>
-          <div className="hidden md:block w-px h-4 bg-slate-200" />
-          <p className="font-semibold text-slate-500 text-sm">
+          <div className="hidden md:block w-px h-8 bg-slate-100 dark:bg-white/10" />
+          <p className="font-bold text-slate-500 dark:text-slate-400 text-lg font-inter transition-colors">
             {isFR 
-              ? 'Déjà membre ? ' 
-              : 'Already a member? '}
-            <Link href={`/${locale}/login`} className="text-[#0a5694] hover:text-blue-700 font-bold ml-1 transition-colors">
+              ? 'Déjà membre du réseau ? ' 
+              : 'Already part of the network? '}
+            <Link href={`/${locale}/login`} className="text-primary dark:text-primary-light hover:text-primary-dark font-black ml-2 transition-colors uppercase tracking-[0.1em]">
               {isFR ? 'Connectez-vous ici' : 'Login here'}
             </Link>
           </p>
@@ -152,4 +159,3 @@ export default function RegisterEntryPage() {
     </div>
   );
 }
-

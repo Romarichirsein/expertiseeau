@@ -15,7 +15,12 @@ import {
   Target,
   Users,
   Zap,
+  Globe,
+  ArrowRight,
+  Sparkles
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
 
 export default function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
   const resolvedParams = React.use(params);
@@ -24,225 +29,242 @@ export default function AboutPage({ params }: { params: Promise<{ locale: string
 
   const values = [
     {
-      title: isFR ? 'Integrite' : 'Integrity',
+      title: isFR ? 'Intégrité' : 'Integrity',
       description: isFR
-        ? "Une ethique professionnelle exigeante au service du secteur de l'eau."
+        ? "Une éthique professionnelle exigeante au service du secteur de l'eau."
         : 'Rigorous professional ethics in service of the water sector.',
       icon: ShieldCheck,
-      color: 'blue',
+      color: 'text-primary',
+      bg: 'bg-primary/10'
     },
     {
       title: isFR ? 'Excellence' : 'Excellence',
       description: isFR
-        ? 'Mettre en avant des competences de haut niveau pour des solutions durables.'
+        ? 'Mettre en avant des compétences de haut niveau pour des solutions durables.'
         : 'Showcasing high-level expertise for sustainable solutions.',
       icon: Target,
-      color: 'emerald',
+      color: 'text-emerald-500',
+      bg: 'bg-emerald-500/10'
     },
     {
       title: isFR ? 'Impact' : 'Impact',
       description: isFR
-        ? "Contribuer a un meilleur acces a l'eau et a l'assainissement au Cameroun."
+        ? "Contribuer à un meilleur accès à l'eau et à l'assainissement au Cameroun."
         : 'Contributing to better access to water and sanitation in Cameroon.',
       icon: Star,
-      color: 'indigo',
+      color: 'text-indigo-500',
+      bg: 'bg-indigo-500/10'
     },
   ];
 
   const pillars = [
     { icon: CheckCircle, text: isFR ? "Centralisation de l'expertise" : 'Expertise centralization' },
     { icon: CheckCircle, text: isFR ? 'Valorisation des talents' : 'Talent promotion' },
-    { icon: CheckCircle, text: isFR ? 'Mise en reseau nationale' : 'National networking' },
+    { icon: CheckCircle, text: isFR ? 'Mise en réseau nationale' : 'National networking' },
     { icon: CheckCircle, text: isFR ? 'Certification des profils' : 'Profile certification' },
   ];
 
   const stats = [
-    { icon: Users, count: '960+', label: isFR ? 'Experts' : 'Experts', color: 'blue' },
-    { icon: Building2, count: '25+', label: isFR ? 'Institutions' : 'Institutions', color: 'emerald' },
-    { icon: Award, count: '14+', label: isFR ? 'Domaines' : 'Fields', color: 'violet' },
-    { icon: BookOpen, count: '150+', label: isFR ? 'Publications' : 'Publications', color: 'amber' },
+    { icon: Users, count: '960+', label: isFR ? 'Experts' : 'Experts', color: 'text-primary', bg: 'bg-primary/10' },
+    { icon: Building2, count: '25+', label: isFR ? 'Institutions' : 'Institutions', color: 'text-emerald-500', bg: 'bg-emerald-500/10' },
+    { icon: Award, count: '14+', label: isFR ? 'Domaines' : 'Fields', color: 'text-violet-500', bg: 'bg-violet-500/10' },
+    { icon: BookOpen, count: '150+', label: isFR ? 'Publications' : 'Publications', color: 'text-amber-500', bg: 'bg-amber-500/10' },
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50/60 pb-32 font-inter">
-      <div className="relative overflow-hidden bg-[#0a5694] pb-24 pt-16">
-        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] bg-cover opacity-10 mix-blend-overlay" />
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-slate-50/60 to-transparent" />
+    <div className="min-h-screen bg-background font-inter pb-32 transition-colors duration-500 overflow-hidden relative">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/10 blur-[180px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-teal-500/5 blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
-        <div className="container relative z-10 px-6">
+      {/* PREMIUM HERO SECTION */}
+      <div className="bg-slate-900 pt-32 md:pt-48 pb-24 md:pb-32 relative overflow-hidden transition-colors duration-500">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.05] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
+        
+        <div className="container relative z-10 px-6 max-w-7xl mx-auto">
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="max-w-3xl"
+            initial={{ opacity: 0, y: 30 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+            className="max-w-4xl space-y-10"
           >
-            <span className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-white backdrop-blur-md">
-              <History size={14} />
-              {isFR ? 'Notre mission et notre vision' : 'Our mission and vision'}
-            </span>
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em] backdrop-blur-xl shadow-2xl">
+              <History size={18} />
+              {isFR ? 'Notre Vision Stratégique' : 'Our Strategic Vision'}
+            </div>
 
-            <h1 className="mb-6 font-outfit text-4xl font-extrabold tracking-tight text-white md:text-5xl">
-              {isFR ? 'A propos du reseau des experts' : 'About the experts network'}
+            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight font-outfit leading-[0.9] uppercase">
+              {isFR ? 'À propos du ' : 'About the '}
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? 'Réseau' : 'Network'}</span>
             </h1>
 
-            <p className="text-xl font-medium leading-relaxed text-blue-100/95">
+            <p className="text-xl md:text-2xl text-slate-400 font-normal max-w-3xl font-inter leading-relaxed">
               {isFR
-                ? "Une plateforme institutionnelle dediee a la structuration, a la mise en valeur et a la connexion des competences camerounaises du secteur de l'eau."
+                ? "Une plateforme institutionnelle dédiée à la structuration, à la mise en valeur et à la connexion des compétences camerounaises du secteur de l'eau."
                 : 'An institutional platform dedicated to structuring, elevating, and connecting Cameroonian expertise in the water sector.'}
             </p>
           </motion.div>
         </div>
       </div>
 
-      <div className="container relative z-20 -mt-16 px-6 pb-32">
+      <div className="container relative z-20 -mt-16 md:-mt-24 px-6 max-w-7xl mx-auto">
+        {/* INITIATIVE CARD */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="mb-32 rounded-[2.5rem] border border-slate-200 bg-white p-8 shadow-2xl shadow-blue-900/5 md:p-16"
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="grid grid-cols-1 items-center gap-16 lg:grid-cols-2">
-            <motion.div initial={{ opacity: 0, x: -30 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}>
-              <div className="mb-4 flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0a5694]">
-                <Building2 size={16} />
-                Expertiseaucameroun.org
-              </div>
+          <Card className="rounded-[4rem] border-white/20 dark:border-white/5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-3xl p-12 md:p-24 shadow-2xl overflow-hidden">
+            <div className="grid grid-cols-1 items-center gap-20 lg:grid-cols-2 relative z-10">
+              <div className="space-y-10">
+                <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[10px] font-black uppercase tracking-[0.3em]">
+                  <Building2 size={18} strokeWidth={2.5} />
+                  EXPERTISAUCAMEROUN.ORG
+                </div>
 
-              <h2 className="mb-8 font-outfit text-3xl font-extrabold tracking-tight text-slate-900">
-                {isFR ? 'Une initiative strategique nationale' : 'A national strategic initiative'}
-              </h2>
+                <h2 className="font-outfit text-4xl md:text-6xl font-black tracking-tight text-foreground leading-[1] uppercase">
+                  {isFR ? 'Une initiative stratégique ' : 'A national '}
+                  <span className="text-primary italic">{isFR ? 'nationale' : 'strategic initiative'}</span>
+                </h2>
 
-              <div className="space-y-6">
-                <p className="text-lg font-medium leading-relaxed text-slate-600">
-                  {isFR
-                    ? "Ce projet est une initiative strategique soutenue par le Fonds de Solidarite pour les Projets Innovants (FSPI), l'Ambassade de France et la Delegation de l'Union europeenne au Cameroun."
-                    : 'This project is a strategic initiative supported by the Solidarity Fund for Innovative Projects (FSPI), the French Embassy, and the European Union Delegation in Cameroon.'}
-                </p>
+                <div className="space-y-8">
+                  <p className="text-xl font-medium leading-relaxed text-muted-foreground font-inter">
+                    {isFR
+                      ? "Ce projet est une initiative stratégique soutenue par le Fonds de Solidarité pour les Projets Innovants (FSPI), l'Ambassade de France et la Délégation de l'Union européenne au Cameroun."
+                      : 'This project is a strategic initiative supported by the Solidarity Fund for Innovative Projects (FSPI), the French Embassy, and the European Union Delegation in Cameroon.'}
+                  </p>
 
-                <p className="font-medium leading-relaxed text-slate-500">
-                  {isFR
-                    ? "Mis en oeuvre avec l'appui de l'AFD, il vise a structurer l'expertise nationale afin de soutenir une gestion durable, fiable et performante des ressources hydrauliques du pays."
-                    : 'Implemented with AFD support, it aims to structure national expertise in order to strengthen sustainable, reliable, and high-performing management of the country\'s water resources.'}
-                </p>
-              </div>
+                  <p className="text-lg font-medium leading-relaxed text-slate-500 font-inter">
+                    {isFR
+                      ? "Mis en oeuvre avec l'appui de l'AFD, il vise à structurer l'expertise nationale afin de soutenir une gestion durable, fiable et performante des ressources hydrauliques du pays."
+                      : 'Implemented with AFD support, it aims to structure national expertise in order to strengthen sustainable, reliable, and high-performing management of the country\'s water resources.'}
+                  </p>
+                </div>
 
-              <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2">
-                {pillars.map((item) => (
-                  <div key={item.text} className="flex items-center gap-3 text-sm font-bold text-slate-700">
-                    <div className="text-emerald-500">
-                      <item.icon size={20} />
+                <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 pt-6">
+                  {pillars.map((item) => (
+                    <div key={item.text} className="flex items-center gap-4 text-[12px] font-black uppercase tracking-tight text-foreground transition-all group">
+                      <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 flex items-center justify-center text-emerald-500 shadow-inner border border-emerald-500/20 group-hover:scale-110 transition-transform">
+                        <item.icon size={24} strokeWidth={3} />
+                      </div>
+                      <span className="font-outfit group-hover:text-primary transition-colors">{item.text}</span>
                     </div>
-                    <span>{item.text}</span>
-                  </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="grid grid-cols-2 gap-6 md:gap-8">
+                {stats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="group flex flex-col items-center rounded-[3rem] border border-white/20 dark:border-white/5 bg-white/40 dark:bg-black/20 p-10 text-center transition-all duration-700 hover:border-primary/40 hover:bg-white dark:hover:bg-white/10 hover:shadow-2xl hover:shadow-primary/5"
+                  >
+                    <div className={`mb-8 flex h-20 w-20 items-center justify-center rounded-3xl shadow-inner transition-all duration-700 group-hover:scale-110 group-hover:rotate-6 ${stat.bg} ${stat.color}`}>
+                      <stat.icon size={36} strokeWidth={2.5} />
+                    </div>
+                    <div className="font-outfit text-5xl font-black text-foreground tracking-tighter transition-colors uppercase">{stat.count}</div>
+                    <div className="mt-3 text-[10px] font-black uppercase tracking-[0.3em] text-muted-foreground">{stat.label}</div>
+                  </motion.div>
                 ))}
               </div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-2 gap-6"
-            >
-              {stats.map((stat) => (
-                <div
-                  key={stat.label}
-                  className="group flex flex-col items-center rounded-[2rem] border border-slate-100 bg-slate-50 p-8 text-center transition-all hover:border-[#0a5694]/20 hover:bg-white hover:shadow-xl"
-                >
-                  <div
-                    className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl shadow-inner transition-transform group-hover:scale-110 ${
-                      stat.color === 'blue'
-                        ? 'bg-blue-100 text-[#0a5694]'
-                        : stat.color === 'emerald'
-                          ? 'bg-emerald-100 text-emerald-600'
-                          : stat.color === 'violet'
-                            ? 'bg-violet-100 text-violet-600'
-                            : 'bg-amber-100 text-amber-600'
-                    }`}
-                  >
-                    <stat.icon size={28} />
-                  </div>
-                  <div className="font-outfit text-3xl font-extrabold text-slate-900">{stat.count}</div>
-                  <div className="mt-1 text-[10px] font-bold uppercase tracking-widest text-slate-400">{stat.label}</div>
-                </div>
-              ))}
-            </motion.div>
-          </div>
+            </div>
+          </Card>
         </motion.div>
 
-        <div className="mb-24">
-          <div className="mx-auto mb-16 max-w-2xl text-center">
-            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-blue-100 bg-blue-50 px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-[#0a5694]">
-              <Heart size={14} />
-              {isFR ? 'Nos valeurs' : 'Our values'}
-            </span>
+        {/* VALUES SECTION */}
+        <div className="py-32">
+          <div className="mx-auto mb-24 max-w-4xl text-center space-y-10">
+            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary text-[11px] font-black uppercase tracking-[0.3em]">
+              <Heart size={20} strokeWidth={3} />
+              {isFR ? 'Nos Valeurs Fondamentales' : 'Our Core Values'}
+            </div>
 
-            <h2 className="font-outfit text-4xl font-extrabold tracking-tight text-slate-900">
-              {isFR ? 'Ce qui guide notre action' : 'What guides our action'}
+            <h2 className="font-outfit text-5xl md:text-7xl font-black tracking-tight text-foreground leading-[1] uppercase">
+              {isFR ? 'Ce qui guide chaque ' : 'What guides every '}
+              <span className="text-primary italic">{isFR ? 'décision' : 'decision'}</span>
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
             {values.map((value, index) => (
               <motion.div
                 key={value.title}
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                className="group rounded-[2.5rem] border border-slate-200 bg-white p-10 shadow-xl shadow-blue-900/5 transition-all hover:-translate-y-1 hover:shadow-2xl"
+                transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: index * 0.15 }}
               >
-                <div
-                  className={`mb-8 flex h-16 w-16 items-center justify-center rounded-2xl shadow-inner transition-transform group-hover:scale-110 ${
-                    value.color === 'blue'
-                      ? 'bg-blue-50 text-[#0a5694]'
-                      : value.color === 'emerald'
-                        ? 'bg-emerald-50 text-emerald-600'
-                        : 'bg-indigo-50 text-indigo-600'
-                  }`}
-                >
-                  <value.icon size={32} />
-                </div>
+                <Card className="group !rounded-[4rem] !p-14 overflow-hidden border-white/20 dark:border-white/5 bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl shadow-2xl transition-all duration-700 hover:border-primary/40 hover:-translate-y-2">
+                  <CardContent className="p-0">
+                    <div className={`mb-12 flex h-24 w-24 items-center justify-center rounded-[2rem] shadow-inner transition-all duration-1000 group-hover:scale-110 group-hover:-rotate-6 ${value.bg} ${value.color}`}>
+                      <value.icon size={48} strokeWidth={2} />
+                    </div>
 
-                <h3 className="mb-4 font-outfit text-xl font-extrabold text-slate-900">{value.title}</h3>
-                <p className="text-sm font-medium leading-relaxed text-slate-500">{value.description}</p>
+                    <h3 className="mb-6 font-outfit text-3xl font-black text-foreground tracking-tight group-hover:text-primary transition-colors uppercase">{value.title}</h3>
+                    <p className="text-lg font-medium leading-relaxed text-muted-foreground font-inter">{value.description}</p>
+                  </CardContent>
+                </Card>
               </motion.div>
             ))}
           </div>
         </div>
 
-        <div className="relative overflow-hidden rounded-[3rem] bg-slate-900 p-10 text-center shadow-2xl shadow-blue-900/20 md:p-20">
-          <div className="absolute right-0 top-0 rotate-12 p-16 opacity-10">
-            <Zap size={240} className="text-white" />
-          </div>
-
-          <div className="relative z-10 mx-auto max-w-2xl">
-            <h2 className="mb-6 font-outfit text-3xl font-extrabold tracking-tight text-white md:text-5xl">
-              {isFR ? "Une vision partagee pour l'avenir" : 'A shared vision for the future'}
-            </h2>
-
-            <p className="mb-12 text-lg font-medium leading-relaxed text-slate-400">
-              {isFR
-                ? "Rejoignez une communaute d'experts engages et contribuez a faire emerger des solutions hydrauliques innovantes au Cameroun."
-                : 'Join a community of committed experts and help shape innovative water solutions in Cameroon.'}
-            </p>
-
-            <div className="flex flex-col justify-center gap-4 sm:flex-row">
-              <Link
-                href={`/${locale}/register/resident`}
-                className="btn-premium btn-primary !px-12 !py-4"
-              >
-                {isFR ? 'Rejoindre le réseau' : 'Join the network'}
-              </Link>
-
-              <Link
-                href={`/${locale}/contact`}
-                className="btn-premium btn-secondary !px-12 !py-4"
-              >
-                {isFR ? 'Nous contacter' : 'Contact us'}
-              </Link>
+        {/* CALL TO ACTION */}
+        <motion.div 
+          initial={{ opacity: 0, scale: 0.95 }}
+          whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+        >
+          <Card className="relative overflow-hidden rounded-[5rem] bg-slate-900 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.5)] p-16 md:p-32 text-center border border-white/10">
+            <div className="absolute right-0 top-0 rotate-12 p-16 opacity-10 pointer-events-none group-hover:rotate-45 transition-transform duration-1000">
+              <Zap size={400} className="text-primary" />
             </div>
-          </div>
-        </div>
+            <div className="absolute left-0 bottom-0 -rotate-12 p-16 opacity-5 pointer-events-none">
+              <Globe size={300} className="text-white" />
+            </div>
+
+            <div className="relative z-10 mx-auto max-w-4xl space-y-12">
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em]">
+                <Sparkles size={18} />
+                {isFR ? 'Expansion du réseau' : 'Network Expansion'}
+              </div>
+              
+              <h2 className="font-outfit text-5xl md:text-8xl font-black tracking-tight text-white leading-[0.95] uppercase">
+                {isFR ? "Une vision partagée pour " : 'A shared vision for '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? "l'avenir" : 'the future'}</span>
+              </h2>
+
+              <p className="text-xl md:text-2xl font-medium leading-relaxed text-slate-400 max-w-3xl mx-auto font-inter">
+                {isFR
+                  ? "Rejoignez une communauté d'experts engagés et contribuez à faire émerger des solutions hydrauliques innovantes au Cameroun."
+                  : 'Join a community of committed experts and help shape innovative water solutions in Cameroon.'}
+              </p>
+
+              <div className="flex flex-col justify-center items-center gap-8 sm:flex-row pt-10">
+                <Link href={`/${locale}/register`} passHref>
+                  <Button variant="premium" className="h-20 px-16 rounded-3xl text-xl font-black shadow-2xl shadow-primary/30 uppercase tracking-widest gap-4">
+                    {isFR ? 'Rejoindre le réseau' : 'Join the network'}
+                    <ArrowRight size={24} strokeWidth={3} />
+                  </Button>
+                </Link>
+
+                <Link href={`/${locale}/contact`} passHref>
+                  <Button variant="outline" className="h-20 px-16 rounded-3xl text-xl font-black bg-white/5 border-white/10 text-white backdrop-blur-xl hover:bg-white/10 uppercase tracking-widest">
+                    {isFR ? 'Nous contacter' : 'Contact us'}
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
       </div>
     </div>
   );

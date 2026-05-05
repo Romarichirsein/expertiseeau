@@ -14,6 +14,7 @@ import {
   Globe,
   Award,
   ChevronRight,
+  Briefcase,
   AlertCircle,
   Inbox
 } from 'lucide-react';
@@ -50,100 +51,128 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
   }
 
   return (
-    <div className="bg-slate-50/50 min-h-screen font-inter pb-32">
-      <div className="max-w-7xl mx-auto px-6 space-y-12 pt-10">
-        {/* Admin Header */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-10">
-          <div className="space-y-4">
-            <div className="flex items-center gap-2 px-3 py-1 rounded-full bg-red-50 text-red-600 font-extrabold text-[10px] uppercase tracking-widest w-fit border border-red-100">
-              <ShieldCheck size={14} />
-              {isFR ? 'Espace Haute Administration' : 'High Administration Space'}
-            </div>
-            <h1 className="text-4xl md:text-6xl font-extrabold text-slate-900 tracking-tight font-outfit">
-              {isFR ? 'Modération des ' : 'Expert '} <span className="text-[#0a5694]">{isFR ? 'Dossiers' : 'Moderation'}</span>
+    <div className="bg-white dark:bg-secondary min-h-screen font-inter pb-32 transition-colors duration-500">
+      <div className="max-w-[1400px] mx-auto px-6 space-y-20 pt-16">
+        
+        {/* ==================== ADMIN HEADER ==================== */}
+        <div className="flex flex-col xl:flex-row xl:items-end justify-between gap-12">
+          <div className="space-y-8 max-w-3xl">
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="inline-flex items-center gap-3 px-5 py-2.5 rounded-full bg-red-50 dark:bg-red-500/10 text-red-600 dark:text-red-400 font-black text-[11px] uppercase tracking-[0.3em] w-fit border border-red-100 dark:border-red-500/20 backdrop-blur-xl"
+            >
+              <ShieldCheck size={18} strokeWidth={2.5} />
+              {isFR ? 'Haute Administration Institutionnelle' : 'Institutional High Administration'}
+            </motion.div>
+            
+            <h1 className="text-6xl md:text-8xl font-black text-secondary dark:text-white tracking-tight font-outfit leading-[0.95]">
+              {isFR ? 'Contrôle & ' : 'Expert '} <span className="text-primary italic">{isFR ? 'Modération' : 'Moderation'}</span>
             </h1>
-            <p className="text-slate-500 font-medium text-lg max-w-2xl leading-relaxed">
+            
+            <p className="text-xl md:text-2xl text-slate-500 dark:text-slate-400 font-normal leading-relaxed font-inter">
               {isFR 
-                ? 'Gérez et validez les nouvelles inscriptions pour garantir l\'excellence et l\'intégrité du réseau national.'
-                : 'Manage and validate new registrations to ensure the excellence and integrity of the national network.'}
+                ? 'Garantissez l\'intégrité du réseau national en validant les compétences et l\'authenticité des nouveaux membres.'
+                : 'Guarantee the integrity of the national network by validating the skills and authenticity of new members.'}
             </p>
           </div>
           
-          <div className="flex items-center gap-6 bg-white p-8 rounded-[2.5rem] border border-slate-200 shadow-xl shadow-blue-900/5">
-            <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-inner">
-              <Clock size={32} />
+          <motion.div 
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            className="flex items-center gap-8 bg-white dark:bg-white/5 p-10 rounded-[3.5rem] border border-slate-100 dark:border-white/5 shadow-2xl shadow-slate-900/5 backdrop-blur-2xl"
+          >
+            <div className="w-20 h-20 rounded-3xl bg-amber-50 dark:bg-amber-500/10 text-amber-600 dark:text-amber-400 flex items-center justify-center shadow-inner">
+              <Clock size={36} strokeWidth={2.5} />
             </div>
             <div>
-              <div className="text-4xl font-extrabold text-slate-900 tracking-tight font-outfit">{pendingExperts.length}</div>
-              <div className="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest">{isFR ? 'Demandes en attente' : 'Pending Requests'}</div>
+              <div className="text-6xl font-black text-secondary dark:text-white tracking-tighter font-outfit leading-none">{pendingExperts.length}</div>
+              <div className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] mt-3">{isFR ? 'Dossiers en Attente' : 'Pending Dossiers'}</div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
+        <div className="section-divider" />
+
+        {/* ==================== CONTENT AREA ==================== */}
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-40 space-y-8 bg-white rounded-[3rem] border border-slate-100 shadow-xl shadow-blue-900/5">
+          <div className="flex flex-col items-center justify-center py-40 space-y-10 bg-slate-50/50 dark:bg-white/5 rounded-[4rem] border border-slate-100 dark:border-white/5 shadow-inner">
             <div className="relative">
-              <div className="w-20 h-20 border-4 border-slate-100 rounded-full" />
-              <Loader2 className="w-20 h-20 animate-spin text-[#0a5694] absolute top-0 left-0" />
+              <div className="w-24 h-24 border-4 border-slate-200 dark:border-white/5 rounded-full" />
+              <Loader2 className="w-24 h-24 animate-spin text-primary absolute top-0 left-0" strokeWidth={1.5} />
             </div>
-            <p className="text-slate-400 font-extrabold uppercase tracking-widest text-[10px]">{isFR ? 'Synchronisation des dossiers...' : 'Synchronizing folders...'}</p>
+            <p className="text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.4em] text-[11px]">{isFR ? 'Synchronisation du répertoire...' : 'Synchronizing directory...'}</p>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-10">
             <AnimatePresence mode="popLayout">
-              {pendingExperts.map((expert) => (
+              {pendingExperts.map((expert, i) => (
                 <motion.div
                   key={expert.id}
                   layout
-                  initial={{ opacity: 0, scale: 0.95 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="bg-white border border-slate-200 p-10 rounded-[3rem] shadow-xl shadow-blue-900/5 hover:shadow-blue-900/10 transition-all flex flex-col lg:flex-row items-center gap-12 group"
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
+                  className="premium-card group relative !p-10 !rounded-[3.5rem] border-slate-100 dark:border-white/5 hover:border-primary/30 flex flex-col lg:flex-row items-center gap-12"
                 >
-                  <div className="w-28 h-28 rounded-[2.5rem] bg-slate-50 flex items-center justify-center text-[#0a5694] shrink-0 group-hover:scale-105 transition-transform shadow-inner border border-slate-100">
-                    {expert.expert_type === 'diaspora' ? <Globe size={48} /> : <UserCheck size={48} />}
+                  {/* Expert Visual */}
+                  <div className="relative shrink-0">
+                    <div className="w-32 h-32 rounded-[2.5rem] bg-slate-50 dark:bg-white/5 flex items-center justify-center text-primary dark:text-primary-light group-hover:scale-105 transition-transform duration-700 shadow-inner border border-slate-100 dark:border-white/10">
+                      {expert.expert_type === 'diaspora' ? <Globe size={48} strokeWidth={1.5} /> : <UserCheck size={48} strokeWidth={1.5} />}
+                    </div>
+                    <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-2xl bg-white dark:bg-secondary border-4 border-slate-50 dark:border-white/10 flex items-center justify-center text-slate-400 shadow-xl">
+                      <Inbox size={16} />
+                    </div>
                   </div>
 
-                  <div className="flex-1 space-y-6 text-center lg:text-left">
-                    <div className="space-y-2">
-                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4">
-                        <h3 className="font-extrabold text-3xl text-slate-900 tracking-tight font-outfit">{expert.name}</h3>
-                        <span className={`px-4 py-1.5 rounded-xl text-[10px] font-extrabold uppercase tracking-widest border ${
-                          expert.expert_type === 'diaspora' ? 'bg-teal-50 text-teal-600 border-teal-100' : 'bg-blue-50 text-blue-600 border-blue-100'
+                  {/* Expert Details */}
+                  <div className="flex-1 space-y-8 text-center lg:text-left">
+                    <div className="space-y-4">
+                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
+                        <h3 className="font-black text-3xl text-secondary dark:text-white tracking-tight font-outfit leading-tight">{expert.name}</h3>
+                        <span className={`px-5 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border shadow-sm ${
+                          expert.expert_type === 'diaspora' 
+                            ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/20' 
+                            : 'bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light border-primary/10'
                         }`}>
-                          {expert.expert_type || 'Resident'}
+                          {expert.expert_type === 'diaspora' ? (isFR ? 'Diaspora' : 'Diaspora') : (isFR ? 'Résident' : 'Resident')}
                         </span>
                       </div>
-                      <p className="text-xl font-bold text-slate-500 font-outfit">{expert.profession}</p>
+                      <div className="flex items-center justify-center lg:justify-start gap-3 text-primary dark:text-primary-light font-black text-[13px] uppercase tracking-[0.2em]">
+                         <Briefcase size={18} strokeWidth={3} />
+                         {expert.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                      </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-center lg:justify-start gap-8 text-sm font-bold text-slate-400">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 border border-slate-100"><Mail size={18} /></div>
-                        <span className="text-slate-600">{expert.email}</span>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm pt-8 border-t border-slate-100 dark:border-white/5">
+                      <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><Mail size={18} strokeWidth={2.5} /></div>
+                        <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.email}</span>
                       </div>
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-2xl bg-slate-50 flex items-center justify-center text-slate-400 border border-slate-100"><MapPin size={18} /></div>
-                        <span className="text-slate-600">{expert.city}, {expert.country || 'Cameroun'}</span>
+                      <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
+                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><MapPin size={18} strokeWidth={2.5} /></div>
+                        <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.city}, {expert.country || 'Cameroun'}</span>
                       </div>
                     </div>
                   </div>
 
-                  <div className="flex flex-wrap items-center justify-center gap-4 w-full lg:w-auto shrink-0 pt-10 lg:pt-0 border-t lg:border-t-0 border-slate-100">
+                  {/* Admin Actions */}
+                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full lg:w-auto shrink-0 pt-10 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-white/5 transition-colors">
                     <button 
                       onClick={() => handleAction(expert.id, 'rejected')}
                       disabled={!!actionLoading}
-                      className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-8 py-4 rounded-2xl font-extrabold text-xs uppercase tracking-widest bg-slate-50 text-slate-400 hover:bg-red-50 hover:text-red-600 border border-slate-100 hover:border-red-100 transition-all group/btn"
+                      className="w-full sm:w-auto flex items-center justify-center gap-4 px-10 py-5 rounded-[1.5rem] font-black text-[11px] uppercase tracking-[0.2em] bg-slate-50 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 border border-slate-100 dark:border-white/5 hover:border-red-100 transition-all group/btn"
                     >
-                      <UserX size={18} className="group-hover/btn:scale-110 transition-transform" />
+                      <UserX size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />
                       {isFR ? 'Rejeter' : 'Reject'}
                     </button>
                     <button 
                       onClick={() => handleAction(expert.id, 'approved')}
                       disabled={!!actionLoading}
-                      className="flex-1 lg:flex-none flex items-center justify-center gap-3 px-10 py-4 rounded-2xl font-extrabold text-xs uppercase tracking-widest bg-[#0a5694] text-white shadow-xl shadow-blue-900/20 hover:bg-[#062040] hover:-translate-y-1 transition-all group/btn"
+                      className="btn-premium w-full sm:w-auto !px-12 !py-5 bg-primary text-white shadow-2xl shadow-primary/30 hover:bg-primary-dark group/btn"
                     >
-                      {actionLoading === expert.id ? <Loader2 className="animate-spin" size={18} /> : <UserCheck size={18} className="group-hover/btn:scale-110 transition-transform" />}
+                      {actionLoading === expert.id ? <Loader2 className="animate-spin" size={20} /> : <UserCheck size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />}
                       {isFR ? 'Approuver' : 'Approve'}
                     </button>
                   </div>
@@ -153,23 +182,23 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
 
             {pendingExperts.length === 0 && (
               <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.98 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="bg-white border border-dashed border-slate-200 rounded-[4rem] py-32 text-center space-y-8 shadow-xl shadow-blue-900/5"
+                className="bg-slate-50/50 dark:bg-white/5 border border-dashed border-slate-200 dark:border-white/10 rounded-[4rem] py-40 text-center space-y-12 transition-colors"
               >
-                <div className="w-28 h-28 bg-emerald-50 rounded-[3rem] mx-auto flex items-center justify-center text-emerald-600 shadow-inner mb-4 border border-emerald-100">
-                  <Inbox size={56} />
+                <div className="w-32 h-32 bg-emerald-50 dark:bg-emerald-500/10 rounded-[3rem] mx-auto flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner mb-6 border border-emerald-100 dark:border-emerald-500/20">
+                  <Inbox size={64} strokeWidth={1.5} />
                 </div>
-                <div className="space-y-4">
-                  <h3 className="font-extrabold text-4xl text-slate-900 tracking-tight font-outfit">{isFR ? 'File de modération vide' : 'Moderation queue empty'}</h3>
-                  <p className="text-slate-500 font-medium text-lg max-w-md mx-auto leading-relaxed">
-                    {isFR ? 'Toutes les demandes ont été traitées. Le réseau est parfaitement à jour.' : 'All requests have been processed. The network is perfectly up to date.'}
+                <div className="space-y-6">
+                  <h3 className="font-black text-4xl md:text-5xl text-secondary dark:text-white tracking-tight font-outfit">{isFR ? 'File de Modération Purifiée' : 'Moderation Queue Purified'}</h3>
+                  <p className="text-slate-500 dark:text-slate-400 font-normal text-xl max-w-xl mx-auto leading-relaxed font-inter">
+                    {isFR ? 'Toutes les candidatures stratégiques ont été traitées avec succès. Le réseau est intègre.' : 'All strategic applications have been successfully processed. The network is integrated.'}
                   </p>
                 </div>
-                <div className="pt-6">
-                  <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-50 text-emerald-600 font-extrabold text-[10px] uppercase tracking-widest border border-emerald-100">
-                    <ShieldCheck size={16} />
-                    {isFR ? 'Intégrité du Système OK' : 'System Integrity OK'}
+                <div className="pt-8">
+                  <div className="section-label">
+                    <ShieldCheck size={18} strokeWidth={3} />
+                    {isFR ? 'Intégrité du Système Certifiée' : 'Certified System Integrity'}
                   </div>
                 </div>
               </motion.div>
@@ -177,12 +206,16 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
           </div>
         )}
 
-        {/* Admin Footer Tip */}
+        {/* ==================== ADMIN FOOTER TIPS ==================== */}
         {!loading && pendingExperts.length > 0 && (
-          <div className="flex items-center justify-center gap-4 text-slate-400 font-extrabold text-[10px] uppercase tracking-widest pt-12">
-            <AlertCircle size={16} className="text-[#0a5694]" />
-            <span>{isFR ? 'Veuillez vérifier les antécédents professionnels avant toute approbation' : 'Please verify professional backgrounds before any approval'}</span>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="flex items-center justify-center gap-4 text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-[0.4em] pt-12 transition-colors"
+          >
+            <AlertCircle size={18} className="text-primary" strokeWidth={3} />
+            <span>{isFR ? 'Veuillez vérifier rigoureusement l\'authenticité des documents' : 'Please rigorously verify the authenticity of documents'}</span>
+          </motion.div>
         )}
       </div>
     </div>

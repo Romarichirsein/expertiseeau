@@ -17,10 +17,15 @@ import {
   ShieldCheck,
   X,
   ChevronDown,
-  Globe
+  Globe,
+  Zap,
+  Sparkles
 } from 'lucide-react';
 import Link from 'next/link';
 import { getApprovedExperts } from '@/lib/actions';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Card, CardContent } from '@/components/ui/card';
 
 const ITEMS_PER_PAGE = 12;
 
@@ -118,30 +123,37 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
   };
 
   return (
-    <div className="min-h-screen bg-slate-50/50 font-inter pb-32">
+    <div className="min-h-screen bg-background font-inter pb-32 transition-colors duration-500 overflow-hidden relative">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/10 blur-[180px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-teal-500/5 blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
       {/* ==================== PAGE HEADER ==================== */}
-      <div className="bg-[#062040] pt-16 pb-16 relative overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-5" />
-        <div className="absolute bottom-0 left-0 w-full h-px bg-white/10" />
+      <div className="bg-slate-900 pt-32 md:pt-48 pb-24 md:pb-32 relative overflow-hidden transition-colors duration-500">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.05] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
+        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
         
-        <div className="container relative z-10">
-          <div className="max-w-3xl">
+        <div className="container relative z-10 px-6">
+          <div className="max-w-4xl">
             <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
+              initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }}
-              className="space-y-4"
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+              className="space-y-8"
             >
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-[10px] font-bold uppercase tracking-widest">
-                <Users size={14} />
-                {isFR ? 'Annuaire Officiel' : 'Official Directory'}
+              <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em] backdrop-blur-xl shadow-2xl">
+                <Users size={18} />
+                {isFR ? 'Annuaire National Certifié' : 'Certified National Directory'}
               </div>
-              <h1 className="text-4xl md:text-5xl font-extrabold text-white tracking-tight font-outfit">
-                {isFR ? 'Répertoire des Experts' : 'Experts Directory'}
+              <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight font-outfit leading-[0.9]">
+                {isFR ? 'Les Experts de la ' : 'Experts of the '}
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? 'Nation' : 'Nation'}</span>
               </h1>
-              <p className="text-lg text-slate-400 font-medium">
+              <p className="text-xl md:text-2xl text-slate-400 font-normal max-w-2xl font-inter leading-relaxed">
                 {isFR 
-                  ? "Consultez les profils des professionnels certifiés du secteur de l'eau et de l'assainissement au Cameroun."
-                  : "View profiles of certified water and sanitation professionals in Cameroon."}
+                  ? "Accédez au premier réseau structuré des professionnels de l'eau au Cameroun. Une expertise vérifiée pour des projets d'envergure."
+                  : "Access the first structured network of water professionals in Cameroon. Verified expertise for large-scale projects."}
               </p>
             </motion.div>
           </div>
@@ -149,51 +161,51 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
       </div>
 
       {/* ==================== SEARCH & FILTERS BAR ==================== */}
-      <div className="sticky top-[72px] z-50 bg-white/80 backdrop-blur-md border-b border-slate-200">
-        <div className="container py-4">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+      <div className="sticky top-16 md:top-20 lg:top-[102px] z-50 bg-background/80 backdrop-blur-2xl border-b border-white/10 transition-colors duration-500">
+        <div className="container py-8 px-6">
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-6">
             {/* Search */}
-            <div className="relative w-full md:w-96 group">
+            <div className="relative w-full lg:w-[500px] group">
               <Search 
-                size={18} 
-                className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-600 transition-colors" 
+                size={20} 
+                className="absolute left-6 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" 
               />
-              <input 
+              <Input 
                 type="text" 
-                placeholder={isFR ? "Rechercher par nom ou profession..." : "Search by name or profession..."}
-                className="w-full pl-12 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:bg-white focus:border-blue-600 focus:ring-4 focus:ring-blue-600/5 transition-all text-sm font-medium"
+                placeholder={isFR ? "Rechercher par nom ou spécialité..." : "Search by name or specialty..."}
+                className="w-full h-16 pl-16 pr-8 bg-white/50 dark:bg-white/5 border-white/20 dark:border-white/5 rounded-2xl outline-none focus-visible:ring-primary/20 transition-all text-base font-bold shadow-inner"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
 
             {/* Actions */}
-            <div className="flex items-center gap-3 w-full md:w-auto">
-              <button
+            <div className="flex items-center gap-4 w-full md:w-auto">
+              <Button
                 onClick={() => setShowFilters(!showFilters)}
-                className={`flex-1 md:flex-none flex items-center justify-center gap-2 px-6 py-3 rounded-xl border text-sm font-bold transition-all ${
-                  showFilters 
-                    ? 'bg-slate-900 border-slate-900 text-white shadow-lg shadow-slate-900/20' 
-                    : 'bg-white border-slate-200 text-slate-700 hover:border-slate-300'
+                variant={showFilters ? "premium" : "outline"}
+                className={`flex-1 md:flex-none h-16 px-10 rounded-2xl border-white/20 dark:border-white/10 font-black text-[12px] uppercase tracking-widest transition-all duration-500 gap-3 ${
+                  showFilters ? "shadow-2xl shadow-primary/20" : "bg-white/50 dark:bg-white/5 backdrop-blur-md"
                 }`}
               >
-                <Filter size={18} />
-                {isFR ? 'Filtres' : 'Filters'}
+                <Filter size={20} />
+                {isFR ? 'Filtres Avancés' : 'Advanced Filters'}
                 {activeFiltersCount > 0 && (
-                  <span className={`w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold ${showFilters ? 'bg-white text-slate-900' : 'bg-blue-600 text-white'}`}>
+                  <span className={`w-6 h-6 rounded-lg flex items-center justify-center text-[10px] font-black ${showFilters ? 'bg-white text-primary' : 'bg-primary text-white'}`}>
                     {activeFiltersCount}
                   </span>
                 )}
-              </button>
+              </Button>
 
               {activeFiltersCount > 0 && (
-                <button 
+                <Button 
+                  variant="ghost"
                   onClick={clearAllFilters}
-                  className="flex items-center gap-2 px-4 py-3 text-slate-500 hover:text-red-600 text-sm font-bold transition-colors"
+                  className="h-16 px-6 text-muted-foreground hover:text-red-500 font-black text-[11px] uppercase tracking-widest gap-2"
                 >
-                  <X size={18} />
-                  <span className="hidden sm:inline">{isFR ? 'Effacer' : 'Clear'}</span>
-                </button>
+                  <X size={20} />
+                  <span className="hidden sm:inline">{isFR ? 'Réinitialiser' : 'Reset'}</span>
+                </Button>
               )}
             </div>
           </div>
@@ -207,43 +219,43 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                 exit={{ height: 0, opacity: 0 }}
                 className="overflow-hidden"
               >
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-6 mt-4 border-t border-slate-100">
-                  <div className="space-y-2">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-8 mt-6 border-t border-white/10">
+                  <div className="space-y-3">
+                    <label className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em] ml-2">
                       {isFR ? 'Domaine d\'expertise' : 'Area of Expertise'}
                     </label>
-                    <div className="relative">
+                    <div className="relative group">
                       <select 
-                        className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-600 appearance-none cursor-pointer text-sm font-medium"
+                        className="w-full flex h-14 w-full rounded-2xl border border-white/20 dark:border-white/10 bg-white/50 dark:bg-white/5 px-6 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 appearance-none cursor-pointer text-foreground font-bold transition-all shadow-inner"
                         value={selectedExpertise}
                         onChange={(e) => setSelectedExpertise(e.target.value)}
                       >
                         {allExpertise.map((ex, i) => (
-                          <option key={i} value={ex}>
+                          <option key={i} value={ex} className="text-secondary">
                             {ex === 'All' ? (isFR ? 'Toutes les expertises' : 'All expertises') : ex}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <ChevronDown size={18} className="absolute right-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors" />
                     </div>
                   </div>
-                  <div className="space-y-2">
-                    <label className="text-[11px] font-bold text-slate-400 uppercase tracking-widest">
-                      {isFR ? 'Localisation (Ville)' : 'Location (City)'}
+                  <div className="space-y-3">
+                    <label className="text-[11px] font-black text-muted-foreground uppercase tracking-[0.3em] ml-2">
+                      {isFR ? 'Zonage Géographique' : 'Geographic Zoning'}
                     </label>
-                    <div className="relative">
+                    <div className="relative group">
                       <select 
-                        className="w-full pl-4 pr-10 py-3 bg-slate-50 border border-slate-200 rounded-xl outline-none focus:border-blue-600 appearance-none cursor-pointer text-sm font-medium"
+                        className="w-full flex h-14 w-full rounded-2xl border border-white/20 dark:border-white/10 bg-white/50 dark:bg-white/5 px-6 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 appearance-none cursor-pointer text-foreground font-bold transition-all shadow-inner"
                         value={selectedCity}
                         onChange={(e) => setSelectedCity(e.target.value)}
                       >
                         {allCities.map((city, i) => (
-                          <option key={i} value={city}>
+                          <option key={i} value={city} className="text-secondary">
                             {city === 'All' ? (isFR ? 'Toutes les villes' : 'All cities') : city}
                           </option>
                         ))}
                       </select>
-                      <ChevronDown size={18} className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                      <ChevronDown size={18} className="absolute right-5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none group-focus-within:text-primary transition-colors" />
                     </div>
                   </div>
                 </div>
@@ -254,49 +266,54 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
       </div>
 
       {/* ==================== MEMBERS GRID ==================== */}
-      <div className="container py-12 pb-24">
+      <div className="container py-16 pb-32">
         {loading ? (
-          <div className="flex flex-col items-center justify-center py-32 gap-4">
-            <Loader2 size={40} className="text-blue-600 animate-spin" />
-            <p className="text-slate-500 font-medium animate-pulse">
+          <div className="flex flex-col items-center justify-center py-40 gap-6">
+            <Loader2 size={48} className="text-primary animate-spin" />
+            <p className="text-muted-foreground font-black text-xs uppercase tracking-[0.4em] animate-pulse">
               {isFR ? "Initialisation de l'annuaire..." : "Loading directory..."}
             </p>
           </div>
         ) : paginatedMembers.length === 0 ? (
           <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="text-center py-32 bg-white rounded-3xl border border-slate-200 shadow-sm px-6"
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="text-center py-40 bg-white/40 dark:bg-white/5 backdrop-blur-2xl rounded-[4rem] border border-white/20 dark:border-white/5 shadow-2xl px-10"
           >
-            <div className="w-20 h-20 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-6">
-              <Search size={36} className="text-slate-300" />
+            <div className="w-24 h-24 bg-primary/10 rounded-3xl flex items-center justify-center mx-auto mb-10 shadow-inner">
+              <Search size={40} className="text-primary" />
             </div>
-            <h3 className="text-xl font-bold text-slate-900 mb-2">
+            <h3 className="text-3xl font-black text-foreground mb-4 font-outfit uppercase tracking-tight">
               {isFR ? 'Aucun membre trouvé' : 'No members found'}
             </h3>
-            <p className="text-slate-500 max-w-sm mx-auto mb-8 font-medium">
+            <p className="text-muted-foreground max-w-sm mx-auto mb-12 text-lg">
               {isFR 
                 ? 'Nous n\'avons trouvé aucun profil correspondant à vos critères actuels.' 
                 : 'We couldn\'t find any profile matching your current criteria.'}
             </p>
-            <button 
+            <Button 
+              variant="premium"
               onClick={clearAllFilters}
-              className="btn-premium btn-primary !px-8 !py-3"
+              className="h-16 px-12 rounded-2xl font-black text-xs uppercase tracking-widest"
             >
               {isFR ? 'Réinitialiser les filtres' : 'Reset filters'}
-            </button>
+            </Button>
           </motion.div>
         ) : (
           <>
             {/* Results Count Summary */}
-            <div className="mb-8 flex items-center justify-between">
-              <div className="text-sm text-slate-500 font-medium">
-                {isFR ? 'Affichage de' : 'Showing'} <span className="text-slate-900 font-bold">{paginatedMembers.length}</span> {isFR ? 'sur' : 'of'} <span className="text-slate-900 font-bold">{filteredMembers.length}</span> {isFR ? 'experts' : 'experts'}
+            <div className="mb-12 flex items-center justify-between">
+              <div className="text-sm text-muted-foreground font-bold bg-white/40 dark:bg-white/5 backdrop-blur-md px-6 py-2.5 rounded-full border border-white/20 dark:border-white/10">
+                {isFR ? 'Affichage de' : 'Showing'} <span className="text-primary font-black px-1">{paginatedMembers.length}</span> {isFR ? 'sur' : 'of'} <span className="text-foreground font-black px-1">{filteredMembers.length}</span> {isFR ? 'experts' : 'experts'}
+              </div>
+              <div className="hidden md:flex items-center gap-2 text-[10px] font-black text-muted-foreground uppercase tracking-[0.2em]">
+                <Sparkles size={14} className="text-primary" />
+                {isFR ? 'Résultats optimisés' : 'Optimized results'}
               </div>
             </div>
 
             {/* Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
               <AnimatePresence mode="popLayout">
                 {paginatedMembers.map((member, i) => {
                   const expArray = parseExpertise(member.expertise);
@@ -304,71 +321,75 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                     <motion.div
                       key={member.id}
                       layout
-                      initial={{ opacity: 0, scale: 0.95 }}
-                      animate={{ opacity: 1, scale: 1 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0, scale: 0.95 }}
-                      transition={{ duration: 0.2, delay: i * 0.02 }}
+                      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
                     >
-                      <Link href={`/${locale}/members/${member.id}`} className="group block bg-white rounded-2xl border border-slate-200 p-6 hover:shadow-2xl hover:shadow-blue-900/5 hover:border-blue-200 transition-all duration-300 relative overflow-hidden">
-                        
-                        {/* Verify Badge */}
-                        <div className="absolute top-4 right-4 text-emerald-500 bg-emerald-50 p-1.5 rounded-lg shadow-sm">
-                          <ShieldCheck size={16} />
-                        </div>
-
-                        <div className="flex flex-col items-center text-center">
-                          {/* Photo */}
-                          <div className="w-24 h-24 rounded-full p-1 bg-slate-100 border border-slate-200 mb-6 group-hover:border-blue-400 transition-colors">
-                            <div className="w-full h-full rounded-full overflow-hidden bg-white flex items-center justify-center">
-                              {member.photo ? (
-                                <img 
-                                  src={member.photo} 
-                                  alt={member.name} 
-                                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                />
-                              ) : (
-                                <User size={40} className="text-slate-300" />
+                      <Link href={`/${locale}/members/${member.id}`} className="group block h-full">
+                        <Card className="h-full border-white/20 dark:border-white/5 bg-white/60 dark:bg-slate-900/60 backdrop-blur-2xl rounded-[3rem] p-0 overflow-hidden group-hover:border-primary/40 group-hover:shadow-2xl group-hover:shadow-primary/10 group-hover:-translate-y-2 transition-all duration-700 h-full flex flex-col">
+                          <CardContent className="p-10 flex-grow">
+                            {/* Photo & Badge */}
+                            <div className="flex justify-between items-start mb-10">
+                              <div className="w-24 h-24 rounded-[2rem] p-1 bg-white/50 dark:bg-white/5 border border-white/20 dark:border-white/10 group-hover:border-primary/30 transition-all duration-700 overflow-hidden shadow-inner">
+                                <div className="w-full h-full rounded-[1.75rem] overflow-hidden bg-white dark:bg-slate-800 flex items-center justify-center">
+                                  {member.photo ? (
+                                    <img 
+                                      src={member.photo} 
+                                      alt={member.name} 
+                                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-1000" 
+                                    />
+                                  ) : (
+                                    <User size={40} className="text-slate-300 dark:text-slate-600" />
+                                  )}
+                                </div>
+                              </div>
+                              <div className="text-emerald-500 bg-emerald-500/10 px-4 py-2 rounded-2xl border border-emerald-500/20 flex items-center gap-2 shadow-sm backdrop-blur-md">
+                                <ShieldCheck size={16} strokeWidth={2.5} />
+                                <span className="text-[10px] font-black uppercase tracking-[0.15em]">{isFR ? 'Vérifié' : 'Verified'}</span>
+                              </div>
+                            </div>
+    
+                            {/* Info */}
+                            <div className="space-y-4 mb-10">
+                              <h3 className="text-2xl font-black text-foreground group-hover:text-primary transition-colors font-outfit leading-tight line-clamp-2 uppercase tracking-tight">
+                                {member.name}
+                              </h3>
+                              <div className="flex items-center gap-2.5 text-primary font-black text-[11px] uppercase tracking-[0.2em]">
+                                <Briefcase size={16} strokeWidth={2.5} />
+                                <span className="truncate">
+                                  {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2.5 text-muted-foreground font-bold text-xs uppercase tracking-wide">
+                                <MapPin size={16} />
+                                <span className="truncate">{member.city || member.country || 'Cameroun'}</span>
+                              </div>
+                            </div>
+    
+                            {/* Expertise Tags */}
+                            <div className="flex flex-wrap gap-2.5">
+                              {expArray.slice(0, 3).map((exp: string, idx: number) => (
+                                <span key={idx} className="px-4 py-2 bg-white/40 dark:bg-white/5 text-muted-foreground text-[10px] font-black uppercase tracking-widest rounded-xl border border-white/20 dark:border-white/5 transition-all duration-700 group-hover:bg-primary/5 group-hover:border-primary/20 group-hover:text-primary">
+                                  {exp}
+                                </span>
+                              ))}
+                              {expArray.length > 3 && (
+                                <span className="px-4 py-2 bg-white/40 dark:bg-white/5 text-muted-foreground text-[10px] font-black rounded-xl border border-white/20 dark:border-white/5">
+                                  +{expArray.length - 3}
+                                </span>
                               )}
                             </div>
-                          </div>
-
-                          {/* Info */}
-                          <div className="space-y-1 mb-4 w-full">
-                            <h3 className="text-lg font-bold text-slate-900 truncate px-2 group-hover:text-blue-600 transition-colors">
-                              {member.name}
-                            </h3>
-                            <div className="flex items-center justify-center gap-1.5 text-blue-600 font-bold text-[11px] uppercase tracking-wider">
-                              <Briefcase size={12} />
-                              <span className="truncate max-w-[180px]">
-                                {member.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
-                              </span>
-                            </div>
-                            <div className="flex items-center justify-center gap-1.5 text-slate-400 font-medium text-xs">
-                              <MapPin size={12} />
-                              <span className="truncate">{member.city || member.country || 'Cameroun'}</span>
+                          </CardContent>
+   
+                          {/* Action Footer */}
+                          <div className="px-10 py-8 bg-white/40 dark:bg-black/20 border-t border-white/20 dark:border-white/5 flex items-center justify-between text-[11px] font-black text-primary uppercase tracking-[0.3em] group-hover:bg-primary group-hover:text-white transition-all duration-700">
+                            {isFR ? 'Profil Institutionnel' : 'Institutional Profile'}
+                            <div className="w-10 h-10 rounded-2xl bg-white dark:bg-slate-900 text-primary group-hover:bg-white/20 group-hover:text-white flex items-center justify-center transition-all duration-700 shadow-sm">
+                              <ChevronRight size={20} strokeWidth={2.5} className="group-hover:translate-x-1 transition-transform" />
                             </div>
                           </div>
-
-                          {/* Expertise Tags */}
-                          <div className="flex flex-wrap justify-center gap-1.5 mb-6">
-                            {expArray.slice(0, 2).map((exp: string, idx: number) => (
-                              <span key={idx} className="px-2 py-1 bg-slate-50 text-slate-600 text-[10px] font-bold rounded-md border border-slate-100 truncate max-w-[100px]">
-                                {exp}
-                              </span>
-                            ))}
-                            {expArray.length > 2 && (
-                              <span className="px-2 py-1 bg-slate-50 text-slate-400 text-[10px] font-bold rounded-md border border-slate-100">
-                                +{expArray.length - 2}
-                              </span>
-                            )}
-                          </div>
-
-                          {/* Action */}
-                          <div className="w-full pt-4 border-t border-slate-50 flex items-center justify-center gap-2 text-[11px] font-bold text-blue-600 uppercase tracking-[0.2em] group-hover:gap-4 transition-all">
-                            {isFR ? 'Profil Complet' : 'Full Profile'}
-                            <ChevronRight size={14} />
-                          </div>
-                        </div>
+                        </Card>
                       </Link>
                     </motion.div>
                   );
@@ -378,48 +399,58 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
 
             {/* ==================== PAGINATION ==================== */}
             {totalPages > 1 && (
-              <div className="mt-16 flex justify-center items-center gap-2">
-                <button
+              <motion.div 
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                className="mt-20 flex justify-center items-center gap-3"
+              >
+                <Button
+                  variant="outline"
+                  size="lg"
                   onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
                   disabled={currentPage === 1}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
+                  className="h-14 px-8 rounded-2xl border-white/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md font-bold uppercase tracking-widest text-[10px] gap-2 disabled:opacity-30"
                 >
-                  <ChevronLeft size={18} />
+                  <ChevronLeft size={20} />
                   <span className="hidden sm:inline">{isFR ? 'Précédent' : 'Prev'}</span>
-                </button>
+                </Button>
 
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-2">
                   {Array.from({ length: totalPages }, (_, i) => i + 1)
                     .filter(p => p === 1 || p === totalPages || Math.abs(p - currentPage) <= 1)
                     .map((page, idx, arr) => (
                       <React.Fragment key={page}>
                         {idx > 0 && arr[idx - 1] !== page - 1 && (
-                          <span className="px-2 text-slate-300 font-bold">...</span>
+                          <span className="px-2 text-muted-foreground font-black">...</span>
                         )}
-                        <button
+                        <Button
+                          variant={currentPage === page ? "premium" : "outline"}
                           onClick={() => setCurrentPage(page)}
-                          className={`w-10 h-10 rounded-xl text-sm font-bold transition-all ${
+                          className={`w-12 h-12 rounded-xl font-black text-sm transition-all p-0 ${
                             currentPage === page 
-                              ? 'bg-blue-600 text-white shadow-lg shadow-blue-600/20' 
-                              : 'bg-white border border-slate-200 text-slate-600 hover:border-slate-300'
+                              ? 'shadow-xl shadow-primary/20' 
+                              : 'bg-white/50 dark:bg-white/5 border-white/20 dark:border-white/10'
                           }`}
                         >
                           {page}
-                        </button>
+                        </Button>
                       </React.Fragment>
                     ))
                   }
                 </div>
 
-                <button
+                <Button
+                  variant="outline"
+                  size="lg"
                   onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
                   disabled={currentPage === totalPages}
-                  className="flex items-center gap-2 px-4 py-2 rounded-xl border border-slate-200 text-sm font-bold text-slate-600 disabled:opacity-30 disabled:cursor-not-allowed hover:bg-slate-50 transition-all"
+                  className="h-14 px-8 rounded-2xl border-white/20 dark:border-white/10 bg-white/50 dark:bg-white/5 backdrop-blur-md font-bold uppercase tracking-widest text-[10px] gap-2 disabled:opacity-30"
                 >
                   <span className="hidden sm:inline">{isFR ? 'Suivant' : 'Next'}</span>
-                  <ChevronRight size={18} />
-                </button>
-              </div>
+                  <ChevronRight size={20} />
+                </Button>
+              </motion.div>
             )}
           </>
         )}
