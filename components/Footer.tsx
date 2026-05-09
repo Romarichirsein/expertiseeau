@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { 
   Users, Building2, Phone, Mail, MapPin, 
-  ArrowRight, Globe, Award, BookOpen, Facebook, Twitter, Linkedin, Instagram,
+  ArrowRight, Globe, Award, BookOpen,
   ShieldCheck, Zap, Sparkles
 } from 'lucide-react';
 import { motion } from 'framer-motion';
@@ -41,8 +41,8 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
                {[
                  { icon: Mail, href: "mailto:contact@expertiseaucameroun.org" },
                  { icon: Phone, href: "tel:+237222234567" },
-                 { icon: Linkedin, href: "#" },
-                 { icon: Facebook, href: "#" }
+                 { icon: Globe, href: "#" },
+                 { icon: ShieldCheck, href: "#" }
                ].map((social, i) => (
                  <a 
                    key={i} 

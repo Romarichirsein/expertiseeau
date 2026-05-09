@@ -65,28 +65,28 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
       <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/10 blur-[180px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-teal-500/5 blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
 
-      {/* ── HERO SECTION ── */}
-      <div className="bg-slate-900 pt-32 md:pt-48 pb-24 md:pb-32 relative overflow-hidden transition-colors duration-500">
+      {/* ==================== PAGE HEADER ==================== */}
+      <div className="bg-slate-900 pt-48 md:pt-60 pb-32 md:pb-40 relative overflow-hidden transition-colors duration-500">
         <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.05] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
         
-        <div className="container relative z-10 px-6 max-w-7xl mx-auto">
+        <div className="container relative z-10 px-6">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="max-w-3xl space-y-10"
+            className="max-w-5xl space-y-12"
           >
-            <div className="inline-flex items-center gap-3 px-5 py-2 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.3em] backdrop-blur-xl shadow-2xl">
-              <MessageSquare size={18} />
+            <div className="section-label bg-white/5 border-white/10 text-primary-light">
+              <MessageSquare size={16} />
               {isFR ? 'Ligne Directe Institutionnelle' : 'Institutional Direct Line'}
             </div>
-            <h1 className="text-6xl md:text-8xl lg:text-9xl font-black text-white tracking-tight font-outfit leading-[0.9] uppercase">
+            <h1 className="text-fluid-h1 font-black text-white tracking-tight font-outfit leading-[0.95] uppercase text-balance">
               {isFR ? 'Parlons de ' : 'Let’s talk about '} 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-teal-400 italic">{isFR ? 'votre projet' : 'your project'}</span>
+              <span className="text-gradient italic">{isFR ? 'votre projet' : 'your project'}</span>
             </h1>
-            <p className="text-xl md:text-2xl text-slate-400 font-normal max-w-2xl font-inter leading-relaxed">
+            <p className="text-xl md:text-3xl text-slate-400 font-medium max-w-3xl font-inter leading-relaxed text-balance">
               {isFR
                 ? "Notre équipe institutionnelle est à votre écoute pour toute demande d'assistance ou de partenariat stratégique."
                 : 'Our institutional team is ready to listen to any request for assistance or strategic partnership.'}
@@ -96,8 +96,8 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
       </div>
 
       {/* ── MAIN CONTENT (CONTAINED) ── */}
-      <div className="container relative z-20 -mt-16 md:-mt-24 px-6 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+      <div className="container relative z-20 -mt-20 md:-mt-28 px-6">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
 
           {/* LEFT: FORM (7 cols) */}
           <motion.div
@@ -106,13 +106,13 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
             className="lg:col-span-7"
           >
-            <Card className="rounded-[4rem] border-white/20 dark:border-white/5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-3xl p-12 md:p-16 shadow-2xl overflow-hidden">
-              <CardContent className="p-0 space-y-12">
-                <div className="space-y-4">
-                  <h2 className="text-4xl font-black text-foreground font-outfit uppercase tracking-tight">
+            <Card className="rounded-[4rem] border-none glass-card premium-shadow p-12 md:p-20 overflow-hidden">
+              <CardContent className="p-0 space-y-14">
+                <div className="space-y-6">
+                  <h2 className="text-5xl font-black text-foreground font-outfit uppercase tracking-tight leading-[1]">
                     {isFR ? 'Envoyer un message' : 'Send a message'}
                   </h2>
-                  <p className="text-lg font-medium text-muted-foreground leading-relaxed">
+                  <p className="text-xl font-medium text-muted-foreground leading-relaxed text-balance">
                     {isFR 
                       ? 'Complétez le formulaire ci-dessous et un expert institutionnel vous répondra sous 24h.' 
                       : 'Complete the form below and an institutional expert will get back to you within 24h.'}
@@ -127,45 +127,45 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       animate={{ opacity: 1 }}
                       exit={{ opacity: 0, scale: 0.98 }}
                       onSubmit={handleSubmit}
-                      className="space-y-10"
+                      className="space-y-12"
                     >
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-                        <div className="space-y-3">
-                          <Label className="ml-2 uppercase tracking-widest text-[11px] font-black text-muted-foreground">
+                        <div className="space-y-4">
+                          <Label className="ml-4 uppercase tracking-[0.3em] text-[10px] font-black text-muted-foreground opacity-60">
                             {isFR ? 'Identité Complète' : 'Full Identity'}
                           </Label>
-                          <Input required type="text" className="h-14 rounded-2xl bg-white/50 dark:bg-black/20 border-white/20 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold" placeholder="Jean Dupont" />
+                          <Input required type="text" className="h-18 rounded-[1.5rem] bg-white/40 dark:bg-white/5 border border-white/10 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold text-base px-8" placeholder="Jean Dupont" />
                         </div>
-                        <div className="space-y-3">
-                          <Label className="ml-2 uppercase tracking-widest text-[11px] font-black text-muted-foreground">
+                        <div className="space-y-4">
+                          <Label className="ml-4 uppercase tracking-[0.3em] text-[10px] font-black text-muted-foreground opacity-60">
                             Email Institutionnel
                           </Label>
-                          <Input required type="email" className="h-14 rounded-2xl bg-white/50 dark:bg-black/20 border-white/20 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold" placeholder="expert@exemple.cm" />
+                          <Input required type="email" className="h-18 rounded-[1.5rem] bg-white/40 dark:bg-white/5 border border-white/10 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold text-base px-8" placeholder="expert@exemple.cm" />
                         </div>
                       </div>
 
-                      <div className="space-y-3">
-                        <Label className="ml-2 uppercase tracking-widest text-[11px] font-black text-muted-foreground">
+                      <div className="space-y-4">
+                        <Label className="ml-4 uppercase tracking-[0.3em] text-[10px] font-black text-muted-foreground opacity-60">
                           {isFR ? 'Sujet du Message' : 'Subject'}
                         </Label>
-                        <Input required type="text" className="h-14 rounded-2xl bg-white/50 dark:bg-black/20 border-white/20 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold" placeholder={isFR ? "Objet de votre demande stratégique" : "Subject of your strategic request"} />
+                        <Input required type="text" className="h-18 rounded-[1.5rem] bg-white/40 dark:bg-white/5 border border-white/10 dark:border-white/5 focus-visible:ring-primary/20 shadow-inner font-bold text-base px-8" placeholder={isFR ? "Objet de votre demande stratégique" : "Subject of your strategic request"} />
                       </div>
 
-                      <div className="space-y-3">
-                        <Label className="ml-2 uppercase tracking-widest text-[11px] font-black text-muted-foreground">
+                      <div className="space-y-4">
+                        <Label className="ml-4 uppercase tracking-[0.3em] text-[10px] font-black text-muted-foreground opacity-60">
                           Message
                         </Label>
-                        <textarea required rows={6} className="w-full flex min-h-[160px] rounded-2xl border border-white/20 dark:border-white/5 bg-white/50 dark:bg-black/20 px-6 py-4 text-base font-bold ring-offset-background placeholder:text-muted-foreground/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 shadow-inner resize-none leading-relaxed transition-all" placeholder={isFR ? "Décrivez votre besoin en détail..." : "Describe your need in detail..."}></textarea>
+                        <textarea required rows={6} className="w-full flex min-h-[180px] rounded-[1.75rem] border border-white/10 dark:border-white/5 bg-white/40 dark:bg-white/5 px-8 py-6 text-base font-bold ring-offset-background placeholder:text-muted-foreground/30 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/20 shadow-inner resize-none leading-relaxed transition-all" placeholder={isFR ? "Décrivez votre besoin en détail..." : "Describe your need in detail..."}></textarea>
                       </div>
 
-                      <Button type="submit" disabled={loading} variant="premium" className="w-full h-20 rounded-3xl font-black text-lg uppercase tracking-widest shadow-2xl shadow-primary/30 gap-4 group">
-                        {loading ? <Loader2 className="animate-spin w-6 h-6" /> : <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
-                        {loading ? (isFR ? 'Transmission en cours...' : 'Transmitting...') : (isFR ? 'Transmettre la demande' : 'Transmit Request')}
+                      <Button type="submit" disabled={loading} variant="premium" className="w-full h-24 rounded-[2rem] font-black text-2xl uppercase tracking-widest shadow-2xl shadow-primary/30 gap-6 group">
+                        {loading ? <Loader2 className="animate-spin w-8 h-8" /> : <Send size={32} strokeWidth={2.5} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />}
+                        {loading ? (isFR ? 'Transmission...' : 'Transmitting...') : (isFR ? 'Transmettre' : 'Transmit')}
                       </Button>
 
-                      <div className="flex items-center justify-center gap-3 text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] bg-white/40 dark:bg-white/5 py-3 rounded-2xl border border-white/20 dark:border-white/10 backdrop-blur-md">
-                        <ShieldCheck size={18} className="text-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.3)]" />
-                        {isFR ? 'Chiffrement de bout en bout AES-256' : 'End-to-End AES-256 Encryption'}
+                      <div className="flex items-center justify-center gap-4 bg-white/40 dark:bg-white/5 py-5 rounded-[1.5rem] border border-white/10 dark:border-white/5 backdrop-blur-3xl shadow-inner">
+                        <ShieldCheck size={20} className="text-emerald-500" />
+                        <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.4em] opacity-60">{isFR ? 'Chiffrement AES-256' : 'AES-256 Encryption'}</span>
                       </div>
                     </motion.form>
                   ) : (
@@ -173,13 +173,13 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       key="success"
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className="py-16 text-center space-y-10"
+                      className="py-20 text-center space-y-12"
                     >
-                      <div className="w-28 h-28 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-inner border border-emerald-500/20">
-                        <CheckCircle2 size={56} className="text-emerald-500 shadow-[0_0_20px_rgba(16,185,129,0.4)]" />
+                      <div className="w-32 h-32 bg-emerald-500/10 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-inner border border-emerald-500/20">
+                        <CheckCircle2 size={64} className="text-emerald-500" />
                       </div>
-                      <div className="space-y-4">
-                        <h3 className="text-4xl font-black text-foreground font-outfit uppercase tracking-tight">
+                      <div className="space-y-6">
+                        <h3 className="text-5xl font-black text-foreground font-outfit uppercase tracking-tight">
                           {isFR ? 'Message Envoyé !' : 'Message Sent!'}
                         </h3>
                         <p className="text-xl text-muted-foreground max-w-md mx-auto leading-relaxed font-medium">
@@ -191,10 +191,10 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
                       <Button 
                         variant="ghost"
                         onClick={() => setIsSubmitted(false)}
-                        className="h-14 px-10 rounded-2xl font-black uppercase tracking-widest text-xs gap-3 text-primary hover:bg-primary/5"
+                        className="h-16 px-12 rounded-2xl font-black uppercase tracking-widest text-xs gap-4 text-primary hover:bg-primary/5 transition-all"
                       >
                         {isFR ? 'Envoyer un autre message' : 'Send another message'}
-                        <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                        <ArrowRight size={24} strokeWidth={2.5} />
                       </Button>
                     </motion.div>
                   )}
@@ -208,24 +208,24 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
             initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
-            className="lg:col-span-5 space-y-8"
+            className="lg:col-span-5 space-y-10"
           >
             {contactCards.map((card, i) => (
               <motion.a
                 key={i}
                 href={card.href}
                 whileHover={{ y: -8, scale: 1.02 }}
-                className="group block p-10 bg-white/60 dark:bg-slate-900/60 backdrop-blur-3xl border border-white/20 dark:border-white/5 rounded-[3rem] shadow-xl hover:shadow-2xl hover:shadow-primary/5 transition-all duration-500"
+                className="group block p-12 border-none glass-card rounded-[3.5rem] premium-shadow transition-all duration-700"
               >
-                <div className="flex items-center gap-10">
-                  <div className={`w-20 h-20 rounded-[2rem] ${card.bg} flex items-center justify-center ${card.color} group-hover:bg-primary group-hover:text-white transition-all duration-500 shadow-inner`}>
-                    <card.icon size={36} strokeWidth={2} />
+                <div className="flex items-center gap-12">
+                  <div className={`w-24 h-24 rounded-3xl ${card.bg} flex items-center justify-center ${card.color} group-hover:bg-primary group-hover:text-white transition-all duration-700 shadow-inner`}>
+                    <card.icon size={44} strokeWidth={2.5} />
                   </div>
-                  <div className="space-y-1.5">
-                    <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em]">{card.label}</div>
-                    <div className="text-xl font-black text-foreground font-outfit group-hover:text-primary transition-colors tracking-tight uppercase">{card.value}</div>
-                    <div className="text-[12px] text-muted-foreground font-black uppercase tracking-widest flex items-center gap-2">
-                      <Clock size={14} className="text-primary/60" />
+                  <div className="space-y-3">
+                    <div className="section-label bg-transparent border-none px-0 text-muted-foreground opacity-60">{card.label}</div>
+                    <div className="text-2xl font-black text-foreground font-outfit group-hover:text-primary transition-colors tracking-tight uppercase leading-none">{card.value}</div>
+                    <div className="flex items-center gap-3 text-[11px] font-black uppercase tracking-widest text-muted-foreground opacity-50">
+                      <Clock size={16} strokeWidth={2.5} className="text-primary/60" />
                       {card.note}
                     </div>
                   </div>
@@ -233,27 +233,27 @@ export default function ContactPage({ params }: { params: Promise<{ locale: stri
               </motion.a>
             ))}
 
-            <Card className="rounded-[3.5rem] bg-slate-900 shadow-2xl p-12 text-white relative overflow-hidden border border-white/10 group">
-              <div className="absolute top-0 right-0 p-12 opacity-10 rotate-12 group-hover:rotate-45 transition-transform duration-1000">
-                <Globe size={180} />
+            <Card className="rounded-[4rem] bg-slate-900 shadow-[0_60px_120px_-20px_rgba(0,0,0,0.5)] p-16 text-white relative overflow-hidden border border-white/10 group">
+              <div className="absolute top-0 right-0 p-12 opacity-5 rotate-12 group-hover:rotate-45 transition-transform duration-[2s] pointer-events-none">
+                <Globe size={240} />
               </div>
-              <div className="relative z-10 space-y-8">
-                <div className="flex items-center gap-5">
-                  <div className="w-14 h-14 rounded-2xl bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary transition-all">
-                    <Clock size={28} className="text-primary group-hover:text-white" />
+              <div className="relative z-10 space-y-12">
+                <div className="flex items-center gap-6">
+                  <div className="w-18 h-18 rounded-[1.5rem] bg-white/5 flex items-center justify-center border border-white/10 group-hover:bg-primary transition-all duration-700">
+                    <Clock size={32} strokeWidth={2.5} className="text-primary group-hover:text-white" />
                   </div>
-                  <h3 className="text-2xl font-black font-outfit uppercase tracking-tight">
+                  <h3 className="text-3xl font-black font-outfit uppercase tracking-tight leading-none">
                     {isFR ? 'Service Institutionnel' : 'Institutional Service'}
                   </h3>
                 </div>
-                <p className="text-lg leading-relaxed text-slate-400 font-medium">
+                <p className="text-xl leading-relaxed text-slate-400 font-medium text-balance">
                   {isFR 
                     ? "Notre équipe d'administration centrale assure une veille constante pour traiter vos demandes stratégiques avec la plus grande célérité."
                     : "Our central administration team ensures constant monitoring to process your strategic requests with the utmost speed."}
                 </p>
-                <div className="flex items-center gap-4 bg-white/5 py-4 px-6 rounded-2xl border border-white/5 w-fit">
-                  <span className="w-3 h-3 rounded-full bg-primary animate-pulse shadow-[0_0_15px_rgba(var(--primary),0.8)]" />
-                  <span className="text-[11px] font-black uppercase tracking-[0.3em] text-primary">{isFR ? 'Disponible Lun-Ven' : 'Available Mon-Fri'}</span>
+                <div className="flex items-center gap-5 bg-white/5 py-5 px-8 rounded-2xl border border-white/5 w-fit shadow-inner">
+                  <div className="w-4 h-4 rounded-full bg-primary animate-pulse shadow-[0_0_20px_rgba(var(--primary),1)]" />
+                  <span className="text-[12px] font-black uppercase tracking-[0.4em] text-primary">{isFR ? 'Opérationnel Lun-Ven' : 'Operational Mon-Fri'}</span>
                 </div>
               </div>
             </Card>

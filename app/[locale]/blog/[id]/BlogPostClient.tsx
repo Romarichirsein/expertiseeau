@@ -5,7 +5,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { 
   Calendar, User, ArrowLeft, Share2, Tag, BookOpen, 
   Quote, ChevronRight, Globe, Download, Clock, MessageSquare, 
-  Sparkles, Zap, Facebook, Twitter, Linkedin
+  Sparkles, Zap, Facebook, X, Linkedin
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
@@ -142,7 +142,7 @@ export default function BlogPostClient({ locale, post }: { locale: string; post:
                   
                   <div className="flex items-center gap-4">
                     <div className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mr-4">{isFR ? 'Diffuser' : 'Spread'}</div>
-                    {[Linkedin, Twitter, Facebook, Share2].map((Icon, i) => (
+                    {[Linkedin, X, Facebook, Share2].map((Icon, i) => (
                       <Button key={i} variant="outline" className="w-14 h-14 rounded-2xl bg-white/40 dark:bg-white/5 border-white/20 dark:border-white/10 text-muted-foreground hover:bg-primary hover:text-white hover:border-primary transition-all duration-500 shadow-xl group">
                         <Icon size={22} strokeWidth={2.5} className="group-hover:scale-110 transition-transform" />
                       </Button>

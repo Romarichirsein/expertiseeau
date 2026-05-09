@@ -76,29 +76,34 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
   );
 
   return (
-    <div className="pb-32 bg-white dark:bg-secondary min-h-screen font-inter transition-colors duration-500">
-      {/* PREMIUM HERO SECTION */}
-      <div className="relative overflow-hidden bg-secondary dark:bg-slate-950 pt-32 pb-44 transition-colors duration-500">
-        <div className="absolute inset-0 opacity-[0.03] bg-[url('/images/hero-pattern.svg')] pointer-events-none" />
+    <div className="min-h-screen bg-background font-inter pb-32 transition-colors duration-500 overflow-hidden relative">
+      {/* Background Decorations */}
+      <div className="absolute top-0 right-0 w-[1000px] h-[1000px] bg-primary/10 blur-[180px] rounded-full translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-teal-500/5 blur-[150px] rounded-full -translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
+      {/* ==================== PAGE HEADER ==================== */}
+      <div className="bg-slate-900 pt-48 md:pt-60 pb-32 md:pb-40 relative overflow-hidden transition-colors duration-500">
+        <div className="absolute inset-0 bg-[url('/images/hero-pattern.svg')] opacity-[0.05] pointer-events-none" />
         <div className="absolute bottom-0 left-0 w-full h-px bg-white/5" />
+        <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-primary/20 blur-[150px] rounded-full translate-x-1/3 -translate-y-1/3" />
         
         <div className="container relative z-10 px-6">
-          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-12">
+          <div className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-16">
             <motion.div 
-              initial={{ opacity: 0, y: 20 }} 
+              initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-              className="max-w-4xl space-y-10"
+              className="max-w-5xl space-y-12"
             >
-              <div className="inline-flex items-center gap-3 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-primary-light text-[11px] font-black uppercase tracking-[0.25em] backdrop-blur-xl">
-                <BookOpen size={20} />
+              <div className="section-label bg-white/5 border-white/10 text-primary-light">
+                <BookOpen size={16} />
                 {isFR ? 'Intelligence Collective & Veille Stratégique' : 'Collective Intelligence & Strategic Watch'}
               </div>
-              <h1 className="text-6xl md:text-9xl font-black text-white tracking-tight font-outfit leading-[0.85]">
+              <h1 className="text-fluid-h1 font-black text-white tracking-tight font-outfit leading-[0.95] uppercase text-balance">
                 {isFR ? 'ACTUALITÉS & ' : 'NEWS & '} 
-                <span className="text-primary-light italic">{isFR ? 'PERSPECTIVES' : 'INSIGHTS'}</span>
+                <span className="text-gradient italic">{isFR ? 'PERSPECTIVES' : 'INSIGHTS'}</span>
               </h1>
-              <p className="text-xl md:text-2xl text-slate-400 font-normal max-w-3xl font-inter leading-relaxed opacity-90">
+              <p className="text-xl md:text-3xl text-slate-400 font-medium max-w-3xl font-inter leading-relaxed text-balance">
                 {isFR 
                   ? 'Décryptez les enjeux stratégiques, les innovations technologiques et les évolutions réglementaires majeures.'
                   : 'Decode major strategic challenges, technological innovations, and regulatory developments.'}
@@ -109,18 +114,18 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
               initial={{ opacity: 0, scale: 0.9, y: 20 }} 
               animate={{ opacity: 1, scale: 1, y: 0 }} 
               transition={{ delay: 0.3, duration: 1 }}
-              className="hidden lg:block shrink-0"
+              className="hidden xl:block shrink-0"
             >
-              <div className="bg-white/5 backdrop-blur-2xl border border-white/10 rounded-[4rem] p-12 flex items-center gap-12 shadow-[0_60px_100px_-20px_rgba(0,0,0,0.5)]">
-                <div className="w-24 h-24 rounded-3xl bg-white/10 flex items-center justify-center text-primary-light border border-white/5">
-                  <TrendingUp size={44} />
+              <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[4rem] p-16 flex items-center gap-14 shadow-2xl premium-shadow">
+                <div className="w-28 h-28 rounded-[2.25rem] bg-primary/10 flex items-center justify-center text-primary-light border border-primary/20 shadow-inner">
+                  <TrendingUp size={48} strokeWidth={2.5} />
                 </div>
                 <div>
-                  <div className="text-6xl font-black text-white tracking-tighter font-outfit leading-none">
+                  <div className="text-7xl font-black text-white tracking-tighter font-outfit leading-none">
                     {loading ? '...' : posts.length}
                   </div>
-                  <div className="text-[11px] font-black text-slate-400 uppercase tracking-[0.3em] mt-4">
-                    {isFR ? 'Publications Stratégiques' : 'Strategic Publications'}
+                  <div className="section-label bg-transparent border-none px-0 mt-4 text-slate-400 opacity-60">
+                    {isFR ? 'Publications' : 'Publications'}
                   </div>
                 </div>
               </div>
@@ -129,71 +134,71 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
         </div>
       </div>
 
-      <div className="container px-6 -mt-24 relative z-20">
+      <div className="container px-6 -mt-20 md:-mt-28 relative z-20">
         <div className="flex flex-col lg:flex-row gap-16 items-start">
           
           {/* SEARCH & FILTER SIDEBAR */}
           <div className="lg:w-96 shrink-0 space-y-12 sticky top-28 transition-all duration-500">
-            <div className="bg-white dark:bg-secondary rounded-[3.5rem] shadow-2xl shadow-slate-900/5 border border-slate-100 dark:border-white/5 p-10 space-y-12 transition-colors duration-500">
+            <Card className="rounded-[3.5rem] border-none glass-card premium-shadow p-12 space-y-12">
               <div className="space-y-6">
-                <h3 className="text-[11px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-[0.3em] px-4 transition-colors">
-                  {isFR ? "Recherche de Savoir" : "Knowledge Search"}
-                </h3>
+                <div className="section-label bg-transparent border-none px-0 text-muted-foreground opacity-60">
+                  {isFR ? "Recherche" : "Search"}
+                </div>
                 <div className="relative group">
-                  <Search size={20} className="absolute left-6 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary transition-colors" />
+                  <Search size={22} className="absolute left-8 top-1/2 -translate-y-1/2 text-muted-foreground group-focus-within:text-primary transition-colors" />
                   <input 
                     type="text" 
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
                     placeholder={isFR ? "Sujet, auteur..." : "Topic, author..."}
-                    className="w-full pl-14 pr-8 py-5 bg-slate-50 dark:bg-white/5 border border-slate-50 dark:border-white/5 rounded-[1.5rem] outline-none focus:bg-white dark:focus:bg-white/10 focus:border-primary/30 focus:ring-8 focus:ring-primary/5 transition-all font-bold text-sm text-secondary dark:text-white shadow-inner"
+                    className="w-full h-18 pl-20 pr-8 py-5 bg-white/40 dark:bg-white/5 border border-white/10 dark:border-white/5 rounded-[1.75rem] outline-none focus:bg-white dark:focus:bg-white/10 focus:ring-8 focus:ring-primary/5 transition-all font-bold text-base text-foreground shadow-inner"
                   />
                 </div>
               </div>
 
               <div className="space-y-6">
-                <h3 className="text-[11px] font-black uppercase text-slate-400 dark:text-slate-500 tracking-[0.3em] px-4 transition-colors">
-                  {isFR ? "Axes Thématiques" : "Thematic Axes"}
-                </h3>
+                <div className="section-label bg-transparent border-none px-0 text-muted-foreground opacity-60">
+                  {isFR ? "Thématiques" : "Thematics"}
+                </div>
                 <div className="flex flex-col gap-3">
                   {['Analyse Stratégique', 'Réglementation', 'Environnement', 'Technologie'].map((cat) => (
-                    <button key={cat} className="group flex items-center justify-between px-6 py-5 rounded-2xl text-[13px] font-bold text-slate-600 dark:text-slate-400 hover:bg-primary hover:text-white transition-all duration-500 text-left border border-transparent hover:shadow-2xl hover:shadow-primary/20">
+                    <button key={cat} className="group flex items-center justify-between px-8 py-6 rounded-2xl text-sm font-black text-muted-foreground uppercase tracking-widest hover:bg-primary hover:text-white transition-all duration-700 text-left border border-transparent hover:shadow-2xl hover:shadow-primary/20">
                       {cat}
-                      <div className="w-8 h-8 rounded-full bg-slate-100 dark:bg-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-500">
-                        <ChevronRight size={18} className="opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
+                      <div className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-white/5 group-hover:bg-white/20 flex items-center justify-center transition-all duration-700">
+                        <ChevronRight size={20} className="opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0" />
                       </div>
                     </button>
                   ))}
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Newsletter Mini Card */}
-            <div className="bg-secondary dark:bg-slate-950 rounded-[3.5rem] p-14 text-white space-y-10 relative overflow-hidden group shadow-[0_60px_100px_-20px_rgba(0,0,0,0.3)] transition-colors duration-500">
-              <div className="absolute top-0 right-0 p-14 opacity-5 group-hover:rotate-12 group-hover:scale-125 transition-transform duration-1000 pointer-events-none">
-                <Mail size={160} />
+            <Card className="rounded-[3.5rem] bg-slate-900 p-16 text-white space-y-12 relative overflow-hidden group premium-shadow border border-white/10">
+              <div className="absolute top-0 right-0 p-14 opacity-5 group-hover:rotate-12 group-hover:scale-125 transition-transform duration-[2s] pointer-events-none">
+                <Mail size={180} />
               </div>
-              <h4 className="text-4xl font-black tracking-tight relative z-10 font-outfit leading-[1]">{isFR ? 'Décryptage Exclusif' : 'Exclusive Insights'}</h4>
-              <p className="text-slate-400 text-base font-normal leading-relaxed relative z-10 font-inter opacity-90">
+              <h4 className="text-4xl font-black tracking-tight relative z-10 font-outfit leading-[1.1] uppercase">{isFR ? 'Décryptage Exclusif' : 'Exclusive Insights'}</h4>
+              <p className="text-slate-400 text-lg font-medium leading-relaxed relative z-10 font-inter opacity-90">
                 {isFR ? 'Recevez nos analyses stratégiques directement dans votre boîte email.' : 'Get our strategic analyses delivered directly to your inbox.'}
               </p>
-              <button className="btn-premium bg-primary text-white w-full !py-6 !text-[11px] !font-black !tracking-[0.3em] shadow-2xl shadow-primary/30 hover:bg-primary-dark rounded-2xl">
-                {isFR ? "S'ABONNER MAINTENANT" : 'SUBSCRIBE NOW'}
+              <button className="h-18 w-full bg-primary text-white text-xs font-black tracking-[0.3em] uppercase shadow-2xl shadow-primary/30 hover:bg-primary-dark rounded-2xl transition-all duration-500">
+                {isFR ? "S'ABONNER" : 'SUBSCRIBE'}
               </button>
-            </div>
+            </Card>
           </div>
 
           {/* ARTICLES GRID */}
-          <div className="flex-1">
+          <div className="flex-1 section-padding-large !pt-0">
             {loading ? (
-              <div className="flex flex-col items-center justify-center py-48 space-y-10 bg-white dark:bg-secondary rounded-[4rem] border border-slate-100 dark:border-white/5 shadow-2xl shadow-slate-900/5 transition-colors duration-500">
-                <Loader2 className="w-20 h-20 animate-spin text-primary" strokeWidth={1} />
-                <p className="text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.4em] text-sm">
+              <div className="flex flex-col items-center justify-center py-60 space-y-12 glass-card rounded-[5rem] premium-shadow">
+                <Loader2 size={64} className="animate-spin text-primary" strokeWidth={1} />
+                <p className="text-muted-foreground font-black uppercase tracking-[0.4em] text-xs">
                   {isFR ? "Chargement des actualités..." : "Loading news feed..."}
                 </p>
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
                 {filteredPosts.map((post, i) => (
                   <motion.article
                     key={post.id}
@@ -201,56 +206,56 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 1, ease: [0.16, 1, 0.3, 1], delay: i * 0.15 }}
-                    className="premium-card group flex flex-col p-0 overflow-hidden h-full border-slate-100 dark:border-white/5 !rounded-[3.5rem] transition-all duration-700 hover:border-primary/20 hover:shadow-[0_40px_80px_-15px_rgba(15,23,42,0.1)]"
+                    className="group flex flex-col p-0 overflow-hidden h-full glass-card !rounded-[4rem] transition-all duration-700 hover:-translate-y-4 premium-shadow"
                   >
                     <Link href={`/${locale}/blog/${post.id}`} className="block relative aspect-[16/10] overflow-hidden">
                       <img 
                         src={post.image_url} 
                         alt={post.title}
-                        className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s] grayscale-[0.3] group-hover:grayscale-0" 
+                        className="absolute inset-0 w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-[1.5s]" 
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-secondary/90 via-secondary/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-                      <div className="absolute top-8 left-8">
-                        <span className="px-5 py-2.5 bg-white/95 dark:bg-secondary/95 backdrop-blur-xl shadow-2xl rounded-[1.2rem] text-[10px] font-black uppercase text-primary dark:text-primary-light tracking-[0.25em] border border-white/20">
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
+                      <div className="absolute top-10 left-10">
+                        <span className="px-6 py-3 bg-white/95 dark:bg-slate-900/95 backdrop-blur-3xl shadow-2xl rounded-2xl text-[10px] font-black uppercase text-primary tracking-widest border border-white/20">
                           {post.category}
                         </span>
                       </div>
                     </Link>
 
                     <div className="p-12 flex flex-col flex-1">
-                      <div className="flex items-center gap-8 text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.3em] mb-10 pb-10 border-b border-slate-100 dark:border-white/5 transition-colors duration-500">
-                        <div className="flex items-center gap-2.5 text-primary dark:text-primary-light">
+                      <div className="flex items-center gap-10 text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] mb-12 pb-10 border-b border-slate-100 dark:border-white/5">
+                        <div className="flex items-center gap-3 text-primary">
                           <Calendar size={18} strokeWidth={2.5} /> 
                           {new Date(post.created_at).toLocaleDateString(isFR ? 'fr-FR' : 'en-US', { day: 'numeric', month: 'short', year: 'numeric' })}
                         </div>
-                        <div className="flex items-center gap-2.5">
+                        <div className="flex items-center gap-3">
                           <User size={18} /> 
                           {post.author}
                         </div>
                       </div>
                       
                       <Link href={`/${locale}/blog/${post.id}`} className="block mb-8">
-                        <h3 className="text-3xl font-black text-secondary dark:text-white leading-[1.1] tracking-tight group-hover:text-primary dark:group-hover:text-primary-light transition-colors duration-500 line-clamp-2 font-outfit">
+                        <h3 className="text-3xl font-black text-foreground leading-[1.1] tracking-tight group-hover:text-primary transition-colors duration-500 line-clamp-2 font-outfit uppercase">
                           {post.title}
                         </h3>
                       </Link>
                       
-                      <p className="text-slate-500 dark:text-slate-400 font-normal leading-relaxed text-base line-clamp-3 mb-12 flex-1 font-inter transition-colors">
+                      <p className="text-muted-foreground font-medium leading-relaxed text-lg line-clamp-3 mb-14 flex-1 font-inter">
                         {post.excerpt}
                       </p>
 
-                      <div className="flex items-center justify-between mt-auto pt-10 border-t border-slate-100 dark:border-white/5 transition-colors duration-500">
+                      <div className="flex items-center justify-between mt-auto pt-10 border-t border-slate-100 dark:border-white/5">
                         <Link 
                           href={`/${locale}/blog/${post.id}`} 
-                          className="inline-flex items-center gap-6 text-primary dark:text-primary-light font-black text-xs uppercase tracking-[0.25em] group/link"
+                          className="inline-flex items-center gap-8 text-primary font-black text-xs uppercase tracking-[0.3em] group/link"
                         >
-                          {isFR ? 'Lire l\'article' : 'Read Article'} 
-                          <div className="w-14 h-14 rounded-2xl bg-slate-50 dark:bg-white/5 group-hover/link:bg-primary group-hover/link:text-white flex items-center justify-center transition-all duration-700 shadow-inner group-hover/link:shadow-2xl group-hover/link:shadow-primary/30 border border-transparent dark:border-white/5">
-                             <ArrowRight size={26} strokeWidth={2.5} className="group-hover/link:translate-x-1 transition-transform duration-500" />
+                          {isFR ? 'Consulter' : 'Consult'} 
+                          <div className="w-16 h-16 rounded-2xl bg-primary/10 group-hover/link:bg-primary group-hover/link:text-white flex items-center justify-center transition-all duration-700 shadow-inner group-hover/link:shadow-2xl group-hover/link:shadow-primary/30">
+                             <ArrowRight size={28} strokeWidth={3} className="group-hover/link:translate-x-1 transition-transform" />
                           </div>
                         </Link>
-                        <button className="w-14 h-14 rounded-2xl border border-slate-100 dark:border-white/5 flex items-center justify-center text-slate-300 dark:text-slate-700 hover:text-primary dark:hover:text-primary-light hover:bg-primary/5 dark:hover:bg-primary/10 hover:border-primary/20 transition-all duration-700">
-                          <Share2 size={22} />
+                        <button className="w-16 h-16 rounded-2xl border border-slate-100 dark:border-white/5 flex items-center justify-center text-muted-foreground hover:text-primary hover:bg-primary/5 transition-all duration-700">
+                          <Share2 size={24} />
                         </button>
                       </div>
                     </div>
@@ -258,17 +263,17 @@ export default function BlogPage({ params }: { params: Promise<{ locale: string 
                 ))}
 
                 {filteredPosts.length === 0 && (
-                  <div className="col-span-full py-60 bg-white dark:bg-secondary rounded-[5rem] border border-dashed border-slate-200 dark:border-white/10 text-center flex flex-col items-center justify-center space-y-10 shadow-2xl shadow-slate-900/5 transition-colors duration-500">
-                    <div className="w-32 h-32 rounded-[2.5rem] bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-200 dark:text-slate-800 shadow-inner transition-colors">
-                      <SearchX size={64} strokeWidth={1} />
+                  <div className="col-span-full py-60 glass-card rounded-[5rem] text-center flex flex-col items-center justify-center space-y-12 premium-shadow">
+                    <div className="w-40 h-40 rounded-[3rem] bg-primary/10 flex items-center justify-center text-primary shadow-inner">
+                      <SearchX size={80} strokeWidth={1.5} />
                     </div>
-                    <div className="space-y-4">
-                      <p className="text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.4em] text-sm">
-                        {isFR ? "Aucune Publication Correspondante" : "No Matching Publications"}
+                    <div className="space-y-6">
+                      <p className="text-muted-foreground font-black uppercase tracking-[0.4em] text-sm">
+                        {isFR ? "Aucun Décryptage Trouvé" : "No Decryption Found"}
                       </p>
-                      <button onClick={() => setSearch('')} className="btn-premium bg-slate-50 dark:bg-white/5 text-secondary dark:text-white border border-slate-200 dark:border-white/10 hover:bg-white dark:hover:bg-white/10 px-10 rounded-[1.5rem] transition-all">
-                         {isFR ? 'Effacer la recherche' : 'Clear search'}
-                      </button>
+                      <Button onClick={() => setSearch('')} variant="premium" className="h-18 px-12 rounded-[1.5rem]">
+                         {isFR ? 'Réinitialiser' : 'Reset Search'}
+                      </Button>
                     </div>
                   </div>
                 )}

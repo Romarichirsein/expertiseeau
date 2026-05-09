@@ -34,8 +34,7 @@ export const metadata: Metadata = {
   robots: { index: true, follow: true },
 };
 
-import dynamic from "next/dynamic";
-const ThemeProvider = dynamic(() => import("../../components/ThemeProvider").then(mod => mod.ThemeProvider), { ssr: false });
+import { ThemeProvider } from "../../components/ThemeProvider";
 
 export default async function RootLayout({
   children,

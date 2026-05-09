@@ -222,9 +222,6 @@ p {
 /* =========================================
    SCROLLBAR & UTILITIES
    ========================================= */
-/* =========================================
-   SCROLLBAR & UTILITIES
-   ========================================= */
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -285,7 +282,7 @@ p {
   text-transform: uppercase;
   letter-spacing: 0.25em;
   color: var(--color-primary);
-  backdrop-blur: 10px;
+  backdrop-filter: blur(10px);
 }
 
 .dark .section-label {
@@ -307,14 +304,34 @@ p {
 
 /* Spacing Utilities */
 .section-padding {
-  padding-top: 10rem;
-  padding-bottom: 10rem;
+  padding-top: 12rem;
+  padding-bottom: 12rem;
+}
+
+.section-padding-large {
+  padding-top: 16rem;
+  padding-bottom: 16rem;
+}
+
+@media (max-width: 1024px) {
+  .section-padding {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
+  }
+  .section-padding-large {
+    padding-top: 10rem;
+    padding-bottom: 10rem;
+  }
 }
 
 @media (max-width: 768px) {
   .section-padding {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+  .section-padding-large {
+    padding-top: 8rem;
+    padding-bottom: 8rem;
   }
 }
 
@@ -336,3 +353,15 @@ p {
 .dark .premium-shadow {
   box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.5);
 }
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-card {
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
