@@ -35,7 +35,7 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
       <div className="container mx-auto px-4 h-20 flex items-center justify-between">
         {/* LOGO */}
         <Link href={`/${locale}`} className="flex items-center">
-          <img src="/images/logo.png" alt="Logo" className="h-14 w-auto" />
+          <img src="/images/logo.png" alt="Logo" className="h-20 w-auto py-2" />
         </Link>
 
         {/* DESKTOP NAV */}
@@ -44,7 +44,7 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
             <Link
               key={item.href}
               href={withLocale(item.href)}
-              className="text-gray-700 hover:text-blue-600 font-semibold text-sm"
+              className="text-gray-700 hover:text-[#0a5694] font-bold text-sm uppercase tracking-wider"
             >
               {isFR ? item.label : item.labelEn}
             </Link>
@@ -52,17 +52,17 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
 
           {/* DROPDOWN */}
           <div className="relative group" onMouseEnter={() => setShowDropdown(true)} onMouseLeave={() => setShowDropdown(false)}>
-            <button className="flex items-center gap-1 text-gray-700 hover:text-blue-600 font-semibold text-sm">
+            <button className="flex items-center gap-1 text-gray-700 hover:text-[#0a5694] font-bold text-sm uppercase tracking-wider">
               {isFR ? 'Institutions publiques' : 'Public Institutions'}
               <ChevronDown size={16} />
             </button>
             {showDropdown && (
-              <div className="absolute top-full left-0 w-64 bg-white shadow-xl border border-gray-100 py-2">
+              <div className="absolute top-full left-0 w-72 bg-white shadow-2xl border border-gray-100 py-3 z-[60]">
                 {institutionsItems.map((item) => (
                   <Link
                     key={item.href}
                     href={withLocale(item.href)}
-                    className="block px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-blue-600"
+                    className="block px-6 py-2.5 text-sm text-gray-600 hover:bg-gray-50 hover:text-[#0a5694] font-medium"
                   >
                     {item.label}
                   </Link>
@@ -71,10 +71,10 @@ export default function Header({ locale = 'fr' }: { locale?: string }) {
             )}
           </div>
 
-          <Link href={withLocale('/contact')} className="text-gray-700 hover:text-blue-600 font-semibold text-sm">
+          <Link href={withLocale('/contact')} className="text-gray-700 hover:text-[#0a5694] font-bold text-sm uppercase tracking-wider">
             {isFR ? 'Contactez-nous' : 'Contact us'}
           </Link>
-          <Link href={withLocale('/login')} className="text-gray-700 hover:text-blue-600 font-semibold text-sm">
+          <Link href={withLocale('/login')} className="text-gray-700 hover:text-[#0a5694] font-bold text-sm uppercase tracking-wider">
             {isFR ? 'Connexion' : 'Login'}
           </Link>
         </nav>
