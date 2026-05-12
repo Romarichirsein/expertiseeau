@@ -18,6 +18,10 @@ export const metadata: Metadata = {
   description: "Portail officiel de l'expertise nationale dans le secteur de l'eau et de l'assainissement au Cameroun. Connectez-vous avec 960+ professionnels certifiés.",
   keywords: ["expertise", "cameroun", "eau", "assainissement", "experts", "forage", "hydrologie", "répertoire national"],
   authors: [{ name: "Expertise Au Cameroun" }],
+  icons: {
+    icon: "/images/logo.png",
+    apple: "/images/logo.png",
+  },
   openGraph: {
     title: "Expertise Au Cameroun | Réseau National des Experts Eaux",
     description: "Répertoire des professionnels du secteur de l'eau au Cameroun.",
