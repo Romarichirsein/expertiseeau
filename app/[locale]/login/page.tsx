@@ -57,7 +57,7 @@ export default function LoginPage({ params }: { params: Promise<{ locale: string
           <Link href={`/${locale}`} className="inline-block mb-12 group">
             <div className="bg-white/80 dark:bg-slate-900/80 p-6 rounded-[2.5rem] shadow-2xl shadow-primary/5 border border-white/20 dark:border-white/10 group-hover:scale-105 transition-all duration-700 backdrop-blur-3xl relative overflow-hidden">
                <div className="absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-               <img src="/images/logo.png" alt="Logo" className="h-14 md:h-16 mx-auto dark:invert dark:brightness-200 relative z-10" />
+               <img src="/assets/logo.png" alt="Logo" className="h-14 md:h-16 mx-auto relative z-10" />
             </div>
           </Link>
           <div className="space-y-6">

@@ -2,9 +2,11 @@
 
 @theme {
   --color-primary: #34b4e2;
-  --color-primary-dark: #4579ec;
-  --color-accent: #2794e8;
+  --color-primary-dark: #2794e8;
+  --color-accent: #84c340;
   --color-secondary: #595959;
+  --color-water-blue: #0ea5e9;
+  --color-deep-ocean: #0369a1;
 }
 
 :root {
@@ -60,7 +62,41 @@ h1, h2, h3, h4, h5, h6 {
 .card {
   background: white;
   border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 1.5rem;
-  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  border-radius: 1rem;
+  padding: 2rem;
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  transition: all 0.3s ease;
 }
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.bg-luxury-gradient {
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+}
+
+.section-padding {
+  padding: 6rem 1rem;
+}
+
+@media (min-width: 1024px) {
+  .section-padding {
+    padding: 8rem 2rem;
+  }
+}
+
