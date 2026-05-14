@@ -1,6 +1,7 @@
 import "../globals.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
+import type { Metadata, Viewport } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 
@@ -48,7 +49,11 @@ export default async function RootLayout({
 
   return (
     <html lang={locale} suppressHydrationWarning>
+      <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto+Slab:100,200,300,400,500,600,700,800,900&display=swap" />
+      </head>
       <body suppressHydrationWarning>
+
         <ThemeProvider
           attribute="class"
           defaultTheme="light"

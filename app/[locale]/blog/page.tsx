@@ -9,6 +9,8 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
+import { Card } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 
 const mockBlogPosts = [
   {

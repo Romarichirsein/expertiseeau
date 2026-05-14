@@ -5,7 +5,7 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { 
   Calendar, User, ArrowLeft, Share2, Tag, BookOpen, 
   Quote, ChevronRight, Globe, Download, Clock, MessageSquare, 
-  Sparkles, Zap
+  Sparkles, Zap, ShieldCheck, Mail
 } from 'lucide-react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';

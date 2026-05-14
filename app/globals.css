@@ -1,22 +1,27 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #1e40af; /* Standard Blue */
-  --color-secondary: #334155;
-  --color-accent: #0f172a;
+  --color-primary: #34b4e2;
+  --color-primary-dark: #4579ec;
+  --color-accent: #2794e8;
+  --color-secondary: #595959;
 }
 
 :root {
   --background: #ffffff;
-  --foreground: #111827;
-  --border: #e5e7eb;
+  --foreground: #595959;
+  --border: #eeeeee;
+  --font-heading: "Roboto Slab", serif;
+  --font-body: "Roboto Slab", serif;
 }
+
 
 body {
   background-color: var(--background);
   color: var(--foreground);
-  font-family: system-ui, -apple-system, sans-serif;
-  line-height: 1.5;
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.8;
 }
 
 .container {
@@ -24,6 +29,13 @@ body {
   margin: 0 auto;
   padding: 0 1rem;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  line-height: 1.4;
+  color: #292929;
+}
+
 
 /* Reverting to simple styles */
 .btn {
