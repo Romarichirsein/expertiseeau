@@ -12,13 +12,13 @@ const navItems = [
 ];
 
 const institutionsItems = [
-  { label: 'Institutions d’appui au développement', href: '/institutions?tab=appui' },
-  { label: 'Bureaux d’études actifs', href: '/institutions?tab=bureaux' },
-  { label: 'Institutions d’enseignement', href: '/institutions?tab=enseignement' },
-  { label: 'Entreprises du secteur de l’eau', href: '/institutions?tab=entreprises' },
-  { label: 'Institution transfrontalière', href: '/institutions?tab=transfrontaliere' },
-  { label: 'ONGs et OSCs', href: '/institutions?tab=ongs' },
-  { label: 'Institutions publiques', href: '/institutions?tab=publiques' },
+  { label: 'Institutions d’appui au développement', href: '/education-et-recherche' },
+  { label: 'Bureaux d’études actifs', href: '/acteur-publics' },
+  { label: 'Institutions d’enseignement', href: '/entreprises' },
+  { label: 'Entreprises du secteur de l’eau', href: '/acteur-dappui-au-developpement' },
+  { label: 'Institution transfrontalière', href: '/institution-transfrontaliere' },
+  { label: 'ONGs et OSCs', href: '/ongs-et-oscs-2' },
+  { label: 'Institutions publiques', href: '/institutions' },
 ];
 
 export default function Header({ locale = 'fr' }: { locale?: string }) {
