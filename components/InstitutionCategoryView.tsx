@@ -43,8 +43,10 @@ export function InstitutionCategoryView({ locale, categoryId, title, titleEn }: 
 
   useEffect(() => {
     const fetchInstitutions = async () => {
+      setLoading(true);
       try {
-        const response = await fetch('/data/institutions.json');
+        const response = await fetch(`/api/institutions?category=${categoryId}`);
+        if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setInstitutions(data);
       } catch (error) {
@@ -54,19 +56,17 @@ export function InstitutionCategoryView({ locale, categoryId, title, titleEn }: 
       }
     };
     fetchInstitutions();
-  }, []);
+  }, [categoryId]);
 
   const filteredInstitutions = useMemo(() => {
-    return institutions.filter(inst => {
-      const matchesCategory = inst.category === categoryId;
-      const matchesSearch = 
-        (inst.nom?.toLowerCase() || '').includes(search.toLowerCase()) || 
-        (inst.sigle?.toLowerCase() || '').includes(search.toLowerCase()) ||
-        (inst.noms?.toLowerCase() || '').includes(search.toLowerCase());
-      
-      return matchesCategory && matchesSearch;
-    });
-  }, [institutions, search, categoryId]);
+    if (!search.trim()) return institutions;
+    const q = search.toLowerCase();
+    return institutions.filter(inst =>
+      (inst.nom?.toLowerCase() || '').includes(q) || 
+      (inst.sigle?.toLowerCase() || '').includes(q) ||
+      (inst.noms?.toLowerCase() || '').includes(q)
+    );
+  }, [institutions, search]);
 
   const renderTableHeader = () => {
     switch (categoryId) {
