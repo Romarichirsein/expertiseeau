@@ -1,12 +1,3676 @@
 [
-  { "id": 1, "sigle": "MINDUH", "nom": "Ministère du Développement Urbain et de l'Habitat", "siege": "Yaoundé", "mandat": "Régulation, planification et développement de l'urbanisme et de l'habitat", "site": "https://www.minhdu.gov.cm/" },
-  { "id": 2, "sigle": "MINTP", "nom": "Ministère des Travaux Publics", "siege": "Yaoundé", "mandat": "Construction des ouvrages d'arts de transport routier, drainage, franchissement", "site": "https://mintp.cm/" },
-  { "id": 3, "sigle": "MINADER", "nom": "Ministère de l'Agriculture et du Développement Rural", "siege": "Yaoundé", "mandat": "Régulation, planification et développement et gestion de l'eau agricole", "site": "https://www.minader.cm/" },
-  { "id": 4, "sigle": "MINEPIA", "nom": "Ministère des Pêches et des Industries Animales", "siege": "Yaoundé", "mandat": "Régulation, planification et développement de la pêche et des ressources en eau pour l'élevage", "site": "" },
-  { "id": 5, "sigle": "MINEE", "nom": "Ministère de l'Eau et de l'Énergie", "siege": "Yaoundé", "mandat": "Élaboration et mise en œuvre de la politique nationale dans les domaines de l'eau et de l'énergie", "site": "https://www.minee.cm/" },
-  { "id": 6, "sigle": "MINFOF", "nom": "Ministère des Forêts et de la Faune", "siege": "Yaoundé", "mandat": "Gestion et protection des bassins versants, des ressources forestières et fauniques", "site": "https://www.minfof.cm/" },
-  { "id": 7, "sigle": "MINEPDED", "nom": "Ministère de l'Environnement, de la Protection de la Nature et du Développement Durable", "siege": "Yaoundé", "mandat": "Protection de l'environnement et des ressources en eau", "site": "https://www.minepded.gov.cm/" },
-  { "id": 8, "sigle": "CDE", "nom": "Cameroon Water Utilities Corporation", "siege": "Yaoundé", "mandat": "Distribution de l'eau potable urbaine", "site": "" },
-  { "id": 9, "sigle": "CAMWATER", "nom": "Cameroon Water Utilities", "siege": "Yaoundé", "mandat": "Gestion du patrimoine eau potable en milieu urbain et périurbain", "site": "" },
-  { "id": 10, "sigle": "SNEC", "nom": "Société Nationale des Eaux du Cameroun", "siege": "Yaoundé", "mandat": "Production et distribution de l'eau potable", "site": "" }
+  {
+    "id": 2,
+    "sigle": "MINDUH",
+    "nom": "Ministère du Développement Urbain et de l’Habitat",
+    "siege": "Yaoundé",
+    "mandat": "Régulation, planification et développement de l’urbanisme et de l’habitat",
+    "site": "https://www.minhdu.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 3,
+    "sigle": "MINTP",
+    "nom": "Ministère des travaux publics",
+    "siege": "Yaoundé",
+    "mandat": "Construction des ouvrages d’arts de transport routier, drainage, franchissement",
+    "site": "https://mintp.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 4,
+    "sigle": "MINADER",
+    "nom": "Ministère de l’Agriculture et du Développement Rural",
+    "siege": "Yaoundé",
+    "mandat": "Régulation, planification et développement et gestion de l’eau agricole",
+    "site": "https://www.minader.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 5,
+    "sigle": "MINEPIA",
+    "nom": "Ministère des Pêches et des Industries Animales",
+    "siege": "Yaoundé",
+    "mandat": "Régulation, planification et développement des activités pastorales et aquacoles",
+    "site": "https://minepia.cm/site/",
+    "category": "publiques"
+  },
+  {
+    "id": 6,
+    "sigle": "MINMIDT",
+    "nom": "Ministère des Mines, de l’industrie et du développement technologique",
+    "siege": "Yaoundé",
+    "mandat": "Régulation, planification et développement des activités minières y inclus les forages d’eau et le contrôle des pollutions",
+    "site": "https://www.minmidt.cm/en/home/",
+    "category": "publiques"
+  },
+  {
+    "id": 7,
+    "sigle": "MINT",
+    "nom": "Ministère des Transports",
+    "siege": "Yaoundé",
+    "mandat": "Régulation, planification et développement des activités de transport maritime et fluvial, suivi et prévision météorologique",
+    "site": "https://mintransports.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 8,
+    "sigle": "MINDDEVEL",
+    "nom": "Ministère de la Décentralisation du Développement local",
+    "siege": "Yaoundé",
+    "mandat": "Coordination et encadrement des collectivités territoriales décentralisées (CTDs en charge de la protection des ressources en eau depuis 2019)",
+    "site": "https://www.minddevel.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 9,
+    "sigle": "MINAT",
+    "nom": "Ministère de l’Administration Territoriale",
+    "siege": "Yaoundé",
+    "mandat": "Régulation de l’action des ONGs et OSCs, administration du territoire, coordination des réponses humanitaires",
+    "site": "-",
+    "category": "publiques"
+  },
+  {
+    "id": 10,
+    "sigle": "MINEPAT",
+    "nom": "Ministère de l’Economie et de la planification",
+    "siege": "Yaoundé",
+    "mandat": "Planification de l’économie et mobilisation des financements nationaux et internationaux, monitoring des contributions aux ODDs",
+    "site": "https://minepat.gov.cm/en/home-2-5/",
+    "category": "publiques"
+  },
+  {
+    "id": 11,
+    "sigle": "MINFOF",
+    "nom": "Ministère des forêts et de la faune",
+    "siege": "Yaoundé",
+    "mandat": "Préservation et protection des forêts, des aires protégées et des écosystèmes à écologie fragile",
+    "site": "https://www.minfof.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 12,
+    "sigle": "MINEPDED",
+    "nom": "Ministère de l’Environnement, de la protection de la nature et du Développement Durable",
+    "siege": "Yaoundé",
+    "mandat": "Réglementation environnementale, préservation des écosystèmes fragiles, suivi du climat et des actions de mitigation/adaptation",
+    "site": "https://minepded.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 13,
+    "sigle": "MINEDUB",
+    "nom": "Ministère de l’éducation de base",
+    "siege": "Yaoundé",
+    "mandat": "Formation des enfants, construction des infrastructures d’eau et assainissement dans les écoles maternelles et primaires",
+    "site": "https://www.minedub.cm/en/home/",
+    "category": "publiques"
+  },
+  {
+    "id": 14,
+    "sigle": "MINESEC",
+    "nom": "Ministère des Enseignements secondaires",
+    "siege": "Yaoundé",
+    "mandat": "Formation des élèves, construction des infrastructures d’eau et assainissement dans les écoles d’enseignement secondaire générale et technique",
+    "site": "https://www.minesec.gov.cm/web/index.php/fr/",
+    "category": "publiques"
+  },
+  {
+    "id": 15,
+    "sigle": "MINESUP",
+    "nom": "Ministère de l’Enseignement Supérieur",
+    "siege": "Yaoundé",
+    "mandat": "Recherche fondamentale, recherche appliquée, formation universitaire, formation continue",
+    "site": "https://www.minesup.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 16,
+    "sigle": "MINRESI",
+    "nom": "Ministère de la Recherche Scientifique et de l’Innovation",
+    "siege": "Yaoundé",
+    "mandat": "Recherche fondamentale, recherche appliquée",
+    "site": "https://minresi.gov.cm/",
+    "category": "publiques"
+  },
+  {
+    "id": 17,
+    "sigle": "MINSANTE",
+    "nom": "Ministère de la Santé Publique",
+    "siege": "Yaoundé",
+    "mandat": "Suivi des indices de santé publique, lutte contre les maladies et développement des infrastructures sanitaires",
+    "site": "https://minsante.cm/",
+    "category": "publiques"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "1",
+    "noms": "AGRIDEV SARL",
+    "ville": "Baham",
+    "region": "Ouest",
+    "specialites": "conseil et production agricole"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "2",
+    "noms": "AGROMAC",
+    "ville": "Bafoussam",
+    "region": "Ouest",
+    "specialites": "Material provider irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "3",
+    "noms": "Aigle industrie service",
+    "ville": "Ngaoundéré",
+    "region": "Adamaoua",
+    "specialites": "Forage d'eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "4",
+    "noms": "AIR FORAGE",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage, captage, puit moderne, vente des matériaux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "5",
+    "noms": "ARESCAM",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage, stockage, unité de traitement, puits, mini adduction, Système de pompage, transport des eaux et réseau de distribution, electrochloration"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "6",
+    "noms": "Aspac cemac",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "7",
+    "noms": "ASPAC International Cameroun (B.P: 35233)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Conception et construction des systèmes d'AEP"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "8",
+    "noms": "Assist Plus",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "construction des"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "9",
+    "noms": "Aura Cameroun (BP 3790 )",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "systèmes"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "1",
+    "noms": "BET GENEX SARL (B.P: 5563)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "d’AEP"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "11",
+    "noms": "BETA CONSULT (B.P: 5009)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Installation irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "12",
+    "noms": "BETA Engineering Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Traitement de l’eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "13",
+    "noms": "BIHG ENGINEERING GROUP SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "14",
+    "noms": "BioWater Sarl",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Etude des ressources et des sites, Adduction d'eau, stockage."
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "15",
+    "noms": "BUNS SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, irrigation, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "16",
+    "noms": "Camfor",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "17",
+    "noms": "CAMWATER",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Qualité de l'eau, forage, biofiltre"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "18",
+    "noms": "Carmeroon Development corporation (CDC)",
+    "ville": "Ekondo Titi",
+    "region": "Sud Ouest",
+    "specialites": "Drainage routier, constructions routière"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "19",
+    "noms": "Centre Pasteur du Cameroun",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Réalisation des forages, installation des pompes, géothermie"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "20",
+    "noms": "COMPETING-BET",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "AEP"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "21",
+    "noms": "DESALYTICS CAMEROUN",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "irrigation de la banane verte et de l'hévéa"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "22",
+    "noms": "EASY WATER EVOLUTION Cameroon",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "analyse de l'eau, technologie de traitement de l'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "23",
+    "noms": "ECTA BTP Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "AEP, Aménagement des points d'eau, réseaux autonomes, Forages et puits"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "24",
+    "noms": "EED SARL (Etudes Engineering Développement )-B.P: 16109",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "analyse de l'eau, technologie de traitement industriel de l'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "25",
+    "noms": "EGIS CAMEROUN (BP: 911)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forage, Mini AEP"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "26",
+    "noms": "Electricity Development Corporation",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Adduction d'eau potable, hydraulique villageoise"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "27",
+    "noms": "Entreprise Générale de Construction et Services (EGCS)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Energie, eau et assainissement"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "28",
+    "noms": "Entretien Plus",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "AEP, puits, forages, stations de pompage"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "29",
+    "noms": "ERA CAMEROUN (B.P: 3356)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "30",
+    "noms": "Et General Technics",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Forage, réalisation des réseaux d'approvisionnement en eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "31",
+    "noms": "Ets ALTHY BTP",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Installation irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "32",
+    "noms": "Ets BFA",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Qualité de l'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "33",
+    "noms": "Ets Bio solution",
+    "ville": "Bafoussam",
+    "region": "Ouest",
+    "specialites": "construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "34",
+    "noms": "Ets BOOGY",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Hydraulique rurale, routière et assainissement"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "35",
+    "noms": "Ets Electro 4",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "36",
+    "noms": "Ets Free Irrigation",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Studies and construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "37",
+    "noms": "ETS Futurex Group",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "38",
+    "noms": "Ets groupe welfare channel",
+    "ville": "Bertoua",
+    "region": "Est",
+    "specialites": "Electronique embarqué, forage d'eau et solutions hydrauliques"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "39",
+    "noms": "Ets Kouayos et Fils",
+    "ville": "Ebolowa",
+    "region": "Sud",
+    "specialites": "Studies and construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "40",
+    "noms": "ETS Pure Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "41",
+    "noms": "ETS RAMSES",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "services"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "42",
+    "noms": "Ets Rural engineering",
+    "ville": "Dschang",
+    "region": "Ouest",
+    "specialites": "construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "43",
+    "noms": "Ets SOLAR HYDRAULIC",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "44",
+    "noms": "Five Engineering CM sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "45",
+    "noms": "FORAX",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Studies and construction irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "46",
+    "noms": "FUDECO",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "47",
+    "noms": "GEOBASE Sarl (BP: 1507)",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Bureau d'étude eau et environnement"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "48",
+    "noms": "GEOFOR ( BP: 1883",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Hydraulique, forage d'eau, Adduction d'eau."
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "49",
+    "noms": "Geosol Sahel Solution",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Installation irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "50",
+    "noms": "GEST CORPORATION SARL",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Puit, Forages, Adduction d'eau, puits moderne"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "51",
+    "noms": "Global corporation",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forages, Puits, Adductions et distributions d'eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "52",
+    "noms": "GN forage",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "foragges, adduction d'eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "53",
+    "noms": "Green Connexion",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Géologie - Hydrogéologie, approvisionnement en eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "54",
+    "noms": "Groupement Ets Global Invest Cameroun (B.P: 1136)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "55",
+    "noms": "HADENEU ENGINEERING SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "56",
+    "noms": "Hévéa du Cameroun (HEVCAM)",
+    "ville": "Niété",
+    "region": "Sud",
+    "specialites": "Etudes environnementales"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "57",
+    "noms": "HYDRAC SA (Hydrocarbures Analyses Contrôles) ( BP 12806",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "58",
+    "noms": "HYDRAS Engineers (BP: 14521)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "59",
+    "noms": "Hydrocamer Sarl (BP: 15299)",
+    "ville": "DSCHANG",
+    "region": "Ouest",
+    "specialites": "Production irrigué d'hévéa (pépinière)"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "60",
+    "noms": "Hydro-Mekin",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Analyse des eaux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "61",
+    "noms": "Hydyam forages sarl",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Hydraulique villageoise,"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "62",
+    "noms": "Integc Sarl",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Insyallation des pompes solaire, Forages, puits,"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "63",
+    "noms": "JACO SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "64",
+    "noms": "KEMTO",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "forage d'eau, approvisionnement en eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "65",
+    "noms": "King Service SARL (BP 5138 )",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forages, puits modernes, château d'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "66",
+    "noms": "LE PLOMBIER SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Material provider irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "67",
+    "noms": "Leauclean",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "FORAGE, puits, aep, génie-civile"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "68",
+    "noms": "MCI (Mot-Confort-Inter-SARL)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "69",
+    "noms": "METRIZ Ingénierie (B.P: 15926)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Material provider irriggation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "70",
+    "noms": "MULTI TRAVAUX ET SERVICE CAMEROUN(MTS-CAM)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Laboratoire d’analyse de l’eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "71",
+    "noms": "Ndevta Dangola Chotai",
+    "ville": "Mokolo",
+    "region": "Extrême Nord",
+    "specialites": "Forage, Adduction"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "72",
+    "noms": "Njanka Construction",
+    "ville": "Mankon",
+    "region": "Nord Ouest",
+    "specialites": "Forages, captages, puits aménagers, système de potabilisation."
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "73",
+    "noms": "Paléo Logos",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage d'eau et puits"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "74",
+    "noms": "Pfleiffer (B.P: 16490)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "75",
+    "noms": "Plantations du Haut Penja (PHP)",
+    "ville": "Penja",
+    "region": "Littoral",
+    "specialites": "Forage d'eau potable, approvisionnement en eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "76",
+    "noms": "PRICA CAMEROUN",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Analyse des eaux usées, adduction d'eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "77",
+    "noms": "Pure Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "78",
+    "noms": "Pyramide inter",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Irrigation de la banane verte"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "79",
+    "noms": "RHE-C SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "80",
+    "noms": "Rt water solution (BP: 30042)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "81",
+    "noms": "SAFEGE (BP: 415)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, Adduction d'eau potable, Aménagement des digues et points d'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "82",
+    "noms": "Sahel water sanitation and Environment",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "83",
+    "noms": "SANITATION AND WATER FOR ALL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forages, puits, Adduction d'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "84",
+    "noms": "SCEM SA B.P: 3617",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forages, puits, AEP"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "85",
+    "noms": "SCR ENGINEERING",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "86",
+    "noms": "SEMAGRI SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "87",
+    "noms": "Ste NERF Services Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "88",
+    "noms": "SIX INTERNATIONNAL (BP: 3124)",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "89",
+    "noms": "Smactel Engineering SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Material provider irrigation"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "90",
+    "noms": "Smart water engineering",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "travux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "91",
+    "noms": "Société Anonyme des Brasseries du Cameroun (SABC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Construction des châteaux d'eau, forage."
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "92",
+    "noms": "Société d'Expansion et de Modernisation de la Riziculture (SEMRY)",
+    "ville": "Yagoua",
+    "region": "Extrême Nord",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "93",
+    "noms": "Soft Mining Engineering Group (SMEG)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "94",
+    "noms": "SOGEFTIONOR CORPORETION Sarl",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": ""
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "95",
+    "noms": "SOIL AND WATER Investigation S. A (BP : 5640)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Production irriguée de riz"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "96",
+    "noms": "SOL SOLUTION AFRIQUE CENTRALE (SSAC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "travaux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "97",
+    "noms": "Solutions Eau, Environnement et Services",
+    "ville": "Douala,",
+    "region": "Littoral",
+    "specialites": "Sondage geophysique et implantation forage"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "98",
+    "noms": "SOPREC",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d’eau potable, Puits"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "99",
+    "noms": "SOPROCIT SARL (B.P:1573)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d'eau"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "100",
+    "noms": "Société sucrière du cameroun (SOSUCAM)",
+    "ville": "Nkoteng",
+    "region": "Centre",
+    "specialites": "Analyses des eaux de forages et eaux de chaudière ; Traitement des eaux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "101",
+    "noms": "SOURCES DU PAYS (B.P: 3784)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes, réalisation et gestion des systèmes d'épuration des eaux usées"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "102",
+    "noms": "SUD CAMEROUN HEVEA S.A 69",
+    "ville": "Meyomessala",
+    "region": "Sud",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "103",
+    "noms": "Tockem",
+    "ville": "Dschang",
+    "region": "Ouest",
+    "specialites": "Irrigation de la canne à sucre et gestion de bassin versant"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "104",
+    "noms": "Underground water",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Analyse de la qualité des eaux"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "105",
+    "noms": "Upper Noun Valley Development Authority (UNVDA)",
+    "ville": "Ndop",
+    "region": "Nord Ouest",
+    "specialites": "Production irrigué d'hévéa (pépinière)"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "106",
+    "noms": "VEOLIA",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Gestion des déchets, développement local"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "107",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": "Hydraulique, forage d'eau, adduction d'eau et Vrd"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "108",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": "Production irriguée de riz"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "109",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": "Construction des stations de pompages, des reservoirs de distribution, production d'eau potable"
+  },
+  {
+    "category": "transfrontaliere",
+    "id": "110",
+    "noms": "Université de Dschang",
+    "ville": "Faculté d'Agronomie et des Sciences Agricoles (FASA)",
+    "region": "Dschang",
+    "specialites": "Ingénierie de l'hydraulique agricole - Ingénierie de l'eau - Gestion de l'eau et de l'environnement"
+  },
+  {
+    "category": "ongs",
+    "id": "1",
+    "noms": "Acahijec",
+    "ville": "Douala",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "2",
+    "noms": "ACCORD PARFAIT",
+    "ville": "Yaoundé/ Cameroun",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "3",
+    "noms": "ACED",
+    "ville": "Maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "4",
+    "noms": "Action pour la Prévention Routière et les Premiers Secours",
+    "ville": "Foumban",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "5",
+    "noms": "Action pour le Développement",
+    "ville": "Dschang",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "6",
+    "noms": "AD II EVOLUTION",
+    "ville": "Douala",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "7",
+    "noms": "African Marine Conservation Organization (AMCO)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "8",
+    "noms": "AGENCE D'APPUI AU DÉVELOPPEMENT LOCAL ET PARTICIPATIF",
+    "ville": "MEIGANGA",
+    "region": "Adamaoua"
+  },
+  {
+    "category": "ongs",
+    "id": "9",
+    "noms": "AGPEDD",
+    "ville": "EBOLOWA",
+    "region": "Sud"
+  },
+  {
+    "category": "ongs",
+    "id": "1",
+    "noms": "AGRO-ENVIRONMENT RENEWABLE ENERGY",
+    "ville": "Douala",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "11",
+    "noms": "AHDeID",
+    "ville": "Maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "12",
+    "noms": "ALDEC",
+    "ville": "Maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "13",
+    "noms": "Alliance pour la Justice Environnementale et le Développement Durable/ Alliance for Environmental Justice and Sustainable Development (AJEDD).",
+    "ville": "Dschang",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "14",
+    "noms": "ANARME",
+    "ville": "",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "15",
+    "noms": "ARIOCA",
+    "ville": "Yaoundé",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "16",
+    "noms": "ASGARA",
+    "ville": "Douala",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "17",
+    "noms": "Association AEPERDEPLAST",
+    "ville": "Maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "18",
+    "noms": "Association Audgreen",
+    "ville": "Maroua",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "19",
+    "noms": "Association Camerounaise pour l’Education environnementale (ACEEN)",
+    "ville": "douala",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "20",
+    "noms": "Association Camerounaise pour le Développement rural (ACADER)",
+    "ville": "Maroua",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "21",
+    "noms": "Association Camerounaise pour le Développement rural (ACADER)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "22",
+    "noms": "Association des jeunes de Louggueo Maroua",
+    "ville": "Yaoundé",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "23",
+    "noms": "Association des Jeunes Professionnels de l’Eau (ASJP-CMR)",
+    "ville": "Maroua",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "24",
+    "noms": "Association des Jeunes Professionnels de l'Eau du Cameroun - IWA YWPC",
+    "ville": "Yaoundé",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "25",
+    "noms": "Association des Jeunes Solidaires de Martap",
+    "ville": "Yaoundé",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "26",
+    "noms": "Association Jeunesse Verte du Cameroun (AJVC)",
+    "ville": "Ngaoundéré - Martap",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "27",
+    "noms": "Association Nationale des Toilettes du Cameroun (ANT-Cameroun)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "28",
+    "noms": "Association pour la Promotion de l’Alphabétisation et du Développement Social (APADES)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "29",
+    "noms": "Association pour la Protection des Enfants Eloignés de leur Famille au Cameroun (APEEFC)",
+    "ville": "Yaoundé",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "30",
+    "noms": "Association pour la Protection du Bassin du Lac-Tchad",
+    "ville": "MAROUA",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "31",
+    "noms": "ASSOCIATION YOUTH WELFARE CAMEROON",
+    "ville": "Kousseri",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "32",
+    "noms": "ATIPAD",
+    "ville": "EBOLOWA",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "33",
+    "noms": "Better Earth International",
+    "ville": "Ebolowa",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "34",
+    "noms": "Biosol Sarl",
+    "ville": "Buea",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "35",
+    "noms": "Brexit Agri Consulting (BAC)",
+    "ville": "Maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "36",
+    "noms": "CAMEROON YOUTH INITIATIVE FOR RURAL DEVELOPMENT (CAMYIRD)",
+    "ville": "yaounde",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "37",
+    "noms": "CARBON EMISSION TRADING CAMEROON (CET)",
+    "ville": "Yaoundé",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "38",
+    "noms": "CEPDEL",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "39",
+    "noms": "CODAS-CARITAS de Yagoua",
+    "ville": "Bafoussam",
+    "region": "Adamaoua"
+  },
+  {
+    "category": "ongs",
+    "id": "40",
+    "noms": "CRAAD",
+    "ville": "Yagoua",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "41",
+    "noms": "CRADED",
+    "ville": "Mokolo",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "42",
+    "noms": "Debate Cameroon",
+    "ville": "Foumban",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "43",
+    "noms": "ELMA",
+    "ville": "Dschang",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "44",
+    "noms": "Environmental Org",
+    "ville": "YAOUNDE",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "45",
+    "noms": "Family Green Corporation",
+    "ville": "Molyko",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "46",
+    "noms": "Fondation Ville Propre (FVP)",
+    "ville": "Penja",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "47",
+    "noms": "FOUNDATION FOR ENVIRONNEMENT AND DEVELOPMENT (FEDEV)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "48",
+    "noms": "GLOBAL VILLAGE CAMEROUN",
+    "ville": "Bamenda",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "49",
+    "noms": "Global Youth Innovation Network (GYIN CAMEROON)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "50",
+    "noms": "Green Africa Hope",
+    "ville": "Yaoundé",
+    "region": "Nord Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "51",
+    "noms": "Green Globe Organisation",
+    "ville": "Maroua",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "52",
+    "noms": "Green Globe Organization",
+    "ville": "Bamenda",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "53",
+    "noms": "GREEN HORIZON",
+    "ville": "Bamenda",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "54",
+    "noms": "Green landscape",
+    "ville": "Yaoundé",
+    "region": "Est"
+  },
+  {
+    "category": "ongs",
+    "id": "55",
+    "noms": "GreenImpact",
+    "ville": "Buea",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "56",
+    "noms": "HOPE GIVERS INTERNATIONAL",
+    "ville": "Dschang",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "57",
+    "noms": "Hydro-Agro",
+    "ville": "YAOUNDE",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "58",
+    "noms": "Innovation de la nature",
+    "ville": "Maroua",
+    "region": "Sud"
+  },
+  {
+    "category": "ongs",
+    "id": "59",
+    "noms": "JALLEBIZ CORPORATION HOLDING",
+    "ville": "Kaolack",
+    "region": "Nord Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "60",
+    "noms": "JEUNES VOLONTAIRES POUR L’ENVIRONNEMENT",
+    "ville": "Douala",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "61",
+    "noms": "Jeunesse Active pour le Développement Durable (JAD)",
+    "ville": "Yaoundé",
+    "region": "Adamaoua"
+  },
+  {
+    "category": "ongs",
+    "id": "62",
+    "noms": "Jeunesse et Développement Durable pour l’Afrique (J2D Afrique)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "63",
+    "noms": "Kan Precious Kune",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "64",
+    "noms": "Knowledge Mobilzation team",
+    "ville": "Foumban",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "65",
+    "noms": "LES ECOCITOYENS",
+    "ville": "Buea",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "66",
+    "noms": "Mane-kadj",
+    "ville": "Yaoundé",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "67",
+    "noms": "MECA",
+    "ville": "Koumra",
+    "region": "Sud"
+  },
+  {
+    "category": "ongs",
+    "id": "68",
+    "noms": "MEDIA CAMEROUN",
+    "ville": "Maroua",
+    "region": "Sud"
+  },
+  {
+    "category": "ongs",
+    "id": "69",
+    "noms": "MOKINE GROUP",
+    "ville": "YAOUNDE",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "70",
+    "noms": "NAVR-GRACE",
+    "ville": "maroua",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "71",
+    "noms": "Ndef Engeneering",
+    "ville": "Yaounde",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "72",
+    "noms": "Ong Arc en Ciel Cameroun",
+    "ville": "Douala",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "73",
+    "noms": "ONG REPTA Cameroun",
+    "ville": "Bafia",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "74",
+    "noms": "Our health foundation",
+    "ville": "Ngaoundal",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "75",
+    "noms": "Panser l'Afrique/Healing Africa",
+    "ville": "Buea",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "76",
+    "noms": "Parlement Mondial de la Jeunesse pour l’Eau Cameroun (PMJE)",
+    "ville": "Yaoundé",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "77",
+    "noms": "Pope Bisong new generation agriculture Cameroon",
+    "ville": "Yaoundé",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "78",
+    "noms": "Réseau Africain des Jeunes pour les Zones",
+    "ville": "Bafoussam",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "79",
+    "noms": "Humides (RAJEZO)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "80",
+    "noms": "Réseau Alliance pour la Maitrise de l'Eau et de l'Energie",
+    "ville": "Bafoussam",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "81",
+    "noms": "Réseau Camerounais d'adolescents et Jeunes Positifs",
+    "ville": "Yaoundé",
+    "region": "Littoral"
+  },
+  {
+    "category": "ongs",
+    "id": "82",
+    "noms": "Réseau des Jeunes pour la préservation des Zones Humides (REJEPH)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "83",
+    "noms": "Réseau Eau et Climat des Organisations",
+    "ville": "Yaoundé",
+    "region": "Nord Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "84",
+    "noms": "Jeunes d’Afrique Centrale (RECOJAC)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "85",
+    "noms": "RESEAU POUR LE DEVELOPPEMENT RURAL ET LA PROTECTION DE L’ENVIRONNEMENT AU CAMEROUN",
+    "ville": "Jakiri",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "86",
+    "noms": "Riba Agroforestry resource Center",
+    "ville": "Buea",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "87",
+    "noms": "Rural Doctors",
+    "ville": "Yaoundé",
+    "region": "Nord Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "88",
+    "noms": "SAJEPHCO",
+    "ville": "Maroua",
+    "region": "Nord Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "89",
+    "noms": "SAMBO HAMADOU",
+    "ville": "Bertoua",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "90",
+    "noms": "Samo Foundation",
+    "ville": "Yaounde",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "91",
+    "noms": "Sanabil Social and Cultural Development Association",
+    "ville": "Yaoundé",
+    "region": "Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "92",
+    "noms": "Scak international business Ltd",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "93",
+    "noms": "SHAD Cameroun",
+    "ville": "Kribi",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "94",
+    "noms": "Specialized Research Centre on Marine Ecosystems (CERECOMA-IRAD)",
+    "ville": "Bafut",
+    "region": "Sud Ouest"
+  },
+  {
+    "category": "ongs",
+    "id": "95",
+    "noms": "STONEFARMS",
+    "ville": "Buea",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "96",
+    "noms": "Think Tomorrow",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "97",
+    "noms": "UNITED VOICES TO SERVE FOREST AND ENVIRONNEMENT (USFE)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "98",
+    "noms": "Watchman Relief Association Global",
+    "ville": "Yaoundé",
+    "region": "Extrême Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "99",
+    "noms": "Water  For  Life Cameroon (W4L)",
+    "ville": "Maroua",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "100",
+    "noms": "Water Energy and Sanitation for Development (WESDE)",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "101",
+    "noms": "WOMEN IN DEVELOPMENT (WID)",
+    "ville": "Yaoundé",
+    "region": "Nord"
+  },
+  {
+    "category": "ongs",
+    "id": "102",
+    "noms": "Young Volunteers for Environment Cameroon",
+    "ville": "Garoua",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "103",
+    "noms": "YOUTH CARE NETWORK",
+    "ville": "Yaoundé",
+    "region": "Centre"
+  },
+  {
+    "category": "ongs",
+    "id": "104",
+    "noms": "YOUTH PROFESSIONAL PLATEFORM FOR AGRICULTURAL DEVELOPMENT (YPARD CAMEROON)",
+    "ville": "Yaoundé",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "105",
+    "noms": "YOUTHS AMBASSADORS FOR BIO-DIVERSITY",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "106",
+    "noms": "",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "107",
+    "noms": "",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "108",
+    "noms": "",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "109",
+    "noms": "",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "ongs",
+    "id": "110",
+    "noms": "",
+    "ville": "",
+    "region": ""
+  },
+  {
+    "category": "appui",
+    "id": "1",
+    "noms": "Global Water Partnership Central Africa (GWP CAf)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Sécurité en eau et gestion de l'eau"
+  },
+  {
+    "category": "appui",
+    "id": "2",
+    "noms": "Global Water Partnership Central Cameroon (GWP Cmr)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Sécurité en eau et gestion de l'eau"
+  },
+  {
+    "category": "appui",
+    "id": "3",
+    "noms": "Bureau des Nations Unies pour les projets et les services (UNOPS)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eau potable et assainissement"
+  },
+  {
+    "category": "appui",
+    "id": "4",
+    "noms": "Bureau Régional de l'UNESCO pour l'Afrique Centrale (UNESCO)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "gestion des connaissances, développement des compétences, sciences, éducation, culture"
+  },
+  {
+    "category": "appui",
+    "id": "5",
+    "noms": "Commission nationale de L'UNESCO pour le Cameroun (COMNAT)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "gestion des connaissances, développement des compétences, sciences, éducation, culture"
+  },
+  {
+    "category": "appui",
+    "id": "6",
+    "noms": "Fond des Nations Unies pour l'Enfance (UNICEF)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eau potable et assainissement, éducation, infrastructure scolaire, réponse humanitaire"
+  },
+  {
+    "category": "appui",
+    "id": "7",
+    "noms": "Haut Commissariat des nations Unies pour les Réfugiés (UNHCR)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "réponse humanitaire, recasement des réfugiés, infrastructures sociales dans les communautés hotes"
+  },
+  {
+    "category": "appui",
+    "id": "8",
+    "noms": "Fond des Nations Unies pour l'Habitat (ONU-HABITAT)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Conservation des écosystèmes, des ressources biologiques et préservation de l'environnement"
+  },
+  {
+    "category": "appui",
+    "id": "9",
+    "noms": "World Wide Fund for Nature (WWF)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Planification urbaine, gestion des inondations, préservation de l'environnement"
+  },
+  {
+    "category": "appui",
+    "id": "10",
+    "noms": "Deutsche Gesellschaft für Internationale Zusammenarbeit (GIZ)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Coopération bilatérale, gouvernance, eau et assainissement, préservation écosystèmes"
+  },
+  {
+    "category": "appui",
+    "id": "11",
+    "noms": "Coopération francaise (AFD)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Coopération bilatérale, gouvernance, eau et assainissement, préservation écosystèmes"
+  },
+  {
+    "category": "appui",
+    "id": "12",
+    "noms": "Commission de l'Union Européenne (UE)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Gouvenance publique"
+  },
+  {
+    "category": "appui",
+    "id": "13",
+    "noms": "Les ambassades des pays",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Diplomatie et coopération au développement"
+  },
+  {
+    "category": "appui",
+    "id": "14",
+    "noms": "Plan International",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eau potable et assainissement"
+  },
+  {
+    "category": "appui",
+    "id": "15",
+    "noms": "Première Urgence (PUI)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Réponse humanitaire, eau et assainissement, infrastructures sociales dans les communautés hôtes"
+  },
+  {
+    "category": "appui",
+    "id": "16",
+    "noms": "Norvegian Refugee Council (NRC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Réponse humanitaire, eau et assainissement, infrastructures sociales dans les communautés hotes"
+  },
+  {
+    "category": "appui",
+    "id": "17",
+    "noms": "Lutherian World Fellowship (LWF)",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "réponse humanitaire, eau et assainissement, infrastructures sociales dans les communautés hotes"
+  },
+  {
+    "category": "appui",
+    "id": "18",
+    "noms": "INTERSOS",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Réponse humanitaire"
+  },
+  {
+    "category": "appui",
+    "id": "19",
+    "noms": "International Rescue Center (IRC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Réponse humanitaire"
+  },
+  {
+    "category": "appui",
+    "id": "20",
+    "noms": "Office International de l'Eau (OIEAU)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Conservation de la biodiversité, préservation de l'environnement"
+  },
+  {
+    "category": "appui",
+    "id": "21",
+    "noms": "Union Mondiale pour la Conservation de la Nature (IUCN)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Conservation de la biodiversité, Gouvernance de l'eau par bassin"
+  },
+  {
+    "category": "appui",
+    "id": "22",
+    "noms": "Réseau Régional multi-acteur de la coopération et de la solidarité internationale - Grand Est (GESCOD / RR)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eau potable et assainissement, gouvernance locale"
+  },
+  {
+    "category": "appui",
+    "id": "23",
+    "noms": "Projet Viva Benoue",
+    "ville": "Lagdo",
+    "region": "Nord",
+    "specialites": "aménagements hydro-agricoles"
+  },
+  {
+    "category": "appui",
+    "id": "24",
+    "noms": "Projet Viva Logone",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "aménagements hydro-agricoles"
+  },
+  {
+    "category": "appui",
+    "id": "25",
+    "noms": "Provillage",
+    "ville": "Bertoua",
+    "region": "Est",
+    "specialites": "infrastructures sociales de base"
+  },
+  {
+    "category": "appui",
+    "id": "26",
+    "noms": "Syndicat des communes de la Lekie (SYNCOLEK)",
+    "ville": "Obala",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau, gouvernance locale"
+  },
+  {
+    "category": "appui",
+    "id": "27",
+    "noms": "Croix rouge camerounaise",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "réponse d'urgance, secourisme"
+  },
+  {
+    "category": "appui",
+    "id": "28",
+    "noms": "Innovation: Africa",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Eau potable et assainissement"
+  },
+  {
+    "category": "appui",
+    "id": "29",
+    "noms": "Syndicat des Communes du Mbam et Inoubou (SYCOMI)",
+    "ville": "Bafia",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau, gouvernance locale"
+  },
+  {
+    "category": "appui",
+    "id": "30",
+    "noms": "Mission d'Etudes et d'Aménagement pour le Développement du Nord (MEADEN)",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "aménagements hydro-agricoles, développement rural"
+  },
+  {
+    "category": "appui",
+    "id": "31",
+    "noms": "Mission de Développement Intégré des Monts Mandara (MIDIMA)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Développement urbain, développement rural, gouvernance"
+  },
+  {
+    "category": "appui",
+    "id": "32",
+    "noms": "Banque Mondiale (BM)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Développement urbain, développement rural,"
+  },
+  {
+    "category": "appui",
+    "id": "33",
+    "noms": "Banque Africaine de Développement (BAD)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "développement rural,"
+  },
+  {
+    "category": "appui",
+    "id": "34",
+    "noms": "Banque Islamique de développement (BID)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Développement urbain, développement rural, gouvernance"
+  },
+  {
+    "category": "appui",
+    "id": "35",
+    "noms": "Commission du Bassin du Lac Tchad (CBLT)",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Développement rural, préservation su bassin du lac Tchad"
+  },
+  {
+    "category": "appui",
+    "id": "36",
+    "noms": "Autorité du Bassin du Niger (ABN)",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Développement rural, gestion du bassin du Niger"
+  },
+  {
+    "category": "appui",
+    "id": "37",
+    "noms": "Commission Internationale du Bassin Congo-Oubangui-Sangha (CICOS)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Développement rural, gestion du bassin du Congo- Oubangui Sangha"
+  },
+  {
+    "category": "appui",
+    "id": "38",
+    "noms": "Communauté Economique des Etats de l'Afrique Centrale (CEEAC)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Développement économique"
+  },
+  {
+    "category": "appui",
+    "id": "39",
+    "noms": "Centre de Recherche pour l'eau et les changements climatiques (CRECC)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "études hydrologiques"
+  },
+  {
+    "category": "appui",
+    "id": "40",
+    "noms": "Institut de Recherche de Géologie manière (IRGM)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "études géologiques et minières"
+  },
+  {
+    "category": "appui",
+    "id": "41",
+    "noms": "Institut National de la Cartographie (INC)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Cartographie des sols et du Sous Sol"
+  },
+  {
+    "category": "appui",
+    "id": "42",
+    "noms": "Institut national des Statistiques (INS)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Statistique socio-économqiues et de développement"
+  },
+  {
+    "category": "appui",
+    "id": "43",
+    "noms": "Institut de Recherche Agricole pour le Développement (IRAD)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Recherche agricole"
+  },
+  {
+    "category": "appui",
+    "id": "44",
+    "noms": "Institut de Recherche pour le Développement (IRD)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Recherche fondamentale et hydrologique"
+  },
+  {
+    "category": "appui",
+    "id": "45",
+    "noms": "Observatoire National pour les Changements climatiques (ONACC)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Suivi, évaluations et projections climatiques"
+  },
+  {
+    "category": "appui",
+    "id": "46",
+    "noms": "Centre International pour la Foresterie (CIFOR)",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Foresterie, biodiversité"
+  },
+  {
+    "category": "appui",
+    "id": "47",
+    "noms": "Institut International d'Agriculture Tropicale (IITA)",
+    "ville": "Yaounde",
+    "region": "Centre",
+    "specialites": "Recherche Agricole"
+  },
+  {
+    "category": "appui",
+    "id": "48",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "49",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "50",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "51",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "52",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "53",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "54",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "55",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "56",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "57",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "58",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "59",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "60",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "61",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "62",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "63",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "appui",
+    "id": "64",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "bureaux",
+    "id": "1",
+    "noms": "AGRIMEM",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "2",
+    "noms": "CERBAT",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "3",
+    "noms": "CONTEC",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "4",
+    "noms": "CRÉA CONSULT",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "5",
+    "noms": "ECI",
+    "ville": "Bamenda",
+    "region": "Nord-Ouest",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "6",
+    "noms": "ECTA BTP",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Travaux publics, voirie et drainage"
+  },
+  {
+    "category": "bureaux",
+    "id": "7",
+    "noms": "ENACAM",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "8",
+    "noms": "HYDROCAMER",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "9",
+    "noms": "IEA",
+    "ville": "Bamenda",
+    "region": "Nord-Ouest",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "10",
+    "noms": "INTEGC Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "11",
+    "noms": "ISD Sarl",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "12",
+    "noms": "LE COMPETING",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "13",
+    "noms": "PENIEL Engineering Consult Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "14",
+    "noms": "PIC PLANET INTEGRATED",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "15",
+    "noms": "PYRAMIDS INTER",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "16",
+    "noms": "REHOBOTH Company Sarl",
+    "ville": "Kousseri",
+    "region": "Extrême Nord",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "17",
+    "noms": "SETICO Ingénieurs Conseils Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "18",
+    "noms": "SPRING ENGINEERING ENTERPRISE",
+    "ville": "Limbé",
+    "region": "Sud-Ouest",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "19",
+    "noms": "TECTEL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Irrigation"
+  },
+  {
+    "category": "bureaux",
+    "id": "20",
+    "noms": "WOÏLA BTP Sarl",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Aménagements hydro agricoles"
+  },
+  {
+    "category": "bureaux",
+    "id": "21",
+    "noms": "BRL Ingénierie",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eau, environnement, aménagement du territoire"
+  },
+  {
+    "category": "bureaux",
+    "id": "22",
+    "noms": "MK-ENGINEERING SARL",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Eau, environnement, aménagement du territoire"
+  },
+  {
+    "category": "bureaux",
+    "id": "23",
+    "noms": "Cabinet consulting \"Les Experts Associés\"",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Analyse des données et Systèmes d’information géographique"
+  },
+  {
+    "category": "bureaux",
+    "id": "24",
+    "noms": "Cabinet d'études GEOCONSULTOR",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Etudes hydrologiques et hydrogéologiques"
+  },
+  {
+    "category": "bureaux",
+    "id": "25",
+    "noms": "GSN ENGINEERING & CONSULTING SARL",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Etudes de faisabilité et études techniques"
+  },
+  {
+    "category": "bureaux",
+    "id": "26",
+    "noms": "Rainbow Environment Consult",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes environnementales et socio-économiques"
+  },
+  {
+    "category": "bureaux",
+    "id": "27",
+    "noms": "Genius Consulting Group",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Mini-centrale hydro-électriques, Hydraulique fluviale"
+  },
+  {
+    "category": "bureaux",
+    "id": "28",
+    "noms": "Enviforest ca",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Eudes environnementales"
+  },
+  {
+    "category": "bureaux",
+    "id": "29",
+    "noms": "C&N Services",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Hydraulique"
+  },
+  {
+    "category": "bureaux",
+    "id": "30",
+    "noms": "BEED ENGINEERING SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forages, approvisionnement en eau"
+  },
+  {
+    "category": "bureaux",
+    "id": "31",
+    "noms": "BATRATEL",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Etudes hydrologiques, Hydrauliques et hydrogéologiques"
+  },
+  {
+    "category": "bureaux",
+    "id": "32",
+    "noms": "PREMALEN",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes de faisabilité et études techniques"
+  },
+  {
+    "category": "bureaux",
+    "id": "33",
+    "noms": "EMERGENCE SARL",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Etudes"
+  },
+  {
+    "category": "bureaux",
+    "id": "34",
+    "noms": "Rapid Engineering Consultant company (Rec-Sarl)",
+    "ville": "Kumba",
+    "region": "Sud-Ouest",
+    "specialites": "Etudes"
+  },
+  {
+    "category": "bureaux",
+    "id": "35",
+    "noms": "Strateg Management Consulting",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Etudes stratégiques et de gestion"
+  },
+  {
+    "category": "bureaux",
+    "id": "42",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "bureaux",
+    "id": "43",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "bureaux",
+    "id": "44",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "bureaux",
+    "id": "45",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "bureaux",
+    "id": "46",
+    "noms": "",
+    "ville": "",
+    "region": "",
+    "specialites": ""
+  },
+  {
+    "category": "enseignement",
+    "id": "N'",
+    "noms": "Institutions publiques d'enseignement supérieure",
+    "ville": "Institutions",
+    "region": "Ville Siege",
+    "specialites": "Spécialités"
+  },
+  {
+    "category": "enseignement",
+    "id": "2",
+    "noms": "Faculté des sciences (FS)",
+    "ville": "Université de Dschang",
+    "region": "Dschang",
+    "specialites": "Sciences et Technologies de l'assainissement"
+  },
+  {
+    "category": "enseignement",
+    "id": "3",
+    "noms": "Institut Supérieur d'Agriculture (ISA)",
+    "ville": "Université de Dschang",
+    "region": "Bertoua",
+    "specialites": "Formation agricole, Eau et for�ts"
+  },
+  {
+    "category": "enseignement",
+    "id": "4",
+    "noms": "Ecole doctorale en Gestion de l'eau",
+    "ville": "Université de Dschang",
+    "region": "Dschang",
+    "specialites": "Ingénierie de l'eau - Gestion de l'eau et de l'environnement"
+  },
+  {
+    "category": "enseignement",
+    "id": "5",
+    "noms": "Institut Supérieur d?agriculture, du bois, de l'eau et de l'environnement (ISABEE)",
+    "ville": "Université d'Ebolowa",
+    "region": "Ebolowa",
+    "specialites": "Ingénierie de l'eau, l?assainissement et l'environnement"
+  },
+  {
+    "category": "enseignement",
+    "id": "6",
+    "noms": "Ecole nationale supérieure des sciences et techniques maritimes et océaniques",
+    "ville": "Université d'Ebolowa",
+    "region": "Kribi",
+    "specialites": "Sciences maritimes et océaniques"
+  },
+  {
+    "category": "enseignement",
+    "id": "7",
+    "noms": "Ecole doctorale en Gestion de l'eau",
+    "ville": "Université d'Ebolowa",
+    "region": "Ebolowa",
+    "specialites": "Eau, assainissement, environnement"
+  },
+  {
+    "category": "enseignement",
+    "id": "8",
+    "noms": "Faculté des Sciences (FS)",
+    "ville": "Université de Yaoundé 1",
+    "region": "Yaoundé",
+    "specialites": "Gestion des Ressources en eau et risques environnementaux dans les métropoles africaines"
+  },
+  {
+    "category": "enseignement",
+    "id": "9",
+    "noms": "Ecole Nationale polytechnique de Yaoundé",
+    "ville": "Universitéde Yaoundé 1",
+    "region": "Yaoundé",
+    "specialites": "Génie civil, drainage et ouvrages de stockage d?eau"
+  },
+  {
+    "category": "enseignement",
+    "id": "10",
+    "noms": "Faculté des sciences (FS)",
+    "ville": "Université de Douala",
+    "region": "Douala",
+    "specialites": "Eau et environnement"
+  },
+  {
+    "category": "enseignement",
+    "id": "11",
+    "noms": "Institut des Sciences Halieutiques (ISH)",
+    "ville": "Université de Douala",
+    "region": "Yabassi",
+    "specialites": "Sciences halieutiques, marines et océanographiques"
+  },
+  {
+    "category": "enseignement",
+    "id": "12",
+    "noms": "Ecole Nationale Polytechnique de Maroua",
+    "ville": "Université de Maroua",
+    "region": "Maroua",
+    "specialites": "Ingénierie Hydrologie, Hydrogéologie, Hydraulique et assainissement"
+  },
+  {
+    "category": "enseignement",
+    "id": "13",
+    "noms": "Catholic University of Bamenda",
+    "ville": "Université de Buea",
+    "region": "Bamenda",
+    "specialites": "Ingénierie civile et fluviale, eau potable"
+  },
+  {
+    "category": "enseignement",
+    "id": "14",
+    "noms": "College of Technology (COLTECH)",
+    "ville": "Université de Bamenda",
+    "region": "Bamenda",
+    "specialites": "Techniques industrielles, gestion de l?eau"
+  },
+  {
+    "category": "enseignement",
+    "id": "15",
+    "noms": "Ecole Nationale Supé rieure des Sciences Agro-alimentaires (ENSAI)",
+    "ville": "Université de Ngaoundéré",
+    "region": "Ngaoundéré",
+    "specialites": "Techniques industrielles"
+  },
+  {
+    "category": "enseignement",
+    "id": "16",
+    "noms": "Ecole de Géologie et d?exploitation miniére",
+    "ville": "Université de Ngaoundéré",
+    "region": "Meiganga",
+    "specialites": "Géologie et mines"
+  },
+  {
+    "category": "enseignement",
+    "id": "17",
+    "noms": "Collèges régionaux d?agriculture",
+    "ville": "MINADER",
+    "region": "Bambili, Ebolowa",
+    "specialites": "Conseiller agricole"
+  },
+  {
+    "category": "enseignement",
+    "id": "18",
+    "noms": "Ecole des infirmiers, de technicien médico sanitaire et du génie sanitaire de Yaoundé",
+    "ville": "MINSANTE",
+    "region": "Yaoundé",
+    "specialites": "Génie sanitaire"
+  },
+  {
+    "category": "enseignement",
+    "id": "19",
+    "noms": "Institut Supérieur des Sciences et Techniques de la Santé (ISSTS-CRC)",
+    "ville": "MINSANTE",
+    "region": "Yaoundé",
+    "specialites": "Secourisme, risques et catastrophes"
+  },
+  {
+    "category": "enseignement",
+    "id": "20",
+    "noms": "Ecole pour la Formation des Spécialistes en Infrastructures, Equipements Ruraux (EFSEAR)",
+    "ville": "MINTP",
+    "region": "Kumba",
+    "specialites": "Equipement rural et génie civil"
+  },
+  {
+    "category": "enseignement",
+    "id": "21",
+    "noms": "Ecole Nationale Supérieur des Travaux Publics",
+    "ville": "MINTP",
+    "region": "Yaoundé",
+    "specialites": "Ingénierie en eau potable, assainissement et environnement"
+  },
+  {
+    "category": "enseignement",
+    "id": "22",
+    "noms": "Institut Agricole d'Obala (IAO)",
+    "ville": "MINESUP",
+    "region": "Obala",
+    "specialites": "Ingénierie en hydraulique agricole"
+  },
+  {
+    "category": "enseignement",
+    "id": "23",
+    "noms": "Centre de formation professionnel des métiers de l'eau et de l'environnement (CEFOPMEE)",
+    "ville": "MINEFOP",
+    "region": "Douala",
+    "specialites": "Techniques Eau, assainissement, environnement"
+  },
+  {
+    "category": "entreprises",
+    "id": "1",
+    "noms": "AGRIDEV SARL",
+    "ville": "Baham",
+    "region": "Ouest",
+    "specialites": "Conseil et production agricole"
+  },
+  {
+    "category": "entreprises",
+    "id": "2",
+    "noms": "AGROMAC",
+    "ville": "Bafoussam",
+    "region": "Ouest",
+    "specialites": "Fourniture d'équipement et matériel agricole"
+  },
+  {
+    "category": "entreprises",
+    "id": "3",
+    "noms": "Aigle industrie service",
+    "ville": "Ngaoundéré",
+    "region": "Adamaoua",
+    "specialites": "Forage d'eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "4",
+    "noms": "AIR FORAGE",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage, captage, puit moderne, vente des matériaux"
+  },
+  {
+    "category": "entreprises",
+    "id": "5",
+    "noms": "ARESCAM",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage, stockage, unité de traitement, puits, mini adduction, Système de pompage, transport des eaux et de distribution, electrochloration"
+  },
+  {
+    "category": "entreprises",
+    "id": "6",
+    "noms": "Aspac cemac",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "7",
+    "noms": "ASPAC International Cameroun",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Conception et construction des systèmes d'Approvisionnement en Eau Potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "8",
+    "noms": "Assist Plus",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "Installation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "9",
+    "noms": "Aura Cameroun",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Traitement et distribution de l’eau de boisson"
+  },
+  {
+    "category": "entreprises",
+    "id": "10",
+    "noms": "BET GENEX SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau potable en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "11",
+    "noms": "BETA CONSULT",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes techniques, socio-économiques et environnementales, Approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "12",
+    "noms": "BETA Engineering Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, irrigation, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "13",
+    "noms": "BIHG ENGINEERING GROUP SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "14",
+    "noms": "BioWater Sarl",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Potabilisation domestique de l'eau, Monitoring de la qualité de l'eau, forage, biofiltre"
+  },
+  {
+    "category": "entreprises",
+    "id": "15",
+    "noms": "BUNS SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Drainage routier, constructions routière"
+  },
+  {
+    "category": "entreprises",
+    "id": "16",
+    "noms": "Camfor",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Réalisation des forages, installation des pompes, géothermie"
+  },
+  {
+    "category": "entreprises",
+    "id": "17",
+    "noms": "CAMWATER",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "18",
+    "noms": "Carmeroon Development corporation (CDC)",
+    "ville": "Ekondo Titi",
+    "region": "Sud-Ouest",
+    "specialites": "Production irriguée de la banane verte et de l'hévéa"
+  },
+  {
+    "category": "entreprises",
+    "id": "19",
+    "noms": "Centre Pasteur du Cameroun",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Analyse de la qualité de l'eau, contrôles de conformité des boissons, technologie de traitement de l'eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "20",
+    "noms": "COMPETING-BET",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "études divers, Approvisionnement en Eau Potable, Aménagement des points d'eau, réseaux autonomes, Forages et puits, contrôle des pollutions"
+  },
+  {
+    "category": "entreprises",
+    "id": "21",
+    "noms": "DESALYTICS CAMEROUN",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Analyse de la qualité des eaux, traitement industriel des eaux"
+  },
+  {
+    "category": "entreprises",
+    "id": "22",
+    "noms": "EASY WATER EVOLUTION Cameroon",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Forage, Approvisionnement en Eau Potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "23",
+    "noms": "ECTA BTP Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Adduction d'eau potable, hydraulique villageoise"
+  },
+  {
+    "category": "entreprises",
+    "id": "24",
+    "noms": "EED SARL (Etudes Engineering Développement)",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Energie, eau potable et assainissement"
+  },
+  {
+    "category": "entreprises",
+    "id": "25",
+    "noms": "EGIS CAMEROUN",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Approvisionnement en Eau Potable, puits, forages, stations de pompage"
+  },
+  {
+    "category": "entreprises",
+    "id": "26",
+    "noms": "Electricity Development Corporation",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "hydro-électricité, gestion des barrages"
+  },
+  {
+    "category": "entreprises",
+    "id": "27",
+    "noms": "Entreprise Générale de Construction et Services (EGCS)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage, réseaux d'approvisionnement en eau potable, constructions de génie civil"
+  },
+  {
+    "category": "entreprises",
+    "id": "28",
+    "noms": "Entretien Plus",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "Installation de systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "29",
+    "noms": "ERA CAMEROUN",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Ouvrages d'assainissement des eaux usées, assainissementt individuel et collectif, approvisionnement en eau potable, ingénierie sociale"
+  },
+  {
+    "category": "entreprises",
+    "id": "30",
+    "noms": "Ets General Technics",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Installation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "31",
+    "noms": "Ets ALTHY BTP",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Hydraulique rurale, routière et assainissement"
+  },
+  {
+    "category": "entreprises",
+    "id": "32",
+    "noms": "Ets BFA",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "33",
+    "noms": "Ets Bio solution",
+    "ville": "Bafoussam",
+    "region": "Ouest",
+    "specialites": "études et réalisation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "34",
+    "noms": "Ets BOOGY",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Installation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "35",
+    "noms": "Ets Electro 4",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Electronique embarqué, forage d'eau et solutions hydrauliques"
+  },
+  {
+    "category": "entreprises",
+    "id": "36",
+    "noms": "Ets Free Irrigation",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Fourniture d'équipement et matériel d'irrigation - Etudes et installation"
+  },
+  {
+    "category": "entreprises",
+    "id": "37",
+    "noms": "ETS Futurex Group",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "38",
+    "noms": "Ets groupe welfare channel",
+    "ville": "Bertoua",
+    "region": "Est",
+    "specialites": "approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "39",
+    "noms": "Ets Kouayos et Fils",
+    "ville": "Ebolowa",
+    "region": "Sud",
+    "specialites": "études et réalisation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "40",
+    "noms": "ETS Pure Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "41",
+    "noms": "ETS RAMSES",
+    "ville": "Maroua",
+    "region": "Extrême Nord",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "42",
+    "noms": "Ets Rural engineering",
+    "ville": "Dschang",
+    "region": "Ouest",
+    "specialites": "études et réalisation des systèmes d'irrigationn infrastructures rurales"
+  },
+  {
+    "category": "entreprises",
+    "id": "43",
+    "noms": "Ets SOLAR HYDRAULIC",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "44",
+    "noms": "Five Engineering CM sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Ouvrages et équipements hydrauliques  et environnement"
+  },
+  {
+    "category": "entreprises",
+    "id": "45",
+    "noms": "FORAX",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Hydraulique, forage d'eau, Adduction d'eau."
+  },
+  {
+    "category": "entreprises",
+    "id": "46",
+    "noms": "FUDECO",
+    "ville": "Njombé",
+    "region": "Littoral",
+    "specialites": "études et réalisation des systèmes d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "47",
+    "noms": "GEOBASE Sarl",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Puit, Forages, Adduction d'eau, puits moderne"
+  },
+  {
+    "category": "entreprises",
+    "id": "48",
+    "noms": "GEOFOR",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Forages, Puits, Adductions et distributions d'eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "49",
+    "noms": "Geosol Sahel Solution",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Forages, adduction d'eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "50",
+    "noms": "GEST CORPORATION SARL",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Géologie - Hydrogéologie, approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "51",
+    "noms": "Global corporation",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "52",
+    "noms": "GN forage",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "entreprises",
+    "id": "53",
+    "noms": "Green Connexion",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Ingénierie environnementales"
+  },
+  {
+    "category": "entreprises",
+    "id": "54",
+    "noms": "Groupement Ets Global Invest Cameroun",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "55",
+    "noms": "HADENEU ENGINEERING SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "56",
+    "noms": "Hévéa du Cameroun (HEVCAM)",
+    "ville": "Niété",
+    "region": "Sud",
+    "specialites": "Production irriguée d'hévéa (pépinière)"
+  },
+  {
+    "category": "entreprises",
+    "id": "57",
+    "noms": "HYDRAC SA (Hydrocarbures Analyses Contrôles)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Analyse des eaux usées et industrielles"
+  },
+  {
+    "category": "entreprises",
+    "id": "58",
+    "noms": "HYDRAS Engineers",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Hydraulique villageoise,"
+  },
+  {
+    "category": "entreprises",
+    "id": "59",
+    "noms": "Hydrocamer Sarl",
+    "ville": "DSCHANG",
+    "region": "Ouest",
+    "specialites": "Installation des pompes solaire, Forages, puits,"
+  },
+  {
+    "category": "entreprises",
+    "id": "60",
+    "noms": "Hydro-Mekin",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "hydro-électricité, gestion des barrages"
+  },
+  {
+    "category": "entreprises",
+    "id": "61",
+    "noms": "Hydyam forages sarl",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage d'eau, approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "62",
+    "noms": "Integc Sarl",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, puits modernes, château d'eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "63",
+    "noms": "JACO SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Fournisseur d'équipement et matériel agricole et hydraulique"
+  },
+  {
+    "category": "entreprises",
+    "id": "64",
+    "noms": "KEMTO",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "FORAGE, puits, approvisionnement en eau potable, ouvrages de génie-civil"
+  },
+  {
+    "category": "entreprises",
+    "id": "65",
+    "noms": "King Service SARL (BP 5138)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage"
+  },
+  {
+    "category": "entreprises",
+    "id": "66",
+    "noms": "LE PLOMBIER SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Fournisseur d'équipement et matériel hydraulique et de plomberie"
+  },
+  {
+    "category": "entreprises",
+    "id": "67",
+    "noms": "Leauclean",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Analyse de la qualité des eaux de boissons et eaux courantes"
+  },
+  {
+    "category": "entreprises",
+    "id": "68",
+    "noms": "MCI (Mot-Confort-Inter-SARL)",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage, Adduction"
+  },
+  {
+    "category": "entreprises",
+    "id": "69",
+    "noms": "METRIZ Ingénierie",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, captages, puits aménagés, système de potabilisation."
+  },
+  {
+    "category": "entreprises",
+    "id": "70",
+    "noms": "MULTI TRAVAUX ET SERVICE CAMEROUN (MTS-CAM)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d'eau et puits"
+  },
+  {
+    "category": "entreprises",
+    "id": "71",
+    "noms": "Ndevta Dangola Chotai",
+    "ville": "Mokolo",
+    "region": "Extrême Nord",
+    "specialites": "Etudes et réalisation, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "72",
+    "noms": "Njanka Construction",
+    "ville": "Mankon",
+    "region": "Nord-Ouest",
+    "specialites": "Forage d'eau potable, approvisionnement en eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "73",
+    "noms": "Padji Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Fourniture d'équipement et matériel d'irrigation - Etudes et installation"
+  },
+  {
+    "category": "entreprises",
+    "id": "74",
+    "noms": "Paléo Logos",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Analyse des eaux usées, adduction d'eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "75",
+    "noms": "Pfleiffer",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "76",
+    "noms": "Plantations du Haut Penja (PHP)",
+    "ville": "Penja",
+    "region": "Littoral",
+    "specialites": "Irrigation de la banane verte"
+  },
+  {
+    "category": "entreprises",
+    "id": "77",
+    "noms": "PRICA CAMEROUN",
+    "ville": "Garoua",
+    "region": "Nord",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "78",
+    "noms": "Pure Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "entreprises",
+    "id": "79",
+    "noms": "Pyramide inter",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, Adduction d'eau potable, Aménagement des digues et points d'eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "80",
+    "noms": "RHE-C SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d'eau, adduction, traitement de l'eau, hydrogéologie"
+  },
+  {
+    "category": "entreprises",
+    "id": "81",
+    "noms": "Rt water solution",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, puits, Adduction d'eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "82",
+    "noms": "SAFEGE",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forages, puits, AEP"
+  },
+  {
+    "category": "entreprises",
+    "id": "83",
+    "noms": "Sahel water sanitation and Environment",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "84",
+    "noms": "SANITATION AND WATER FOR ALL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau et assainissement"
+  },
+  {
+    "category": "entreprises",
+    "id": "85",
+    "noms": "SCEM SA",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "86",
+    "noms": "SCR ENGINEERING",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Approvisionnement en eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "87",
+    "noms": "SEMAGRI SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Fourniture d'équipement et matériel d'irrigation"
+  },
+  {
+    "category": "entreprises",
+    "id": "88",
+    "noms": "Ste NERF Services Cameroun",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Travaux hydrauliques et routiers"
+  },
+  {
+    "category": "entreprises",
+    "id": "89",
+    "noms": "SIX INTERNATIONNAL",
+    "ville": "DOUALA",
+    "region": "Littoral",
+    "specialites": "Construction des châteaux d'eau, forage."
+  },
+  {
+    "category": "entreprises",
+    "id": "90",
+    "noms": "Smactel Engineering SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "91",
+    "noms": "Smart water engineering",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes et réalisation, Forages, Adductions d’eau potable"
+  },
+  {
+    "category": "entreprises",
+    "id": "92",
+    "noms": "Société Anonyme des Brasseries du Cameroun (SABC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Production et distribution de boissons gazeuses et alcoolisées"
+  },
+  {
+    "category": "entreprises",
+    "id": "93",
+    "noms": "Société d'Expansion et de Modernisation de la Riziculture (SEMRY)",
+    "ville": "Yagoua",
+    "region": "Extrême Nord",
+    "specialites": "Production irriguée de riz paddy"
+  },
+  {
+    "category": "entreprises",
+    "id": "94",
+    "noms": "Soft Mining Engineering Group (SMEG)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Travaux hydrauliques et routiers"
+  },
+  {
+    "category": "entreprises",
+    "id": "95",
+    "noms": "SOGEFTIONOR CORPORETION Sarl",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Sondage géophysique et implantation forage"
+  },
+  {
+    "category": "entreprises",
+    "id": "96",
+    "noms": "SOIL AND WATER Investigation S. A",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Forage d’eau potable, Puits"
+  },
+  {
+    "category": "entreprises",
+    "id": "97",
+    "noms": "SOL SOLUTION AFRIQUE CENTRALE (SSAC)",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Forage d'eau"
+  },
+  {
+    "category": "entreprises",
+    "id": "98",
+    "noms": "Solutions Eau, Environnement et Services",
+    "ville": "Douala,",
+    "region": "Littoral",
+    "specialites": "Analyses des eaux de forages et eaux de chaudière ; Traitement des eaux"
+  },
+  {
+    "category": "entreprises",
+    "id": "99",
+    "noms": "SOPREC",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Etudes, réalisation et gestion des systèmes d'épuration des eaux usées"
+  },
+  {
+    "category": "entreprises",
+    "id": "100",
+    "noms": "SOPROCIT SARL",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Approvisionnement en eau en milieu rural"
+  },
+  {
+    "category": "entreprises",
+    "id": "101",
+    "noms": "Société sucrière du cameroun (SOSUCAM)",
+    "ville": "Nkoteng",
+    "region": "Centre",
+    "specialites": "Irrigation de la canne à sucre et gestion de bassin versant"
+  },
+  {
+    "category": "entreprises",
+    "id": "102",
+    "noms": "SOURCES DU PAYS",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Production et distribution d'eau de boisson"
+  },
+  {
+    "category": "entreprises",
+    "id": "103",
+    "noms": "SUD CAMEROUN HEVEA S.A",
+    "ville": "Meyomessala",
+    "region": "Sud",
+    "specialites": "Production irriguée d'hévéa (pépinière)"
+  },
+  {
+    "category": "entreprises",
+    "id": "104",
+    "noms": "Sunstream Irrigation",
+    "ville": "Yaoundé",
+    "region": "Centre",
+    "specialites": "Fourniture d'équipement et matériel d'irrigation - Etudes et installation"
+  },
+  {
+    "category": "entreprises",
+    "id": "105",
+    "noms": "Tockem",
+    "ville": "Dschang",
+    "region": "Ouest",
+    "specialites": "Gestion des déchets, développement local"
+  },
+  {
+    "category": "entreprises",
+    "id": "106",
+    "noms": "Underground water",
+    "ville": "Douala",
+    "region": "Littoral",
+    "specialites": "Hydraulique, forage d'eau, adduction d'eau et Voiries et réseaux divers"
+  },
+  {
+    "category": "entreprises",
+    "id": "107",
+    "noms": "Upper Noun Valley Development Authority (UNVDA)",
+    "ville": "Ndop",
+    "region": "Nord-Ouest",
+    "specialites": "Production irriguée de riz"
+  },
+  {
+    "category": "entreprises",
+    "id": "108",
+    "noms": "VEOLIA",
+    "ville": "YAOUNDE",
+    "region": "Centre",
+    "specialites": "Construction des stations de pompages, des réservoirs de distribution, production d'eau potable"
+  }
 ]

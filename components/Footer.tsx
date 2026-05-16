@@ -27,8 +27,8 @@ export default function Footer({ locale = 'fr' }: { locale?: string }) {
               <p>..</p>
               <p>Yaounndé, Cameroun</p>
               <div className="mt-2 flex gap-2">
-                <Link href="#" className="hover:text-[#34b4e2] transition-colors">Contact</Link> | 
-                <Link href="#" className="hover:text-[#34b4e2] transition-colors">Careers</Link>
+                <Link href={`/${locale}/contact`} className="hover:text-[#34b4e2] transition-colors">Contact</Link> | 
+                <Link href={`/${locale}/login`} className="hover:text-[#34b4e2] transition-colors">Careers</Link>
               </div>
             </div>
           </div>

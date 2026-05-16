@@ -1,46 +1,72 @@
-
-import re
+import requests
+from bs4 import BeautifulSoup
 import json
 
-sql_file = r"c:\Users\COMPUTER STORES\Downloads\projets ia\Sites wellborne\expertiseaucameroun\u703004442_FABRICE.expertiseaucameroun-org.20260416123448.sql\u703004442_FABRICE.sql"
+urls = {
+    'transfrontaliere': 'https://www.expertiseaucameroun.org/institution-transfrontaliere',
+    'ongs': 'https://www.expertiseaucameroun.org/ongs-et-oscs-2',
+    'appui': 'https://www.expertiseaucameroun.org/education-et-recherche',
+    'bureaux': 'https://www.expertiseaucameroun.org/acteur-publics',
+    'enseignement': 'https://www.expertiseaucameroun.org/entreprises',
+    'entreprises': 'https://www.expertiseaucameroun.org/acteur-dappui-au-developpement'
+}
 
-def extract_tables():
-    tables = {}
-    with open(sql_file, 'r', encoding='utf-8', errors='ignore') as f:
-        content = f.read()
-        
-        # Look for tablepress_table post types
-        # Rows: (ID, author, date, date_gmt, content, title, ...)
-        # The content is JSON
-        pattern = re.compile(r"\((\d+),.*?'(.*?)','(.*?)','(.*?)','publish',.*?'tablepress_table',.*?\)", re.DOTALL)
-        matches = pattern.findall(content)
-        
-        for post_id, author_id, date1, date2, row in matches:
-            # The content might be very long. Let's find title and JSON
-            # In the matches above, group 2 should be the content (JSON)
-            # Actually findstr output showed title is 'Entreprises du secteur de l’eau au Cameroun'
-            # Let's try to find title in the row
-            title_match = re.search(r"','(.*?)','(.*?)','publish'", row)
-            if title_match:
-                title = title_match.group(1)
-                # The JSON is at the beginning of the row content
-                # We need to unescape SQL strings (roughly)
-                json_content = row.split("','")[0].replace("\\'", "'").replace('\\"', '"')
-                try:
-                    data = json.loads(json_content)
-                    tables[title] = data
-                except:
-                    # Try to clean it further if needed
-                    pass
-    return tables
+data = []
 
-if __name__ == "__main__":
-    results = extract_tables()
-    # Save each table to a JSON file
-    import os
-    os.makedirs('data/institutions', exist_ok=True)
-    for title, data in results.items():
-        safe_title = "".join([c if c.isalnum() else "_" for c in title])
-        with open(f'data/institutions/{safe_title}.json', 'w', encoding='utf-8') as f:
-            json.dump(data, f, indent=2, ensure_ascii=False)
-        print(f"Extracted: {title} ({len(data)} rows)")
+for category, url in urls.items():
+    print(f"Fetching {url}...")
+    try:
+        response = requests.get(url, verify=False)
+        response.raise_for_status()
+        soup = BeautifulSoup(response.text, 'html.parser')
+        
+        tables = soup.find_all('table')
+        if not tables:
+            print(f"No tables found for {category}")
+            continue
+            
+        table = tables[0]
+        headers = [th.text.strip() for th in table.find_all('th')]
+        
+        for row in table.find_all('tr'):
+            cells = row.find_all('td')
+            if not cells:
+                continue
+                
+            row_data = {}
+            row_data['category'] = category
+            
+            # Map columns based on category
+            if category == 'ongs':
+                # N°, Noms, Ville, Région
+                if len(cells) >= 4:
+                    row_data['id'] = cells[0].text.strip()
+                    row_data['noms'] = cells[1].text.strip()
+                    row_data['ville'] = cells[2].text.strip()
+                    row_data['region'] = cells[3].text.strip()
+            else:
+                # N°, Noms, Ville, Région, Spécialités
+                if len(cells) >= 5:
+                    row_data['id'] = cells[0].text.strip()
+                    row_data['noms'] = cells[1].text.strip()
+                    row_data['ville'] = cells[2].text.strip()
+                    row_data['region'] = cells[3].text.strip()
+                    row_data['specialites'] = cells[4].text.strip()
+            
+            if 'id' in row_data and row_data['id']:
+                data.append(row_data)
+                
+    except Exception as e:
+        print(f"Error scraping {category}: {e}")
+
+# Read existing data
+with open('../data/institutions.json', 'r', encoding='utf-8') as f:
+    existing_data = json.load(f)
+
+# Combine and save
+existing_data.extend(data)
+
+with open('../data/institutions.json', 'w', encoding='utf-8') as f:
+    json.dump(existing_data, f, ensure_ascii=False, indent=2)
+
+print("Scraping completed. institutions.json updated.")
