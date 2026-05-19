@@ -13,22 +13,28 @@ export const TestimonialsSection = ({ locale }: TestimonialsSectionProps) => {
 
   const testimonials = [
     {
-      name: "Calliope Grey",
-      role: "Practising for 6 months",
-      text: "Fusce nec tellus sed augue semper porta mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh.",
-      image: "https://yoga.oceanwp.org/wp-content/uploads/2016/09/testimonial-1.jpg"
+      name: "Dr. Emmanuel Noumsi",
+      role: isFR ? "Hydrogéologue, Expert AEP - Yaoundé" : "Hydrogeologist, Water Supply Expert - Yaounde",
+      text: isFR 
+        ? "Le Réseau National est un outil de collaboration exceptionnel. Il permet de mutualiser nos expertises pour répondre efficacement aux défis complexes de l'accès à l'eau potable au Cameroun."
+        : "The National Network is an exceptional collaboration tool. It allows us to pool our expertise to effectively respond to the complex challenges of access to clean drinking water in Cameroon.",
+      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150&h=150&fit=crop&crop=face"
     },
     {
-      name: "Hector Aldo",
-      role: "Practising for 2 months",
-      text: "Fusce nec tellus sed augue semper porta mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh.",
-      image: "https://yoga.oceanwp.org/wp-content/uploads/2016/09/testimonial-2.jpg"
+      name: "Ing. Carine Bella",
+      role: isFR ? "Spécialiste Assainissement & GIRE - Douala" : "Sanitation & IWRM Specialist - Douala",
+      text: isFR 
+        ? "Grâce à cette plateforme, nous pouvons enfin connecter les bureaux d'études, les institutions et les experts indépendants. C'est un grand pas en avant pour la gouvernance des ressources aquatiques."
+        : "Thanks to this platform, we can finally connect consulting firms, institutions, and independent experts. This is a major step forward for aquatic resource governance.",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150&h=150&fit=crop&crop=face"
     },
     {
-      name: "Silvia Cruz",
-      role: "Practising for 4 months",
-      text: "Fusce nec tellus sed augue semper porta mauris ipsum. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh.",
-      image: "https://yoga.oceanwp.org/wp-content/uploads/2016/09/testimonial-3.jpg"
+      name: "Prof. Jean-Pierre Mvondo",
+      role: isFR ? "Chercheur en Hydrologie, Université de Dschang" : "Hydrology Researcher, University of Dschang",
+      text: isFR 
+        ? "La recherche appliquée trouve ici un pont direct vers les acteurs opérationnels du secteur de l'eau. Une excellente initiative pour encourager l'innovation et le partage des connaissances."
+        : "Applied research finds a direct bridge to operational actors in the water sector here. An excellent initiative to encourage innovation and knowledge sharing.",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face"
     }
   ];
 
