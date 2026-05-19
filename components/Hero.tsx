@@ -56,7 +56,7 @@ export const Hero = ({ locale }: HeroProps) => {
       </div>
 
       <div className="container relative z-30 mx-auto px-4">
-        <div className="max-w-4xl">
+        <div className="max-w-4xl mx-auto text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
@@ -64,18 +64,18 @@ export const Hero = ({ locale }: HeroProps) => {
           >
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-md">
               {isFR ? "“Les experts de l'eau," : "“Water experts,"} <br />
-              <span className="text-[#84c340] drop-shadow-sm">
+              <span className="text-white drop-shadow-sm">
                 {isFR ? "partageons et mutualisons nos compétences!”" : "let's share and pool our skills!”"}
               </span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-white/95 mb-10 max-w-2xl font-light drop-shadow-sm">
+            <p className="text-xl md:text-2xl text-white/95 mb-10 max-w-2xl mx-auto font-light drop-shadow-sm">
               {isFR 
                 ? "Le Réseau National des Experts Eaux au Cameroun. Unissant les compétences pour un avenir durable."
                 : "The National Network of Water Experts in Cameroon. Uniting skills for a sustainable future."}
             </p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-wrap justify-center gap-4">
               <motion.div
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
