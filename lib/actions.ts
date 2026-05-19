@@ -51,15 +51,30 @@ export async function getApprovedExperts() {
           .order('name', { ascending: true });
         
         if (error || !data || data.length === 0) {
-            // Fallback to local API
-            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
-            if (res.ok) return await res.json();
+            if (typeof window === 'undefined') {
+                const fs = require('fs');
+                const path = require('path');
+                const filePath = path.join(process.cwd(), 'data', 'members.json');
+                const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+                return experts.filter((m: any) => m.name && m.status === 'approved');
+            } else {
+                const res = await fetch('/api/experts');
+                if (res.ok) return await res.json();
+            }
             return [];
         }
         return data;
     } catch (e) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
-        if (res.ok) return await res.json();
+        if (typeof window === 'undefined') {
+            const fs = require('fs');
+            const path = require('path');
+            const filePath = path.join(process.cwd(), 'data', 'members.json');
+            const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            return experts.filter((m: any) => m.name && m.status === 'approved');
+        } else {
+            const res = await fetch('/api/experts');
+            if (res.ok) return await res.json();
+        }
         return [];
     }
 }
@@ -73,20 +88,35 @@ export async function getExpertById(id: string) {
           .single();
         
         if (error || !data) {
-            // Fallback
-            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
-            if (res.ok) {
-                const experts = await res.json();
+            if (typeof window === 'undefined') {
+                const fs = require('fs');
+                const path = require('path');
+                const filePath = path.join(process.cwd(), 'data', 'members.json');
+                const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
                 return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+            } else {
+                const res = await fetch('/api/experts');
+                if (res.ok) {
+                    const experts = await res.json();
+                    return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+                }
             }
             return null;
         }
         return data;
     } catch (e) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
-        if (res.ok) {
-            const experts = await res.json();
+        if (typeof window === 'undefined') {
+            const fs = require('fs');
+            const path = require('path');
+            const filePath = path.join(process.cwd(), 'data', 'members.json');
+            const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+        } else {
+            const res = await fetch('/api/experts');
+            if (res.ok) {
+                const experts = await res.json();
+                return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+            }
         }
         return null;
     }
@@ -100,14 +130,28 @@ export async function getInstitutions() {
           .order('nom', { ascending: true });
         
         if (error || !data || data.length === 0) {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
-            if (res.ok) return await res.json();
+            if (typeof window === 'undefined') {
+                const fs = require('fs');
+                const path = require('path');
+                const filePath = path.join(process.cwd(), 'data', 'institutions.json');
+                return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            } else {
+                const res = await fetch('/api/institutions');
+                if (res.ok) return await res.json();
+            }
             return [];
         }
         return data;
     } catch (e) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
-        if (res.ok) return await res.json();
+        if (typeof window === 'undefined') {
+            const fs = require('fs');
+            const path = require('path');
+            const filePath = path.join(process.cwd(), 'data', 'institutions.json');
+            return JSON.parse(fs.readFileSync(filePath, 'utf8'));
+        } else {
+            const res = await fetch('/api/institutions');
+            if (res.ok) return await res.json();
+        }
         return [];
     }
 }
@@ -121,19 +165,35 @@ export async function getInstitutionById(id: string) {
           .single();
         
         if (error || !data) {
-            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
-            if (res.ok) {
-                const insts = await res.json();
+            if (typeof window === 'undefined') {
+                const fs = require('fs');
+                const path = require('path');
+                const filePath = path.join(process.cwd(), 'data', 'institutions.json');
+                const insts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
                 return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+            } else {
+                const res = await fetch('/api/institutions');
+                if (res.ok) {
+                    const insts = await res.json();
+                    return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+                }
             }
             return null;
         }
         return data;
     } catch (e) {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
-        if (res.ok) {
-            const insts = await res.json();
+        if (typeof window === 'undefined') {
+            const fs = require('fs');
+            const path = require('path');
+            const filePath = path.join(process.cwd(), 'data', 'institutions.json');
+            const insts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
             return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+        } else {
+            const res = await fetch('/api/institutions');
+            if (res.ok) {
+                const insts = await res.json();
+                return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+            }
         }
         return null;
     }
