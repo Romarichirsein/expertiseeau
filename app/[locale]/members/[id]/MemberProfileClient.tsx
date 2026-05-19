@@ -97,9 +97,11 @@ export default function MemberProfileClient({
     setLoading(true);
     const res = await updateExpert(member.id, formData);
     if (res.success) {
+      alert(isFR ? 'Profil mis à jour avec succès !' : 'Profile updated successfully!');
       router.refresh();
       setIsEditing(false);
     } else {
+      alert(isFR ? `Échec de la mise à jour: ${res.error}` : `Update failed: ${res.error}`);
       console.error('Update failed:', res.error);
     }
     setLoading(false);

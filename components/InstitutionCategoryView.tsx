@@ -45,7 +45,7 @@ export function InstitutionCategoryView({ locale, categoryId, title, titleEn }: 
     const fetchInstitutions = async () => {
       setLoading(true);
       try {
-        const response = await fetch(`/api/institutions?category=${categoryId}`);
+        const response = await fetch(`/${locale}/api/institutions?category=${categoryId}`);
         if (!response.ok) throw new Error('Failed to fetch');
         const data = await response.json();
         setInstitutions(data);
@@ -56,7 +56,7 @@ export function InstitutionCategoryView({ locale, categoryId, title, titleEn }: 
       }
     };
     fetchInstitutions();
-  }, [categoryId]);
+  }, [categoryId, locale]);
 
   const filteredInstitutions = useMemo(() => {
     if (!search.trim()) return institutions;
@@ -85,6 +85,7 @@ export function InstitutionCategoryView({ locale, categoryId, title, titleEn }: 
       case 'bureaux':
       case 'enseignement':
       case 'entreprises':
+      case 'transfrontaliere':
         return (
           <tr>
             <th className="px-6 py-4 text-left text-sm font-black uppercase tracking-wider">N°</th>

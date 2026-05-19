@@ -43,59 +43,102 @@ export async function registerExpert(data: ExpertFormData) {
 }
 
 export async function getApprovedExperts() {
-    const { data, error } = await supabase
-      .from('experts')
-      .select('*')
-      .eq('status', 'approved')
-      .order('name', { ascending: true });
-    
-    if (error) {
-      console.error('Fetch error:', error.message);
-      return [];
+    try {
+        const { data, error } = await supabase
+          .from('experts')
+          .select('*')
+          .eq('status', 'approved')
+          .order('name', { ascending: true });
+        
+        if (error || !data || data.length === 0) {
+            // Fallback to local API
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
+            if (res.ok) return await res.json();
+            return [];
+        }
+        return data;
+    } catch (e) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
+        if (res.ok) return await res.json();
+        return [];
     }
-    return data;
 }
 
 export async function getExpertById(id: string) {
-    const { data, error } = await supabase
-      .from('experts')
-      .select('*')
-      .eq('id', id)
-      .single();
-    
-    if (error) {
-      console.error('Fetch error:', error.message);
-      return null;
+    try {
+        const { data, error } = await supabase
+          .from('experts')
+          .select('*')
+          .eq('id', id)
+          .single();
+        
+        if (error || !data) {
+            // Fallback
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
+            if (res.ok) {
+                const experts = await res.json();
+                return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+            }
+            return null;
+        }
+        return data;
+    } catch (e) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts`);
+        if (res.ok) {
+            const experts = await res.json();
+            return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+        }
+        return null;
     }
-    return data;
 }
 
 export async function getInstitutions() {
-    const { data, error } = await supabase
-      .from('institutions')
-      .select('*')
-      .order('nom', { ascending: true });
-    
-    if (error) {
-      console.error('Fetch institutions error:', error.message);
-      return [];
+    try {
+        const { data, error } = await supabase
+          .from('institutions')
+          .select('*')
+          .order('nom', { ascending: true });
+        
+        if (error || !data || data.length === 0) {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
+            if (res.ok) return await res.json();
+            return [];
+        }
+        return data;
+    } catch (e) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
+        if (res.ok) return await res.json();
+        return [];
     }
-    return data;
 }
 
 export async function getInstitutionById(id: string) {
-    const { data, error } = await supabase
-      .from('institutions')
-      .select('*')
-      .eq('id', id)
-      .single();
-    
-    if (error) {
-      console.error('Fetch institution error:', error.message);
-      return null;
+    try {
+        const { data, error } = await supabase
+          .from('institutions')
+          .select('*')
+          .eq('id', id)
+          .single();
+        
+        if (error || !data) {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
+            if (res.ok) {
+                const insts = await res.json();
+                return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+            }
+            return null;
+        }
+        return data;
+    } catch (e) {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/institutions`);
+        if (res.ok) {
+            const insts = await res.json();
+            return insts.find((i: any) => i.id.toString() === id.toString()) || null;
+        }
+        return null;
     }
-    return data;
 }
+
 export async function updateExpert(id: string, data: any) {
     try {
         const { error } = await supabase
@@ -106,7 +149,18 @@ export async function updateExpert(id: string, data: any) {
         if (error) throw error;
         return { success: true };
     } catch (error: any) {
-        console.error('Update error:', error.message);
-        return { success: false, error: error.message };
+        console.error('Update error, trying local fallback:', error.message);
+        try {
+            const res = await fetch(`${process.env.NEXT_PUBLIC_APP_URL || ''}/api/experts/${id}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+            if (res.ok) return { success: true, message: 'Saved locally (fallback)' };
+            return { success: false, error: 'Local update failed' };
+        } catch (localError: any) {
+            return { success: false, error: localError.message };
+        }
     }
 }
+
