@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import { Search, MapPin, Award, User, Filter, ChevronLeft, ChevronRight, Mail, Phone, Briefcase } from 'lucide-react';
 import { PageHeader } from '@/components/PageHeader';
 import { motion, AnimatePresence } from 'framer-motion';
+import Link from 'next/link';
 
 interface Member {
   id: string;
@@ -239,9 +240,12 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                         )}
                       </div>
 
-                      <button className="w-full mt-6 bg-[#292929] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#34b4e2] transform hover:-translate-y-1 transition-all shadow-md">
+                      <Link 
+                        href={`/${locale}/members/${member.id}`}
+                        className="w-full block text-center mt-6 bg-[#292929] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#34b4e2] transform hover:-translate-y-1 transition-all shadow-md"
+                      >
                         {isFR ? 'Voir le Profil' : 'View Profile'}
-                      </button>
+                      </Link>
                     </div>
                   </motion.div>
                 ))}
