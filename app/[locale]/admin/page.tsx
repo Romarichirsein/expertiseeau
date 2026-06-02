@@ -16,12 +16,15 @@ import {
   ChevronRight,
   Briefcase,
   AlertCircle,
-  Inbox
+  Inbox,
+  Users
 } from 'lucide-react';
 import { getPendingExperts, updateExpertStatus } from '@/lib/actions/admin';
+import MemberDirectory from '@/components/admin/MemberDirectory';
 
 export default function AdminPage({ params }: { params: Promise<{ locale: string }> }) {
   const [pendingExperts, setPendingExperts] = useState<any[]>([]);
+  const [activeTab, setActiveTab] = useState<'moderation' | 'directory'>('moderation');
   const [loading, setLoading] = useState(true);
   const [actionLoading, setActionLoading] = useState<string | null>(null);
   const resolvedParams = React.use(params);
@@ -94,128 +97,171 @@ export default function AdminPage({ params }: { params: Promise<{ locale: string
 
         <div className="section-divider" />
 
+        {/* ==================== TABS SYSTEM ==================== */}
+        <div className="flex items-center gap-8 border-b border-slate-100 dark:border-white/5 pb-6">
+          <button
+            onClick={() => setActiveTab('moderation')}
+            className={`relative pb-4 font-black text-xs uppercase tracking-[0.25em] flex items-center gap-3 transition-colors ${
+              activeTab === 'moderation' 
+                ? 'text-primary' 
+                : 'text-slate-400 hover:text-secondary dark:hover:text-white'
+            }`}
+          >
+            <Clock size={16} />
+            {isFR ? 'File de Modération' : 'Moderation Queue'}
+            {activeTab === 'moderation' && (
+              <motion.div 
+                layoutId="activeTabUnderline"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+              />
+            )}
+          </button>
+          
+          <button
+            onClick={() => setActiveTab('directory')}
+            className={`relative pb-4 font-black text-xs uppercase tracking-[0.25em] flex items-center gap-3 transition-colors ${
+              activeTab === 'directory' 
+                ? 'text-primary' 
+                : 'text-slate-400 hover:text-secondary dark:hover:text-white'
+            }`}
+          >
+            <Users size={16} />
+            {isFR ? 'Annuaire des Membres' : 'Member Directory'}
+            {activeTab === 'directory' && (
+              <motion.div 
+                layoutId="activeTabUnderline"
+                className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary rounded-full"
+              />
+            )}
+          </button>
+        </div>
+
         {/* ==================== CONTENT AREA ==================== */}
-        {loading ? (
-          <div className="flex flex-col items-center justify-center py-40 space-y-10 bg-slate-50/50 dark:bg-white/5 rounded-[4rem] border border-slate-100 dark:border-white/5 shadow-inner">
-            <div className="relative">
-              <div className="w-24 h-24 border-4 border-slate-200 dark:border-white/5 rounded-full" />
-              <Loader2 className="w-24 h-24 animate-spin text-primary absolute top-0 left-0" strokeWidth={1.5} />
+        {activeTab === 'moderation' ? (
+          loading ? (
+            <div className="flex flex-col items-center justify-center py-40 space-y-10 bg-slate-50/50 dark:bg-white/5 rounded-[4rem] border border-slate-100 dark:border-white/5 shadow-inner">
+              <div className="relative">
+                <div className="w-24 h-24 border-4 border-slate-200 dark:border-white/5 rounded-full" />
+                <Loader2 className="w-24 h-24 animate-spin text-primary absolute top-0 left-0" strokeWidth={1.5} />
+              </div>
+              <p className="text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.4em] text-[11px]">{isFR ? 'Synchronisation du répertoire...' : 'Synchronizing directory...'}</p>
             </div>
-            <p className="text-slate-400 dark:text-slate-500 font-black uppercase tracking-[0.4em] text-[11px]">{isFR ? 'Synchronisation du répertoire...' : 'Synchronizing directory...'}</p>
-          </div>
-        ) : (
-          <div className="space-y-10">
-            <AnimatePresence mode="popLayout">
-              {pendingExperts.map((expert, i) => (
-                <motion.div
-                  key={expert.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
-                  className="premium-card group relative !p-10 !rounded-[3.5rem] border-slate-100 dark:border-white/5 hover:border-primary/30 flex flex-col lg:flex-row items-center gap-12"
+          ) : (
+            <div className="space-y-10">
+              <AnimatePresence mode="popLayout">
+                {pendingExperts.map((expert, i) => (
+                  <motion.div
+                    key={expert.id}
+                    layout
+                    initial={{ opacity: 0, y: 30 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.05 }}
+                    className="premium-card group relative !p-10 !rounded-[3.5rem] border-slate-100 dark:border-white/5 hover:border-primary/30 flex flex-col lg:flex-row items-center gap-12"
+                  >
+                    {/* Expert Visual */}
+                    <div className="relative shrink-0">
+                      <div className="w-32 h-32 rounded-[2.5rem] bg-slate-50 dark:bg-white/5 flex items-center justify-center text-primary dark:text-primary-light group-hover:scale-105 transition-transform duration-700 shadow-inner border border-slate-100 dark:border-white/10">
+                        {expert.expert_type === 'diaspora' ? <Globe size={48} strokeWidth={1.5} /> : <UserCheck size={48} strokeWidth={1.5} />}
+                      </div>
+                      <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-2xl bg-white dark:bg-secondary border-4 border-slate-50 dark:border-white/10 flex items-center justify-center text-slate-400 shadow-xl">
+                        <Inbox size={16} />
+                      </div>
+                    </div>
+
+                    {/* Expert Details */}
+                    <div className="flex-1 space-y-8 text-center lg:text-left">
+                      <div className="space-y-4">
+                        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
+                          <h3 className="font-black text-3xl text-secondary dark:text-white tracking-tight font-outfit leading-tight">{expert.name}</h3>
+                          <span className={`px-5 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border shadow-sm ${
+                            expert.expert_type === 'diaspora' 
+                              ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/20' 
+                              : 'bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light border-primary/10'
+                          }`}>
+                            {expert.expert_type === 'diaspora' ? (isFR ? 'Diaspora' : 'Diaspora') : (isFR ? 'Résident' : 'Resident')}
+                          </span>
+                        </div>
+                        <div className="flex items-center justify-center lg:justify-start gap-3 text-primary dark:text-primary-light font-black text-[13px] uppercase tracking-[0.2em]">
+                           <Briefcase size={18} strokeWidth={3} />
+                           {expert.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
+                        </div>
+                      </div>
+
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm pt-8 border-t border-slate-100 dark:border-white/5">
+                        <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
+                          <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><Mail size={18} strokeWidth={2.5} /></div>
+                          <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.email}</span>
+                        </div>
+                        <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
+                          <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><MapPin size={18} strokeWidth={2.5} /></div>
+                          <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.city}, {expert.country || 'Cameroun'}</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Admin Actions */}
+                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full lg:w-auto shrink-0 pt-10 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-white/5 transition-colors">
+                      <button 
+                        onClick={() => handleAction(expert.id, 'rejected')}
+                        disabled={!!actionLoading}
+                        className="w-full sm:w-auto flex items-center justify-center gap-4 px-10 py-5 rounded-[1.5rem] font-black text-[11px] uppercase tracking-[0.2em] bg-slate-50 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 border border-slate-100 dark:border-white/5 hover:border-red-100 transition-all group/btn"
+                      >
+                        <UserX size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />
+                        {isFR ? 'Rejeter' : 'Reject'}
+                      </button>
+                      <button 
+                        onClick={() => handleAction(expert.id, 'approved')}
+                        disabled={!!actionLoading}
+                        className="btn-premium w-full sm:w-auto !px-12 !py-5 bg-primary text-white shadow-2xl shadow-primary/30 hover:bg-primary-dark group/btn"
+                      >
+                        {actionLoading === expert.id ? <Loader2 className="animate-spin" size={20} /> : <UserCheck size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />}
+                        {isFR ? 'Approuver' : 'Approve'}
+                      </button>
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+
+              {pendingExperts.length === 0 && (
+                <motion.div 
+                  initial={{ opacity: 0, scale: 0.98 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="bg-slate-50/50 dark:bg-white/5 border border-dashed border-slate-200 dark:border-white/10 rounded-[4rem] py-40 text-center space-y-12 transition-colors"
                 >
-                  {/* Expert Visual */}
-                  <div className="relative shrink-0">
-                    <div className="w-32 h-32 rounded-[2.5rem] bg-slate-50 dark:bg-white/5 flex items-center justify-center text-primary dark:text-primary-light group-hover:scale-105 transition-transform duration-700 shadow-inner border border-slate-100 dark:border-white/10">
-                      {expert.expert_type === 'diaspora' ? <Globe size={48} strokeWidth={1.5} /> : <UserCheck size={48} strokeWidth={1.5} />}
-                    </div>
-                    <div className="absolute -bottom-2 -right-2 w-10 h-10 rounded-2xl bg-white dark:bg-secondary border-4 border-slate-50 dark:border-white/10 flex items-center justify-center text-slate-400 shadow-xl">
-                      <Inbox size={16} />
-                    </div>
+                  <div className="w-32 h-32 bg-emerald-50 dark:bg-emerald-500/10 rounded-[3rem] mx-auto flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner mb-6 border border-emerald-100 dark:border-emerald-500/20">
+                    <Inbox size={64} strokeWidth={1.5} />
                   </div>
-
-                  {/* Expert Details */}
-                  <div className="flex-1 space-y-8 text-center lg:text-left">
-                    <div className="space-y-4">
-                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-5">
-                        <h3 className="font-black text-3xl text-secondary dark:text-white tracking-tight font-outfit leading-tight">{expert.name}</h3>
-                        <span className={`px-5 py-1.5 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] border shadow-sm ${
-                          expert.expert_type === 'diaspora' 
-                            ? 'bg-emerald-50 dark:bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-100 dark:border-emerald-500/20' 
-                            : 'bg-primary/5 dark:bg-primary/10 text-primary dark:text-primary-light border-primary/10'
-                        }`}>
-                          {expert.expert_type === 'diaspora' ? (isFR ? 'Diaspora' : 'Diaspora') : (isFR ? 'Résident' : 'Resident')}
-                        </span>
-                      </div>
-                      <div className="flex items-center justify-center lg:justify-start gap-3 text-primary dark:text-primary-light font-black text-[13px] uppercase tracking-[0.2em]">
-                         <Briefcase size={18} strokeWidth={3} />
-                         {expert.profession || (isFR ? 'Expert Eau' : 'Water Expert')}
-                      </div>
-                    </div>
-
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 text-sm pt-8 border-t border-slate-100 dark:border-white/5">
-                      <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><Mail size={18} strokeWidth={2.5} /></div>
-                        <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.email}</span>
-                      </div>
-                      <div className="flex items-center justify-center lg:justify-start gap-4 group/info cursor-pointer">
-                        <div className="w-12 h-12 rounded-2xl bg-slate-50 dark:bg-white/5 flex items-center justify-center text-slate-400 group-hover/info:text-primary transition-all shadow-inner border border-slate-100 dark:border-white/5"><MapPin size={18} strokeWidth={2.5} /></div>
-                        <span className="text-slate-600 dark:text-slate-400 font-bold group-hover/info:text-secondary dark:group-hover/info:text-white transition-colors">{expert.city}, {expert.country || 'Cameroun'}</span>
-                      </div>
-                    </div>
+                  <div className="space-y-6">
+                    <h3 className="font-black text-4xl md:text-5xl text-secondary dark:text-white tracking-tight font-outfit">{isFR ? 'File de Modération Purifiée' : 'Moderation Queue Purified'}</h3>
+                    <p className="text-slate-500 dark:text-slate-400 font-normal text-xl max-w-xl mx-auto leading-relaxed font-inter">
+                      {isFR ? 'Toutes les candidatures stratégiques ont été traitées avec succès. Le réseau est intègre.' : 'All strategic applications have been successfully processed. The network is integrated.'}
+                    </p>
                   </div>
-
-                  {/* Admin Actions */}
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4 w-full lg:w-auto shrink-0 pt-10 lg:pt-0 border-t lg:border-t-0 border-slate-100 dark:border-white/5 transition-colors">
-                    <button 
-                      onClick={() => handleAction(expert.id, 'rejected')}
-                      disabled={!!actionLoading}
-                      className="w-full sm:w-auto flex items-center justify-center gap-4 px-10 py-5 rounded-[1.5rem] font-black text-[11px] uppercase tracking-[0.2em] bg-slate-50 dark:bg-white/5 text-slate-500 dark:text-slate-400 hover:bg-red-50 dark:hover:bg-red-500/10 hover:text-red-600 dark:hover:text-red-400 border border-slate-100 dark:border-white/5 hover:border-red-100 transition-all group/btn"
-                    >
-                      <UserX size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />
-                      {isFR ? 'Rejeter' : 'Reject'}
-                    </button>
-                    <button 
-                      onClick={() => handleAction(expert.id, 'approved')}
-                      disabled={!!actionLoading}
-                      className="btn-premium w-full sm:w-auto !px-12 !py-5 bg-primary text-white shadow-2xl shadow-primary/30 hover:bg-primary-dark group/btn"
-                    >
-                      {actionLoading === expert.id ? <Loader2 className="animate-spin" size={20} /> : <UserCheck size={20} strokeWidth={3} className="group-hover/btn:scale-110 transition-transform" />}
-                      {isFR ? 'Approuver' : 'Approve'}
-                    </button>
+                  <div className="pt-8">
+                    <div className="section-label">
+                      <ShieldCheck size={18} strokeWidth={3} />
+                      {isFR ? 'Intégrité du Système Certifiée' : 'Certified System Integrity'}
+                    </div>
                   </div>
                 </motion.div>
-              ))}
-            </AnimatePresence>
+              )}
 
-            {pendingExperts.length === 0 && (
-              <motion.div 
-                initial={{ opacity: 0, scale: 0.98 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-slate-50/50 dark:bg-white/5 border border-dashed border-slate-200 dark:border-white/10 rounded-[4rem] py-40 text-center space-y-12 transition-colors"
-              >
-                <div className="w-32 h-32 bg-emerald-50 dark:bg-emerald-500/10 rounded-[3rem] mx-auto flex items-center justify-center text-emerald-600 dark:text-emerald-400 shadow-inner mb-6 border border-emerald-100 dark:border-emerald-500/20">
-                  <Inbox size={64} strokeWidth={1.5} />
-                </div>
-                <div className="space-y-6">
-                  <h3 className="font-black text-4xl md:text-5xl text-secondary dark:text-white tracking-tight font-outfit">{isFR ? 'File de Modération Purifiée' : 'Moderation Queue Purified'}</h3>
-                  <p className="text-slate-500 dark:text-slate-400 font-normal text-xl max-w-xl mx-auto leading-relaxed font-inter">
-                    {isFR ? 'Toutes les candidatures stratégiques ont été traitées avec succès. Le réseau est intègre.' : 'All strategic applications have been successfully processed. The network is integrated.'}
-                  </p>
-                </div>
-                <div className="pt-8">
-                  <div className="section-label">
-                    <ShieldCheck size={18} strokeWidth={3} />
-                    {isFR ? 'Intégrité du Système Certifiée' : 'Certified System Integrity'}
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </div>
-        )}
-
-        {/* ==================== ADMIN FOOTER TIPS ==================== */}
-        {!loading && pendingExperts.length > 0 && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            className="flex items-center justify-center gap-4 text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-[0.4em] pt-12 transition-colors"
-          >
-            <AlertCircle size={18} className="text-primary" strokeWidth={3} />
-            <span>{isFR ? 'Veuillez vérifier rigoureusement l\'authenticité des documents' : 'Please rigorously verify the authenticity of documents'}</span>
-          </motion.div>
+              {/* ==================== ADMIN FOOTER TIPS ==================== */}
+              {pendingExperts.length > 0 && (
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex items-center justify-center gap-4 text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-[0.4em] pt-12 transition-colors"
+                >
+                  <AlertCircle size={18} className="text-primary" strokeWidth={3} />
+                  <span>{isFR ? 'Veuillez vérifier rigoureusement l\'authenticité des documents' : 'Please rigorously verify the authenticity of documents'}</span>
+                </motion.div>
+              )}
+            </div>
+          )
+        ) : (
+          <MemberDirectory isFR={isFR} />
         )}
       </div>
     </div>
