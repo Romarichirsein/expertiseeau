@@ -5,6 +5,7 @@ import { Search, MapPin, Award, User, Filter, ChevronLeft, ChevronRight, Mail, P
 import { PageHeader } from '@/components/PageHeader';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
+import { getApprovedExperts } from '@/lib/actions';
 
 interface Member {
   id: string;
@@ -51,8 +52,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
   useEffect(() => {
     const fetchMembers = async () => {
       try {
-        const response = await fetch('/data/members.json');
-        const data = await response.json();
+        const data = await getApprovedExperts();
         // Filter out members without names or those not approved if needed
         const validMembers = data.filter((m: Member) => m.name && m.status === 'approved');
         setMembers(validMembers);
