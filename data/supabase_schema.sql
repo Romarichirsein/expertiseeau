@@ -44,9 +44,27 @@ ALTER TABLE experts ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Experts visibility" ON experts
   FOR SELECT USING (status = 'approved');
 
--- Les utilisateurs peuvent modifier leur propre profil
+-- Les utilisateurs peuvent modifier leur propre profil (correspondance par email)
 CREATE POLICY "Users can update own profile" ON experts
   FOR UPDATE USING (auth.email() = email);
+
+-- Les administrateurs peuvent modifier tous les profils
+CREATE POLICY "Admins can update all profiles" ON experts
+  FOR UPDATE USING (
+    (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin'
+  );
+
+-- Les administrateurs peuvent insérer de nouveaux profils
+CREATE POLICY "Admins can insert profiles" ON experts
+  FOR INSERT WITH CHECK (
+    (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin'
+  );
+
+-- Les administrateurs peuvent supprimer des profils
+CREATE POLICY "Admins can delete profiles" ON experts
+  FOR DELETE USING (
+    (auth.jwt() -> 'user_metadata' ->> 'role') = 'admin'
+  );
 
 -- Index pour la recherche rapide
 CREATE INDEX idx_experts_name ON experts (name);

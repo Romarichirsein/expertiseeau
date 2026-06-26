@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
@@ -81,6 +81,7 @@ export default function MemberProfileClient({
   const [isEditing, setIsEditing] = useState(false);
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [canEdit, setCanEdit] = useState(false);
   const [formData, setFormData] = useState({
     name: member.name || '',
     profession: member.profession || '',
@@ -92,6 +93,16 @@ export default function MemberProfileClient({
     university: member.university || '',
     photo: member.photo || '',
   });
+
+  // Check if current session user owns this profile or is an admin
+  useEffect(() => {
+    supabase.auth.getUser().then(({ data: { user } }) => {
+      if (!user) return;
+      const isOwner = user.email === member.email;
+      const isAdmin = user.user_metadata?.role === 'admin';
+      setCanEdit(isOwner || isAdmin);
+    });
+  }, [member.email]);
 
   const handleSave = async () => {
     setLoading(true);
@@ -159,16 +170,18 @@ export default function MemberProfileClient({
             </Button>
           </Link>
           
-          <Button
-            onClick={() => setIsEditing(!isEditing)}
-            variant={isEditing ? "outline" : "premium"}
-            className={`h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest gap-3 shadow-xl ${
-              isEditing ? "border-red-500/20 text-red-500 bg-red-500/5 hover:bg-red-500 hover:text-white" : ""
-            }`}
-          >
-            {isEditing ? <X size={20} strokeWidth={3} /> : <Edit size={20} strokeWidth={3} />}
-            {isEditing ? (isFR ? 'Annuler' : 'Cancel') : (isFR ? 'Éditer mon profil' : 'Edit My Profile')}
-          </Button>
+          {canEdit && (
+            <Button
+              onClick={() => setIsEditing(!isEditing)}
+              variant={isEditing ? "outline" : "premium"}
+              className={`h-14 px-8 rounded-2xl font-black text-xs uppercase tracking-widest gap-3 shadow-xl ${
+                isEditing ? "border-red-500/20 text-red-500 bg-red-500/5 hover:bg-red-500 hover:text-white" : ""
+              }`}
+            >
+              {isEditing ? <X size={20} strokeWidth={3} /> : <Edit size={20} strokeWidth={3} />}
+              {isEditing ? (isFR ? 'Annuler' : 'Cancel') : (isFR ? 'Éditer mon profil' : 'Edit My Profile')}
+            </Button>
+          )}
         </div>
 
         {/* MAIN PROFILE HEADER CARD */}

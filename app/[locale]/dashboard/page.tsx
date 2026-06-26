@@ -50,7 +50,7 @@ export default function DashboardPage({ params }: { params: Promise<{ locale: st
       const { data: expertData } = await supabase
         .from('experts')
         .select('*')
-        .eq('id', user.id)
+        .eq('email', user.email)
         .single();
       
       setExpert(expertData);
@@ -186,7 +186,7 @@ export default function DashboardPage({ params }: { params: Promise<{ locale: st
                   <Settings size={20} className="text-primary" />
                   <h3 className="text-[11px] font-black text-foreground uppercase tracking-[0.3em]">{isFR ? 'Informations de Compte' : 'Account Information'}</h3>
                 </div>
-                <Link href={`/${locale}/members/${user?.id}`} passHref>
+                <Link href={`/${locale}/members/${expert?.id}`} passHref>
                   <Button variant="outline" size="sm" className="h-10 px-6 rounded-xl border-white/20 dark:border-white/10 bg-white dark:bg-white/5 font-bold text-[10px] uppercase tracking-widest shadow-sm">
                     {isFR ? 'Modifier' : 'Edit'}
                   </Button>
@@ -209,8 +209,8 @@ export default function DashboardPage({ params }: { params: Promise<{ locale: st
                   <span className="text-[10px] font-black text-muted-foreground uppercase tracking-[0.3em] block mb-8 ml-1">{isFR ? 'Actions Stratégiques' : 'Strategic Actions'}</span>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {[
-                      { icon: FileEdit, label: isFR ? 'Mettre à jour le CV' : 'Update CV', href: `/${locale}/members/${user?.id}` },
-                      { icon: MapPin, label: isFR ? 'Contact & Localisation' : 'Contact & Location', href: `/${locale}/members/${user?.id}` }
+                      { icon: FileEdit, label: isFR ? 'Mettre à jour le CV' : 'Update CV', href: `/${locale}/members/${expert?.id}` },
+                      { icon: MapPin, label: isFR ? 'Contact & Localisation' : 'Contact & Location', href: `/${locale}/members/${expert?.id}` }
                     ].map((action, i) => (
                       <Link key={i} href={action.href} className="p-8 bg-white/40 dark:bg-white/5 rounded-3xl border border-white/20 dark:border-white/5 flex items-center justify-between hover:bg-white dark:hover:bg-white/10 hover:border-primary/30 transition-all duration-500 group hover:shadow-2xl hover:shadow-primary/5">
                         <div className="flex items-center gap-5">

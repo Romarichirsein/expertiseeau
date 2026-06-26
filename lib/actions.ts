@@ -80,42 +80,48 @@ export async function getApprovedExperts() {
 }
 
 export async function getExpertById(id: string) {
+    // Helper: search locally by id, then by email as fallback (for Supabase UUID vs WordPress int id mismatch)
+    function findInList(experts: any[], id: string) {
+        return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+    }
+
     try {
+        // 1. Try Supabase by id
         const { data, error } = await supabase
           .from('experts')
           .select('*')
           .eq('id', id)
           .single();
         
-        if (error || !data) {
-            if (typeof window === 'undefined') {
-                const fs = require('fs');
-                const path = require('path');
-                const filePath = path.join(process.cwd(), 'data', 'members.json');
-                const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-                return experts.find((e: any) => e.id.toString() === id.toString()) || null;
-            } else {
-                const res = await fetch('/api/experts');
-                if (res.ok) {
-                    const experts = await res.json();
-                    return experts.find((e: any) => e.id.toString() === id.toString()) || null;
-                }
+        if (!error && data) return data;
+
+        // 2. If not found (UUID vs numeric id mismatch), try local file
+        if (typeof window === 'undefined') {
+            const fs = require('fs');
+            const path = require('path');
+            const filePath = path.join(process.cwd(), 'data', 'members.json');
+            const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+            return findInList(experts, id);
+        } else {
+            const res = await fetch('/api/experts');
+            if (res.ok) {
+                const experts = await res.json();
+                return findInList(experts, id);
             }
-            return null;
         }
-        return data;
+        return null;
     } catch (e) {
         if (typeof window === 'undefined') {
             const fs = require('fs');
             const path = require('path');
             const filePath = path.join(process.cwd(), 'data', 'members.json');
             const experts = JSON.parse(fs.readFileSync(filePath, 'utf8'));
-            return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+            return findInList(experts, id);
         } else {
             const res = await fetch('/api/experts');
             if (res.ok) {
                 const experts = await res.json();
-                return experts.find((e: any) => e.id.toString() === id.toString()) || null;
+                return findInList(experts, id);
             }
         }
         return null;
