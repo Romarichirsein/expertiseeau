@@ -103,31 +103,34 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
 
       <div className="container mx-auto px-4 py-12">
         {/* SEARCH & FILTERSBAR */}
-        <div className="bg-white p-6 rounded-2xl shadow-sm mb-12 flex flex-col lg:flex-row gap-6 items-end">
+        <div className="bg-white dark:bg-slate-900/60 backdrop-blur-md p-8 rounded-[2.5rem] border border-slate-100 dark:border-slate-800 shadow-[0_8px_30px_rgb(0,0,0,0.02)] mb-12 flex flex-col lg:flex-row gap-6 items-end relative overflow-hidden">
+          {/* subtle decorative border line */}
+          <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-[#34b4e2] to-[#2794e8]" />
+          
           <div className="flex-grow space-y-2 w-full">
-            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider">
-              {isFR ? 'Rechercher' : 'Search'}
+            <label className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] ml-1">
+              {isFR ? 'Rechercher un expert' : 'Search an expert'}
             </label>
             <div className="relative">
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input 
                 type="text" 
-                placeholder={isFR ? "Nom, prénom ou email..." : "Name, first name or email..."}
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-[#34b4e2] transition-all"
+                placeholder={isFR ? "Nom, spécialité ou email..." : "Name, specialty or email..."}
+                className="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900 border-none rounded-2xl focus:ring-2 focus:ring-[#34b4e2] transition-all font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
           </div>
 
-          <div className="w-full lg:w-64 space-y-2">
-            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider">
-              {isFR ? 'Expertise' : 'Expertise'}
+          <div className="w-full lg:w-72 space-y-2">
+            <label className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] ml-1">
+              {isFR ? 'Domaine d\'expertise' : 'Expertise Domain'}
             </label>
             <div className="relative">
-              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Filter className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <select 
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-[#34b4e2] appearance-none cursor-pointer"
+                className="w-full pl-12 pr-10 py-3.5 bg-slate-50 dark:bg-slate-900 border-none rounded-2xl focus:ring-2 focus:ring-[#34b4e2] appearance-none cursor-pointer font-medium text-slate-700 dark:text-slate-200"
                 value={filterExpertise}
                 onChange={(e) => setFilterExpertise(e.target.value)}
               >
@@ -136,19 +139,24 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                   <option key={domain} value={domain}>{domain}</option>
                 ))}
               </select>
+              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-slate-400">
+                <svg className="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/>
+                </svg>
+              </div>
             </div>
           </div>
 
           <div className="w-full lg:w-64 space-y-2">
-            <label className="text-sm font-bold text-gray-500 uppercase tracking-wider">
-              {isFR ? 'Ville' : 'City'}
+            <label className="text-[11px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.25em] ml-1">
+              {isFR ? 'Ville de résidence' : 'City of residence'}
             </label>
             <div className="relative">
-              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={18} />
               <input 
                 type="text" 
                 placeholder={isFR ? "Yaoundé, Douala..." : "City name..."}
-                className="w-full pl-12 pr-4 py-3 bg-gray-50 border-none rounded-xl focus:ring-2 focus:ring-[#34b4e2] transition-all"
+                className="w-full pl-12 pr-4 py-3.5 bg-slate-50 dark:bg-slate-900 border-none rounded-2xl focus:ring-2 focus:ring-[#34b4e2] transition-all font-medium text-slate-700 dark:text-slate-200 placeholder-slate-400"
                 value={filterCity}
                 onChange={(e) => setFilterCity(e.target.value)}
               />
@@ -158,7 +166,7 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
 
         {/* RESULTS INFO */}
         <div className="mb-8 flex justify-between items-center">
-          <p className="text-gray-500">
+          <p className="text-sm font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest pl-2">
             {loading ? (
               isFR ? "Chargement des experts..." : "Loading experts..."
             ) : (
@@ -173,13 +181,13 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {[...Array(8)].map((_, i) => (
-              <div key={i} className="bg-white p-8 rounded-3xl shadow-sm animate-pulse space-y-4">
-                <div className="w-16 h-16 bg-gray-200 rounded-full mx-auto" />
-                <div className="h-6 bg-gray-200 rounded w-3/4 mx-auto" />
-                <div className="h-4 bg-gray-200 rounded w-1/2 mx-auto" />
-                <div className="space-y-2 pt-4">
-                  <div className="h-4 bg-gray-100 rounded w-full" />
-                  <div className="h-4 bg-gray-100 rounded w-full" />
+              <div key={i} className="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm animate-pulse space-y-6">
+                <div className="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-2xl mx-auto" />
+                <div className="h-6 bg-slate-100 dark:bg-slate-800 rounded w-3/4 mx-auto" />
+                <div className="h-4 bg-slate-100 dark:bg-slate-800 rounded w-1/2 mx-auto" />
+                <div className="space-y-3 pt-6 border-t border-slate-50 dark:border-slate-850">
+                  <div className="h-4 bg-slate-55 dark:bg-slate-800 rounded w-full" />
+                  <div className="h-4 bg-slate-55 dark:bg-slate-800 rounded w-full" />
                 </div>
               </div>
             ))}
@@ -191,60 +199,84 @@ export default function MembersPage({ params }: { params: Promise<{ locale: stri
                 {currentMembers.map((member) => (
                   <motion.div
                     layout
-                    initial={{ opacity: 0, scale: 0.9 }}
+                    initial={{ opacity: 0, scale: 0.95 }}
                     animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.9 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
                     key={member.id}
-                    className="bg-white group p-8 rounded-3xl shadow-sm hover:shadow-xl transition-all border border-transparent hover:border-[#34b4e2]/20 relative overflow-hidden"
+                    className="bg-white dark:bg-slate-900 group p-6 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.02)] hover:shadow-[0_20px_50px_rgba(52,180,226,0.08)] transition-all duration-500 border border-slate-100 dark:border-slate-850 hover:border-[#34b4e2]/30 relative overflow-hidden flex flex-col justify-between"
                   >
-                    {/* Decorative background circle */}
-                    <div className="absolute -top-10 -right-10 w-32 h-32 bg-[#34b4e2]/5 rounded-full group-hover:scale-150 transition-transform duration-500" />
+                    {/* Background decorative glow */}
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-[#34b4e2]/5 blur-2xl rounded-full group-hover:scale-150 transition-transform duration-700 pointer-events-none" />
                     
-                    <div className="relative z-10 space-y-4">
-                      <div className="w-20 h-20 bg-gradient-to-br from-[#34b4e2] to-[#2794e8] rounded-2xl flex items-center justify-center text-white font-bold text-2xl shadow-lg mx-auto mb-6 transform group-hover:rotate-6 transition-transform">
-                        {member.name.charAt(0).toUpperCase()}
+                    <div className="relative z-10 space-y-6">
+                      {/* Avatar & Status Row */}
+                      <div className="flex justify-between items-start">
+                        <div className="relative">
+                          <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#34b4e2]/10 to-[#2794e8]/10 flex items-center justify-center text-[#34b4e2] font-black text-xl border border-[#34b4e2]/20 shadow-inner group-hover:scale-105 transition-transform duration-500">
+                            {member.name ? member.name.charAt(0).toUpperCase() : 'E'}
+                          </div>
+                          <div className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 border-2 border-white dark:border-slate-900 flex items-center justify-center shadow-md">
+                            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                          </div>
+                        </div>
+                        
+                        {/* Resident or Diaspora status */}
+                        <span className="px-3 py-1 bg-slate-50 dark:bg-slate-800 text-slate-500 dark:text-slate-400 text-[10px] font-black uppercase tracking-widest rounded-lg border border-slate-100 dark:border-slate-800">
+                          {member.country?.toLowerCase() === 'cameroun' || member.country?.toLowerCase() === 'cameroon' 
+                            ? (isFR ? 'Résident' : 'Resident') 
+                            : (isFR ? 'Diaspora' : 'Diaspora')}
+                        </span>
                       </div>
                       
-                      <div className="text-center space-y-1">
-                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-[#34b4e2] transition-colors line-clamp-1">
+                      {/* Member Info */}
+                      <div className="space-y-1">
+                        <h3 className="text-lg font-black text-slate-800 dark:text-slate-100 group-hover:text-[#34b4e2] transition-colors duration-300 line-clamp-1 font-outfit uppercase tracking-tight">
                           {member.name}
                         </h3>
-                        <p className="text-sm font-medium text-gray-400 uppercase tracking-tighter line-clamp-1">
-                          {member.profession || (isFR ? "Expert" : "Expert")}
+                        <p className="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest line-clamp-1">
+                          {member.profession || (isFR ? "Expert en Eau" : "Water Expert")}
                         </p>
                       </div>
 
-                      <div className="pt-4 border-t border-gray-50 space-y-3">
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <MapPin size={16} className="text-[#34b4e2]" />
-                          <span className="line-clamp-1">{member.city}, {member.country}</span>
+                      {/* Details lists */}
+                      <div className="pt-5 border-t border-slate-50 dark:border-slate-800/60 space-y-3 text-xs text-slate-600 dark:text-slate-400">
+                        <div className="flex items-center gap-3">
+                          <MapPin size={15} className="text-[#34b4e2] shrink-0" />
+                          <span className="line-clamp-1 font-medium">{member.city || 'Yaoundé'}, {member.country || 'Cameroun'}</span>
                         </div>
-                        <div className="flex items-center gap-3 text-sm text-gray-600">
-                          <Mail size={16} className="text-[#34b4e2]" />
-                          <span className="line-clamp-1">{member.email}</span>
+                        <div className="flex items-center gap-3">
+                          <Mail size={15} className="text-[#34b4e2] shrink-0" />
+                          <span className="line-clamp-1 font-medium">{member.email || '---'}</span>
                         </div>
-                        {member.expertise.length > 0 && (
-                          <div className="flex items-start gap-3 text-sm text-gray-600">
-                            <Briefcase size={16} className="text-[#34b4e2] mt-1 shrink-0" />
-                            <div className="flex flex-wrap gap-1">
-                              {member.expertise.slice(0, 2).map((exp, i) => (
-                                <span key={i} className="px-2 py-0.5 bg-gray-100 rounded-md text-[10px] font-bold text-gray-500 uppercase">
-                                  {exp.split('/')[0].trim()}
-                                </span>
-                              ))}
-                              {member.expertise.length > 2 && (
-                                <span className="text-[10px] font-bold text-[#34b4e2]">+{member.expertise.length - 2}</span>
-                              )}
-                            </div>
-                          </div>
-                        )}
                       </div>
 
+                      {/* Expertise domains tags */}
+                      {member.expertise && member.expertise.length > 0 && (
+                        <div className="pt-4 border-t border-slate-50 dark:border-slate-800/60 space-y-2">
+                          <div className="flex flex-wrap gap-1.5">
+                            {member.expertise.slice(0, 2).map((exp, i) => (
+                              <span key={i} className="px-2.5 py-1 bg-[#34b4e2]/5 dark:bg-[#34b4e2]/10 text-[#34b4e2] text-[9px] font-black uppercase tracking-wider rounded-lg border border-[#34b4e2]/10 dark:border-[#34b4e2]/20">
+                                {exp.split('/')[0].trim()}
+                              </span>
+                            ))}
+                            {member.expertise.length > 2 && (
+                              <span className="text-[10px] font-bold text-[#34b4e2] bg-[#34b4e2]/5 px-2 py-0.5 rounded-md">
+                                +{member.expertise.length - 2}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Action Button */}
+                    <div className="pt-6">
                       <Link 
                         href={`/${locale}/members/${member.id}`}
-                        className="w-full block text-center mt-6 bg-[#292929] text-white py-3 rounded-xl font-bold text-sm hover:bg-[#34b4e2] transform hover:-translate-y-1 transition-all shadow-md"
+                        className="w-full text-center bg-[#292929] hover:bg-[#34b4e2] text-white py-3.5 px-4 rounded-2xl font-black text-[11px] uppercase tracking-widest transition-all duration-300 shadow-md hover:shadow-lg flex items-center justify-center gap-2 group-hover:scale-[1.01]"
                       >
-                        {isFR ? 'Voir le Profil' : 'View Profile'}
+                        {isFR ? 'Consulter le Profil' : 'Consult Profile'}
+                        <ChevronRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                       </Link>
                     </div>
                   </motion.div>

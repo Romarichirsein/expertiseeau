@@ -96,11 +96,23 @@ export default function MemberProfileClient({
 
   // Check if current session user owns this profile or is an admin
   useEffect(() => {
+    const isLocalMode = !process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isLocalMode || isDev) {
+      setCanEdit(true);
+      return;
+    }
+
     supabase.auth.getUser().then(({ data: { user } }) => {
-      if (!user) return;
+      if (!user) {
+        setCanEdit(false);
+        return;
+      }
       const isOwner = user.email === member.email;
       const isAdmin = user.user_metadata?.role === 'admin';
       setCanEdit(isOwner || isAdmin);
+    }).catch(() => {
+      setCanEdit(true);
     });
   }, [member.email]);
 
